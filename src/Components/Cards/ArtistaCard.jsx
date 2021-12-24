@@ -6,11 +6,13 @@ import {
   CardMedia,
   CardContent,
   Card,
+  CardHeader,
 } from "@mui/material";
 
 function ArtistaCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
+      <CardHeader title={props.title} subheader={props.subheader} />
       <CardActionArea>
         <CardMedia
           component='img'
@@ -19,11 +21,20 @@ function ArtistaCard(props) {
           alt={props.imgAlt}
         />
         <CardContent>
+          <Typography
+            gutterBottom
+            variant='body1'
+            color='text.secondary'
+            component='div'
+          >
+            ({props.lugarNacimiento} {props.fechaNacimiento}{" "}
+            {props.fechaFallecimiento})
+          </Typography>
           <Typography gutterBottom variant='h5' component='div'>
-            {props.nombre}
+            {props.nodo}
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            {props.bioSmall}
+            {props.introSmall}
           </Typography>
         </CardContent>
       </CardActionArea>

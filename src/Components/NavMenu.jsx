@@ -10,6 +10,7 @@ import {
   MenuItem,
   Button,
   IconButton,
+  ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -21,6 +22,16 @@ function NavMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [anchorAlta, setAnchorAlta] = React.useState(null);
+  const openAlta = Boolean(anchorAlta);
+
+  const handleClickAlta = (event) => {
+    setAnchorAlta(event.currentTarget);
+  };
+  const handleCloseAlta = () => {
+    setAnchorAlta(null);
   };
 
   return (
@@ -47,7 +58,7 @@ function NavMenu() {
             }}
           >
             <MenuItem as={Link} onClick={handleClose} to='/'>
-              Expo
+              <ListItemText>Expo</ListItemText>
             </MenuItem>
             <MenuItem as={Link} onClick={handleClose} to='/archivo'>
               Archivo
@@ -57,6 +68,29 @@ function NavMenu() {
             </MenuItem>
             <MenuItem as={Link} onClick={handleClose} to='/equipo'>
               Equipo
+            </MenuItem>
+          </Menu>
+
+          <Button
+            id='alta-button'
+            aria-controls='alta-button'
+            aria-haspopup='true'
+            aria-expanded={openAlta ? "true" : undefined}
+            onClick={handleClickAlta}
+            color='inherit'
+          >
+            Altas
+          </Button>
+
+          <Menu
+            id='alta-button'
+            aria-labelledby='alta-button'
+            anchorEl={anchorAlta}
+            open={openAlta}
+            onClose={handleCloseAlta}
+          >
+            <MenuItem as={Link} onClick={handleCloseAlta} to='/altas/artista'>
+              Artista
             </MenuItem>
           </Menu>
 
