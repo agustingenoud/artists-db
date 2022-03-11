@@ -18,7 +18,7 @@ function AltaArtista() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { nacimiento: new Date() },
+    defaultValues: {},
   });
 
   const onSubmit = async (data) => {
@@ -108,7 +108,7 @@ function AltaArtista() {
             />
             <FInput
               label='Fecha de Fallecimiento'
-              type='text'
+              type='int'
               register={{ ...register("fallecimiento") }}
               changeInput={(lift) => setFechaFallecimientoSample(lift)}
             />
