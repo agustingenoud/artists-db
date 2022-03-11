@@ -4,7 +4,6 @@ import { Button, Grid, Typography, Box } from "@mui/material";
 
 import firebase from "../../Config/firebase";
 import FInput from "../../Components/Forms/FInput";
-import FDate from "../../Components/Forms/FDate";
 import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
 import Titulo from "../../Components/Styles/Titulo";
@@ -52,7 +51,7 @@ function AltaArtista() {
   const [nombreSample, setNombreSample] = useState("");
   const [lugarNacimientoSample, setLugarNacimientoSample] = useState();
   const [fechaNacimientoSample, setFechaNacimientoSample] = useState();
-  const [fechaFallecmientoSample, setfechaFallecmientoSample] = useState();
+  const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState();
   const [nodoSample, setNodoSample] = useState();
   const [bioSample, setBioSample] = useState();
   const [introSample, setIntroSample] = useState();
@@ -78,7 +77,7 @@ function AltaArtista() {
       </Grid>
       {/* Elem3 */}
       <Grid container xs={12} md={6}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} fullwidth>
           <FInput
             xs={6}
             label='id'
@@ -88,28 +87,30 @@ function AltaArtista() {
           />
 
           <FInput
-            label='nombre'
+            label='Nombre'
             type='text'
             register={{ ...register("nombre", { required: true }) }}
             changeInput={(lift) => setNombreSample(lift)}
           />
 
           <FInput
-            label='lugar de nacimiento'
+            label='Lugar de nacimiento'
             type='text'
             register={{ ...register("lugar de nacimiento") }}
             changeInput={(lift) => setLugarNacimientoSample(lift)}
           />
           <div>
-            <FDate
-              label='Fecha de Nacimiento'
-              register={{ ...register("nacimiento", { required: true }) }}
+            <FInput
+              label='Fecha de nacimiento'
+              type='int'
+              register={{ ...register("nacimiento") }}
               changeInput={(lift) => setFechaNacimientoSample(lift)}
             />
-            <FDate
+            <FInput
               label='Fecha de Fallecimiento'
+              type='text'
               register={{ ...register("fallecimiento") }}
-              changeInput={(lift) => setfechaFallecmientoSample(lift)}
+              changeInput={(lift) => setFechaFallecimientoSample(lift)}
             />
           </div>
           <div>
