@@ -23,7 +23,9 @@ export default function FDate(props) {
         label={props.label}
         value={value}
         onChange={handleChange}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => (
+          <TextField {...params} sx={{ m: 2, width: "85%" }} />
+        )}
       />
     </LocalizationProvider>
   );

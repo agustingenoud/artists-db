@@ -13,6 +13,10 @@ function FInput(props) {
         type={props.type || "text"}
         {...props.register}
         onChange={onInputChange}
+        sx={{
+          m: 2,
+          width: "85%",
+        }}
       />
     </>
   );

@@ -23,6 +23,10 @@ function FSelect(props) {
         labelId='nodos'
         {...props.register}
         onChange={handleChange}
+        sx={{
+          width: "85%",
+          m: 2,
+        }}
       >
         {items.map(({ nodo, value }) => (
           <MenuItem key={value} value={value}>

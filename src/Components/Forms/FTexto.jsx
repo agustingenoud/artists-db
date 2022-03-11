@@ -15,6 +15,10 @@ function FTexto(props) {
       defaultValue={props.defaultValue}
       {...props.register}
       onChange={onInputChange}
+      sx={{
+        width: "85%",
+        m: 2,
+      }}
     />
   );
 }

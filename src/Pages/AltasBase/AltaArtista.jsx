@@ -56,6 +56,7 @@ function AltaArtista() {
   const [nodoSample, setNodoSample] = useState();
   const [bioSample, setBioSample] = useState();
   const [introSample, setIntroSample] = useState();
+  const [idSample, setIdSample] = useState();
 
   const handleNombre = (e) => {
     e.preventDefault();
@@ -79,9 +80,11 @@ function AltaArtista() {
       <Grid container xs={12} md={6}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FInput
+            xs={6}
             label='id'
             type='Inventario'
             register={{ ...register("id", { required: true }) }}
+            changeInput={(lift) => setIdSample(lift)}
           />
 
           <FInput
@@ -97,44 +100,50 @@ function AltaArtista() {
             register={{ ...register("lugar de nacimiento") }}
             changeInput={(lift) => setLugarNacimientoSample(lift)}
           />
-
-          <FDate
-            label='Fecha de Nacimiento'
-            register={{ ...register("nacimiento", { required: true }) }}
-            changeInput={(lift) => setFechaNacimientoSample(lift)}
-          />
-          <FDate
-            label='Fecha de Fallecimiento'
-            register={{ ...register("fallecimiento") }}
-            changeInput={(lift) => setfechaFallecmientoSample(lift)}
-          />
-          <FTexto
-            label='intro'
-            fullwidth
-            register={{ ...register("intro") }}
-            changeInput={(lift) => setIntroSample(lift)}
-          />
-
-          <FTexto
-            label='Bio'
-            fullwidth
-            register={{ ...register("bio") }}
-            changeInput={(lift) => setBioSample(lift)}
-          />
-
-          <FSelect
-            value='nodo'
-            id='nodo'
-            label='nodo'
-            items={nodos}
-            register={{ ...register("nodo") }}
-            changeInput={(lift) => setNodoSample(lift)}
-          />
-          <Button variant='contained' type='submit'>
+          <div>
+            <FDate
+              label='Fecha de Nacimiento'
+              register={{ ...register("nacimiento", { required: true }) }}
+              changeInput={(lift) => setFechaNacimientoSample(lift)}
+            />
+            <FDate
+              label='Fecha de Fallecimiento'
+              register={{ ...register("fallecimiento") }}
+              changeInput={(lift) => setfechaFallecmientoSample(lift)}
+            />
+          </div>
+          <div>
+            <FTexto
+              label='intro'
+              fullwidth
+              register={{ ...register("intro") }}
+              changeInput={(lift) => setIntroSample(lift)}
+            />
+          </div>
+          <div>
+            <FTexto
+              label='Bio'
+              fullwidth
+              register={{ ...register("bio") }}
+              changeInput={(lift) => setBioSample(lift)}
+            />
+          </div>
+          <div>
+            <FSelect
+              value='nodo'
+              id='nodo'
+              label='nodo'
+              items={nodos}
+              register={{ ...register("nodo") }}
+              changeInput={(lift) => setNodoSample(lift)}
+            />
+          </div>
+          <Button variant='contained' type='submit' sx={{ m: 2 }}>
             Ingresar Artista
           </Button>
         </form>
       </Grid>
+
       {/* Elem 4*/}
       <Grid item xs={12} md={6}>
         <ArtistaCard
