@@ -77,7 +77,7 @@ function AltaArtista() {
       </Grid>
       {/* Elem3 */}
       <Grid container xs={12} md={6}>
-        <form onSubmit={handleSubmit(onSubmit)} fullwidth>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <FInput
             xs={6}
             label='id'
