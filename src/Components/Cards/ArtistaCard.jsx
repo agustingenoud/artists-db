@@ -27,7 +27,8 @@ function ArtistaCard(props) {
             color='text.secondary'
             component='div'
           >
-            ({props.lugarNacimiento} {props.fechaNacimiento}{" "}
+            ({props.lugarNacimiento} {props.fechaNacimiento}
+            {" - "}
             {props.fechaFallecimiento})
           </Typography>
           <Typography gutterBottom variant='h5' component='div'>

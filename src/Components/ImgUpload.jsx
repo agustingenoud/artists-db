@@ -8,7 +8,7 @@ import {
 
 import firebaseApp from "../Config/firebase";
 
-function ImgUpload() {
+function ImgUpload(props) {
   const [progress, setProgress] = useState(0);
 
   const formHandler = (e) => {
@@ -39,6 +39,7 @@ function ImgUpload() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
+          props.changeInput(downloadURL);
         });
       }
     );

@@ -15,6 +15,7 @@ import FormArtista from "../../Components/Forms/FormArtista";
 function AltaArtista() {
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -57,6 +58,8 @@ function AltaArtista() {
   const [introSample, setIntroSample] = useState();
   const [idSample, setIdSample] = useState();
 
+  const [picSample, setPicSample] = useState();
+
   const handleNombre = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -73,7 +76,13 @@ function AltaArtista() {
       </Grid>
       {/* Elem2 */}
       <Grid item xs={12}>
-        <ImgUpload />
+        <ImgUpload
+          label='img'
+          changeInput={(lift) => setPicSample(lift)}
+          register={{
+            ...register("img", { value: picSample }, { required: true }),
+          }}
+        />
       </Grid>
       {/* Elem3 */}
       <Grid container xs={12} md={6}>
@@ -150,7 +159,7 @@ function AltaArtista() {
         <ArtistaCard
           title={nombreSample}
           nodo={nodoSample}
-          imgSrc={`https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2F6a%2Fdb%2F5c%2F6adb5cb9ca27e48304b56ff5bdf55448.jpg&f=1&nofb=1`}
+          imgSrc={picSample}
           imgAlt={`flash`}
           categorías={nodoSample}
           lugarNacimiento={lugarNacimientoSample}
@@ -158,6 +167,19 @@ function AltaArtista() {
           fechaFallecimiento={fechaFallecmientoSample}
           introSmall={introSample}
         />
+        <button
+          type='button'
+          onClick={() => {
+            const values = getValues(); // { test: "test-input", test1: "test1-input" }
+            const singleValue = getValues("test"); // "test-input"
+            const multipleValues = getValues(["test", "test1"]);
+            console.log("VALORES");
+            console.log(values);
+            console.log(register);
+          }}
+        >
+          Get Values
+        </button>
       </Grid>
     </Grid>
   );
