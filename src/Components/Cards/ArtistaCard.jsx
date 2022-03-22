@@ -14,12 +14,7 @@ function ArtistaCard(props) {
     <Card>
       <CardHeader title={props.title} subheader={props.subheader} />
       <CardActionArea>
-        <CardMedia
-          component='img'
-          height='140'
-          image={props.imgSrc}
-          alt={props.imgAlt}
-        />
+        <CardMedia component='img' image={props.imgSrc} alt={props.imgAlt} />
         <CardContent>
           <Typography
             gutterBottom

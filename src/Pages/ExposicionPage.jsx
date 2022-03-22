@@ -4,13 +4,7 @@ import { Button, Grid, Typography, Box } from "@mui/material";
 function ExposicionPage() {
   return (
     <>
-      <h1>
-        Devenir <br />
-        Otrxs <br />
-        Cuerpxs
-      </h1>
-
-      <Grid container spacing={6}>
+      <Grid container spacing={6} sx={{ marginTop: "0.1vh" }}>
         <Grid item xs={12} md={6} lg={3}>
           <ArtistaCard
             title={`Artista`}
@@ -21,7 +15,7 @@ function ExposicionPage() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} lg={3}>
           <ArtistaCard
             title={`colectivo`}
             imgSrc={`https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.mhuklLd7bc34Zo8ISkZL9AHaGT%26pid%3DApi&f=1`}
@@ -30,7 +24,7 @@ function ExposicionPage() {
             bioSmall={`lkajd aldsk kdlskasdl`}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} lg={3}>
           <ArtistaCard
             title={`evento`}
             imgSrc={`https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.eij8Mf1vHfXq98aZM_3-BQAAAA%26pid%3DApi&f=1`}

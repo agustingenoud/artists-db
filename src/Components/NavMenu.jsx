@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -9,12 +9,73 @@ import {
   Menu,
   MenuItem,
   Button,
-  IconButton,
-  ListItemText,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
+const menuItems = [
+  {
+    label: "expo",
+    href: "/",
+  },
+  {
+    label: "textos",
+    href: "/textos",
+  },
+  {
+    label: "equipo",
+    href: "/equipo",
+  },
+  {
+    label: "archivo",
+    href: "/archivo",
+  },
+];
+
+const displayDesktop = () => {
+  return (
+    <>
+      {menuItems.map((item) => (
+        <Button as={Link} to={item.href} color='inherit'>
+          {item.label}
+        </Button>
+      ))}
+    </>
+  );
+};
+
+const displayMobile = () => {
+  return (
+    <>
+      <Typography>OLu</Typography>
+    </>
+  );
+};
+
 function NavMenu() {
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
+
+  const { mobileView, drawerOpen } = state;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setState((prevState) => ({ ...prevState, mobileView: true }))
+        : setState((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+
+    window.addEventListener("resize", () => setResponsiveness());
+
+    return () => {
+      window.removeEventListener("resize", () => setResponsiveness());
+    };
+  }, []);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -35,78 +96,43 @@ function NavMenu() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
-        <Toolbar>
-          <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            sx={{ mr: 2 }}
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id='basic-menu'
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem as={Link} onClick={handleClose} to='/'>
-              <ListItemText>Expo</ListItemText>
-            </MenuItem>
-            <MenuItem as={Link} onClick={handleClose} to='/archivo'>
-              Archivo
-            </MenuItem>
-            <MenuItem as={Link} onClick={handleClose} to='/textos'>
-              Textos
-            </MenuItem>
-            <MenuItem as={Link} onClick={handleClose} to='/equipo'>
-              Equipo
-            </MenuItem>
-          </Menu>
-          <Button
-            id='alta-button'
-            aria-controls='alta-button'
-            aria-haspopup='true'
-            aria-expanded={openAlta ? "true" : undefined}
-            onClick={handleClickAlta}
-            color='inherit'
-          >
-            Altas
-          </Button>
-          <Menu
-            id='alta-button'
-            aria-labelledby='alta-button'
-            anchorEl={anchorAlta}
-            open={openAlta}
-            onClose={handleCloseAlta}
-          >
-            <MenuItem as={Link} onClick={handleCloseAlta} to='/altas/artista'>
-              Artista
-            </MenuItem>
-          </Menu>
+    <Box>
+      <AppBar position='static' sx={{ padding: "8% 2% 18% 2%" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant='h3'>
+            Devenir <br />
+            Otrxs <br />
+            Cuerpxs
+          </Typography>
+
           <Box>
-            <Button as={Link} to='/' color='inherit'>
-              Expo
+            <Button
+              id='alta-button'
+              aria-controls='alta-button'
+              aria-haspopup='true'
+              aria-expanded={openAlta ? "true" : undefined}
+              onClick={handleClickAlta}
+              color='inherit'
+            >
+              Altas
             </Button>
-            <Button as={Link} to='/textos' color='inherit'>
-              textos
-            </Button>
-            <Button as={Link} to='/equipo' color='inherit'>
-              equipo
-            </Button>
-            <Button as={Link} to='/archivo' color='inherit'>
-              archivo
-            </Button>
-            <Button as={Link} to='/login' color='inherit'>
-              Login
-            </Button>
+            <Menu
+              id='alta-button'
+              aria-labelledby='alta-button'
+              anchorEl={anchorAlta}
+              open={openAlta}
+              onClose={handleCloseAlta}
+            >
+              <MenuItem as={Link} onClick={handleCloseAlta} to='/altas/artista'>
+                Artista
+              </MenuItem>
+            </Menu>
+            {mobileView ? displayMobile() : displayDesktop()}
           </Box>
         </Toolbar>
       </AppBar>
