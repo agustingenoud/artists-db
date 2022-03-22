@@ -9,33 +9,47 @@ const theme = createTheme({
   palette: {
     type: "light",
     primary: {
-      main: "#7c41d4",
-      light: "#8646e8",
-      dark: "#5016a4",
-      contrastText: "#c7c5c5",
+      main: "#ffffff",
     },
     secondary: {
-      main: "#63acc9",
-      light: "#78b7ce",
-      dark: "#46758c",
-      contrastText: "rgba(230,230,230,0.87)",
+      main: "#f50057",
     },
-    background: {
-      default: "#2d2d2d",
-      paper: "#2e2f2f",
+  },
+  typography: {
+    fontFamily: "Montserrat",
+    h1: {
+      fontFamily: "Montserrat",
     },
-    text: {
-      primary: "rgba(255,255,255,0.87)",
-      secondary: "rgba(160,160,160,0.54)",
-      disabled: "rgba(27,105,88,0.75)",
-      hint: "rgba(51,135,75,0.38)",
+    h2: {
+      fontFamily: "Montserrat",
     },
-    success: {
-      main: "#4caf83",
-      light: "#70c79b",
-      dark: "#2f8a67",
+    h3: {
+      fontFamily: "Montserrat",
     },
-    divider: "rgba(158,158,158,0.12)",
+    h4: {
+      fontFamily: "Montserrat",
+    },
+    h5: {
+      fontFamily: "Montserrat",
+    },
+    body1: {
+      fontFamily: "Montserrat",
+    },
+    subtitle1: {
+      fontFamily: "Roboto Slab",
+    },
+    subtitle2: {
+      fontFamily: "Roboto Slab",
+    },
+    body2: {
+      fontFamily: "Roboto Slab",
+    },
+    caption: {
+      fontFamily: "Roboto Slab",
+    },
+    overline: {
+      fontFamily: "Roboto Slab",
+    },
   },
 });
 

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Button, Grid, Typography, Box, Input } from "@mui/material";
+
 import {
   ref,
   getDownloadURL,
@@ -46,12 +48,16 @@ function ImgUpload(props) {
   };
 
   return (
-    <div className='App'>
+    <div className='App' style={{ marginLeft: 10, marginBottom: 20 }}>
       <form onSubmit={formHandler}>
-        <input type='file' className='input' />
-        <button type='submit'>Upload</button>
+        <Input type='file' className='input' sx={{ m: 1 }} />
+        <Button color='secondary' type='submit'>
+          Upload
+        </Button>
+        <Typography variant='body1' display='inline'>
+          Uploading done {progress}%
+        </Typography>
       </form>
-      <h2>Uploading done {progress}%</h2>
     </div>
   );
 }

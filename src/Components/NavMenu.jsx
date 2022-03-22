@@ -70,7 +70,6 @@ function NavMenu() {
               Equipo
             </MenuItem>
           </Menu>
-
           <Button
             id='alta-button'
             aria-controls='alta-button'
@@ -81,7 +80,6 @@ function NavMenu() {
           >
             Altas
           </Button>
-
           <Menu
             id='alta-button'
             aria-labelledby='alta-button'
@@ -93,10 +91,23 @@ function NavMenu() {
               Artista
             </MenuItem>
           </Menu>
-
-          <Button as={Link} to='/login' color='inherit'>
-            Login
-          </Button>
+          <Box>
+            <Button as={Link} to='/' color='inherit'>
+              Expo
+            </Button>
+            <Button as={Link} to='/textos' color='inherit'>
+              textos
+            </Button>
+            <Button as={Link} to='/equipo' color='inherit'>
+              equipo
+            </Button>
+            <Button as={Link} to='/archivo' color='inherit'>
+              archivo
+            </Button>
+            <Button as={Link} to='/login' color='inherit'>
+              Login
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

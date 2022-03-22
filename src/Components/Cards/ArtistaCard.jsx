@@ -11,7 +11,7 @@ import {
 
 function ArtistaCard(props) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardHeader title={props.title} subheader={props.subheader} />
       <CardActionArea>
         <CardMedia
