@@ -1,6 +1,27 @@
 import ArtistaCard from "../Components/Cards/ArtistaCard";
 import { Button, Grid, Typography, Box } from "@mui/material";
 
+import {
+  doc,
+  getDoc,
+  query,
+  getDocs,
+  getFirestore,
+  collection,
+} from "firebase/firestore";
+import firebaseApp from "../Config/firebase";
+
+/* const getData = async () => {
+  const firestore = getFirestore();
+  const q = query(collection(firestore, "artistas"));
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+  });
+}; */
+
 function ExposicionPage() {
   return (
     <>
