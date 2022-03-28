@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Grid, Typography, Box } from "@mui/material";
 
-import firebase from "../../Config/firebase";
+import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
+
 import FInput from "../../Components/Forms/FInput";
 import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
@@ -12,10 +13,11 @@ import ImgUpload from "../../Components/ImgUpload";
 
 import FormArtista from "../../Components/Forms/FormArtista";
 
+const firestore = getFirestore();
+
 function AltaArtista() {
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -24,10 +26,13 @@ function AltaArtista() {
 
   const onSubmit = async (data) => {
     try {
-      //const document = await firebase.db.collection("artistas").add(data);
-      console.log("INSIDE > onSubmit()");
+      data.img = picSample;
       console.log(data);
-    } catch (e) {}
+      const artistasRef = doc(collection(firestore, "artistas"));
+      await setDoc(artistasRef, data);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   const nodos = [
@@ -65,8 +70,6 @@ function AltaArtista() {
     console.log(e.target.value);
   };
 
-  const handleNodo = (e) => {};
-
   return (
     /* GridRoot */
     <Grid container>
@@ -78,10 +81,10 @@ function AltaArtista() {
       <Grid item xs={12}>
         <ImgUpload
           label='img'
-          changeInput={(lift) => setPicSample(lift)}
           register={{
             ...register("img", { value: picSample }, { required: true }),
           }}
+          changeInput={(lift) => setPicSample(lift)}
         />
       </Grid>
       {/* Elem3 */}
@@ -155,31 +158,18 @@ function AltaArtista() {
       </Grid>
 
       {/* Elem 4*/}
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={6} lg={3}>
         <ArtistaCard
           title={nombreSample}
           nodo={nodoSample}
           imgSrc={picSample}
-          imgAlt={`flash`}
+          imgAlt={`preview-img`}
           categorías={nodoSample}
           lugarNacimiento={lugarNacimientoSample}
           fechaNacimiento={fechaNacimientoSample}
           fechaFallecimiento={fechaFallecmientoSample}
           introSmall={introSample}
         />
-        <button
-          type='button'
-          onClick={() => {
-            const values = getValues(); // { test: "test-input", test1: "test1-input" }
-            const singleValue = getValues("test"); // "test-input"
-            const multipleValues = getValues(["test", "test1"]);
-            console.log("VALORES");
-            console.log(values);
-            console.log(register);
-          }}
-        >
-          Get Values
-        </button>
       </Grid>
     </Grid>
   );
