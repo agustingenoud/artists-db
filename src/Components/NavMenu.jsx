@@ -32,26 +32,6 @@ const menuItems = [
   },
 ];
 
-const displayDesktop = () => {
-  return (
-    <>
-      {menuItems.map((item) => (
-        <Button as={Link} to={item.href} color='inherit'>
-          {item.label}
-        </Button>
-      ))}
-    </>
-  );
-};
-
-const displayMobile = () => {
-  return (
-    <>
-      <Typography>OLu</Typography>
-    </>
-  );
-};
-
 function NavMenu() {
   const [state, setState] = useState({
     mobileView: false,
@@ -70,19 +50,19 @@ function NavMenu() {
     setResponsiveness();
 
     window.addEventListener("resize", () => setResponsiveness());
-
     return () => {
       window.removeEventListener("resize", () => setResponsiveness());
     };
   }, []);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [anchorMenu, setAnchorMenu] = React.useState(null);
+  const openMenu = Boolean(anchorMenu);
+
+  const handleClickMenu = (event) => {
+    setAnchorMenu(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseMenu = () => {
+    setAnchorMenu(null);
   };
 
   const [anchorAlta, setAnchorAlta] = React.useState(null);
@@ -93,6 +73,50 @@ function NavMenu() {
   };
   const handleCloseAlta = () => {
     setAnchorAlta(null);
+  };
+
+  const displayDesktop = () => {
+    return (
+      <>
+        {menuItems.map((item) => (
+          <Button as={Link} to={item.href} color='inherit'>
+            {item.label}
+          </Button>
+        ))}
+      </>
+    );
+  };
+
+  const displayMobile = () => {
+    return (
+      <>
+        <Box>
+          <Button
+            id='menu-button'
+            aria-controls='menu-button'
+            aria-haspopup='true'
+            aria-expanded={openMenu ? "true" : undefined}
+            onClick={handleClickMenu}
+            color='inherit'
+          >
+            <MenuIcon />
+          </Button>
+          <Menu
+            id='menu-button'
+            aria-labelledby='menu-button'
+            anchorEl={anchorMenu}
+            open={openMenu}
+            onClose={handleCloseMenu}
+          >
+            {menuItems.map((item) => (
+              <MenuItem as={Link} onClick={handleCloseMenu} to={item.href}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+      </>
+    );
   };
 
   return (
