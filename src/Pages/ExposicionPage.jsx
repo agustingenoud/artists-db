@@ -41,6 +41,7 @@ function ExposicionPage() {
                 introSmall={ficha.data().bio}
                 fechaNacimiento={ficha.data().nacimiento}
                 fechaFallecimiento={ficha.data().fallecimiento}
+                id={ficha.id}
               />
             </Grid>
           ))}

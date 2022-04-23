@@ -30,7 +30,7 @@ function ArtistaCard(props) {
             color='text.primary'
             component='div'
           >
-            <strong>Nombre del Artista</strong>
+            <strong>{props.nombre}</strong>
           </Typography>
           <Typography
             gutterBottom
@@ -47,6 +47,9 @@ function ArtistaCard(props) {
           </Typography>
           <Typography variant='body2' color='text.secondary'>
             {props.introSmall}
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            {props.id}
           </Typography>
         </CardContent>
       </CardActionArea>
