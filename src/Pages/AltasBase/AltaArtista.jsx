@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button, Grid, Typography, Box } from "@mui/material";
 
 import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
+import firebase from "../../Config/firebase";
 
 import FInput from "../../Components/Forms/FInput";
 import FTexto from "../../Components/Forms/FTexto";
@@ -27,13 +28,23 @@ function AltaArtista() {
   const onSubmit = async (data) => {
     try {
       data.img = picSample;
-      console.log(data);
+      console.log("Data a escribir: ", data);
+      const artistasRef = await firebase.db.collection("artistas").add(data);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  /* const onSubmit = async (data) => {
+    try {
+      data.img = picSample;
+      console.log("DATA: ", data);
       const artistasRef = doc(collection(firestore, "artistas"));
       await setDoc(artistasRef, data);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  };
+  }; */
 
   const nodos = [
     {

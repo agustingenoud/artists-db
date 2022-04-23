@@ -1,4 +1,9 @@
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+import "firebase/compat/auth";
+
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCCV_vDMnmWaFJ_KxtS7gXDS5cKRHgC1WE",
@@ -10,8 +15,13 @@ const firebaseConfig = {
   storageBucket: "gs://devenir-otros-cuerpos.appspot.com",
 };
 
+/*
 const firebaseApp = initializeApp(firebaseConfig);
-
 export default firebaseApp;
+*/
 
-//export default firebaseApp;
+firebase.initializeApp(firebaseConfig);
+firebase.db = firebase.firestore();
+firebase.auth = firebase.auth();
+
+export default firebase;
