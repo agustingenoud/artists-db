@@ -12,10 +12,26 @@ import {
 function ArtistaCard(props) {
   return (
     <Card>
-      <CardHeader title={props.title} subheader={props.subheader} />
       <CardActionArea>
         <CardMedia component='img' image={props.imgSrc} alt={props.imgAlt} />
+
         <CardContent>
+          <Typography
+            gutterBottom
+            variant='body1'
+            color='text.secondary'
+            component='div'
+          >
+            ARTISTAS
+          </Typography>
+          <Typography
+            gutterBottom
+            variant='h6'
+            color='text.primary'
+            component='div'
+          >
+            <strong>Nombre del Artista</strong>
+          </Typography>
           <Typography
             gutterBottom
             variant='body1'

@@ -84,11 +84,10 @@ function AltaArtista() {
   return (
     /* GridRoot */
     <Grid container>
-      {/* Elem1 */}
       <Grid item xs={12}>
         <Titulo txt='Alta de Artista' onKeyPress={handleNombre} />
       </Grid>
-      {/* Elem2 */}
+
       <Grid item xs={12}>
         <ImgUpload
           label='img'
@@ -98,7 +97,7 @@ function AltaArtista() {
           changeInput={(lift) => setPicSample(lift)}
         />
       </Grid>
-      {/* Elem3 */}
+
       <Grid container xs={12} md={6}>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <FInput
@@ -168,7 +167,6 @@ function AltaArtista() {
         </form>
       </Grid>
 
-      {/* Elem 4*/}
       <Grid item xs={12} md={6} lg={3}>
         <ArtistaCard
           title={nombreSample}
