@@ -32,8 +32,11 @@ const theme = createTheme({
     h5: {
       fontFamily: "Montserrat",
     },
+    h6: {
+      fontFamily: "Roboto Slab",
+    },
     body1: {
-      fontFamily: "Montserrat",
+      fontFamily: "Roboto Slab",
     },
     subtitle1: {
       fontFamily: "Roboto Slab",

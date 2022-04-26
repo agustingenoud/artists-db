@@ -15,20 +15,20 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 const menuItems = [
   {
-    label: "expo",
+    label: "Home",
     href: "/",
   },
   {
-    label: "textos",
-    href: "/textos",
+    label: "Proyecto",
+    href: "/proyecto",
   },
   {
-    label: "equipo",
-    href: "/equipo",
+    label: "Texto",
+    href: "/texto",
   },
   {
-    label: "archivo",
-    href: "/archivo",
+    label: "Índice",
+    href: "/indice",
   },
 ];
 
@@ -79,9 +79,20 @@ function NavMenu() {
     return (
       <>
         {menuItems.map((item) => (
-          <Button as={Link} to={item.href} color='inherit'>
+          <Typography
+            variant='body1'
+            ml={1}
+            as={Link}
+            to={item.href}
+            color='inherit'
+            fontWeight='bold'
+            sx={{ textDecoration: "none" }}
+          >
             {item.label}
-          </Button>
+          </Typography>
+          /*  <Button as={Link} to={item.href} color='inherit'>
+            {item.label}
+          </Button> */
         ))}
       </>
     );
