@@ -15,10 +15,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 
 const menuItems = [
-  /*   {
-    label: "Home",
-    href: "/",
-  }, */
   {
     label: "Proyecto",
     href: "/proyecto",
@@ -30,6 +26,10 @@ const menuItems = [
   {
     label: "Índice",
     href: "/indice",
+  },
+  {
+    label: "Altas",
+    href: "/altas",
   },
 ];
 
@@ -66,16 +66,6 @@ function NavMenu() {
     setAnchorMenu(null);
   };
 
-  const [anchorAlta, setAnchorAlta] = React.useState(null);
-  const openAlta = Boolean(anchorAlta);
-
-  const handleClickAlta = (event) => {
-    setAnchorAlta(event.currentTarget);
-  };
-  const handleCloseAlta = () => {
-    setAnchorAlta(null);
-  };
-
   const displayDesktop = () => {
     return (
       <>
@@ -91,9 +81,6 @@ function NavMenu() {
           >
             {item.label}
           </Typography>
-          /*  <Button as={Link} to={item.href} color='inherit'>
-            {item.label}
-          </Button> */
         ))}
       </>
     );
@@ -151,30 +138,7 @@ function NavMenu() {
             <strong>Cuerpxs</strong>
           </Typography>
 
-          <Box>
-            <Button
-              id='alta-button'
-              aria-controls='alta-button'
-              aria-haspopup='true'
-              aria-expanded={openAlta ? "true" : undefined}
-              onClick={handleClickAlta}
-              color='inherit'
-            >
-              Altas
-            </Button>
-            <Menu
-              id='alta-button'
-              aria-labelledby='alta-button'
-              anchorEl={anchorAlta}
-              open={openAlta}
-              onClose={handleCloseAlta}
-            >
-              <MenuItem as={Link} onClick={handleCloseAlta} to='/altas/artista'>
-                Artista
-              </MenuItem>
-            </Menu>
-            {mobileView ? displayMobile() : displayDesktop()}
-          </Box>
+          <Box>{mobileView ? displayMobile() : displayDesktop()}</Box>
         </Toolbar>
 
         <Grid
