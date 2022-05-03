@@ -32,7 +32,7 @@ function ArtistaCard(props) {
           >
             <strong>{props.nombre}</strong>
           </Typography>
-          <Typography
+          {/*           <Typography
             gutterBottom
             variant='body1'
             color='text.secondary'
@@ -41,16 +41,13 @@ function ArtistaCard(props) {
             ({props.lugarNacimiento} {props.fechaNacimiento}
             {" - "}
             {props.fechaFallecimiento})
-          </Typography>
-          <Typography gutterBottom variant='h5' component='div'>
-            {props.nodo}
-          </Typography>
+          </Typography> */}
           <Typography variant='body2' color='text.secondary'>
             {props.introSmall}
           </Typography>
-          <Typography variant='body2' color='text.secondary'>
+          {/*           <Typography variant='body2' color='text.secondary'>
             {props.id}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
       <CardActions>

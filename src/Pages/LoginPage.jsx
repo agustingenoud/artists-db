@@ -2,7 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 /* import firebase from "../Config/firebase";*/
-function LoginPage() {}
+function LoginPage() {
+  return (
+    <>
+      <h1>LOGIN PAGE . . .</h1>
+      <h2>La data del lógin péish</h2>
+    </>
+  );
+}
 /*
 function LoginPage() {
   const {

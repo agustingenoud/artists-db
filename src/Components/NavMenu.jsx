@@ -10,14 +10,15 @@ import {
   MenuItem,
   Button,
   Typography,
+  Grid,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const menuItems = [
-  {
+  /*   {
     label: "Home",
     href: "/",
-  },
+  }, */
   {
     label: "Proyecto",
     href: "/proyecto",
@@ -132,17 +133,22 @@ function NavMenu() {
 
   return (
     <Box>
-      <AppBar position='static' sx={{ padding: "8% 2% 18% 2%" }}>
+      <AppBar position='static' sx={{ padding: "8% 2% 12% 2%" }}>
         <Toolbar
           sx={{
             display: "flex",
             justifyContent: "space-between",
           }}
         >
-          <Typography variant='h3'>
+          <Typography
+            variant='h3'
+            as={Link}
+            to='/'
+            sx={{ textDecoration: "none", color: "black" }}
+          >
             Devenir <br />
-            Otrxs <br />
-            Cuerpxs
+            Otros <br />
+            <strong>Cuerpxs</strong>
           </Typography>
 
           <Box>
@@ -170,6 +176,41 @@ function NavMenu() {
             {mobileView ? displayMobile() : displayDesktop()}
           </Box>
         </Toolbar>
+
+        <Grid
+          container
+          spacing={6}
+          sx={{ marginTop: "6vh", paddingLeft: "10vw" }}
+        >
+          <Grid item xs={12} md={5} lg={5}>
+            <Typography variant='h5'>
+              <span
+                style={{
+                  backgroundColor: "#D6711E",
+                  padding: "0.4vh 1.2vw",
+                }}
+              >
+                Disidencias Sexuales
+              </span>
+            </Typography>
+            <br />
+            <Typography variant='h5' sx={{ fontWeight: "bold" }}>
+              Prácticas artísticas y activistas que{" "}
+              <span style={{ color: "#D6711E" }}>
+                cuestionan la forma hegemónica{" "}
+              </span>
+              en que{" "}
+              <span style={{ fontWeight: "lighter" }}>
+                {" "}
+                <em> sexo y genero</em>
+              </span>{" "}
+              son representados socialmente.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={5} lg={5}>
+            <img src='https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2Fimg-intro.png?alt=media&token=e0eb0b83-24e1-48fd-9ad0-00b61d98095e'></img>
+          </Grid>
+        </Grid>
       </AppBar>
     </Box>
   );

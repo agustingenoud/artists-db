@@ -35,7 +35,7 @@ function ExposicionPage() {
           {fichas.map((ficha) => (
             <Grid item xs={12} md={6} lg={3}>
               <ArtistaCard
-                title={ficha.data().nombre}
+                nombre={ficha.data().nombre}
                 imgSrc={ficha.data().img}
                 nodo={ficha.data().nodo}
                 introSmall={ficha.data().bio}

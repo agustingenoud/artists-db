@@ -9,6 +9,7 @@ import IndicePage from "../Pages/IndicePage";
 import TextoPage from "../Pages/TextoPage";
 import AltaArtista from "../Pages/AltasBase/AltaArtista";
 import AltaTest from "../Pages/AltasBase/AltaTest";
+import AltaPage from "../Pages/AltaPage";
 
 import NavMenu from "../Components/NavMenu";
 import Footer from "../Components/Footer";
@@ -26,6 +27,8 @@ function Equipo() {
           <Route path='/texto' element={<TextoPage />} />
 
           <Route path='/login' element={<LoginPage />} />
+
+          <Route path='/altas' element={<AltaPage />} />
 
           <Route path='/altas/artista' element={<AltaArtista />} />
           <Route path='/altas/test' element={<AltaTest />} />
