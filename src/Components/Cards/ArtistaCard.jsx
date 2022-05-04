@@ -9,6 +9,8 @@ import {
   CardHeader,
 } from "@mui/material";
 
+import { Link } from "react-router-dom";
+
 function ArtistaCard(props) {
   return (
     <Card>
@@ -32,16 +34,6 @@ function ArtistaCard(props) {
           >
             <strong>{props.nombre}</strong>
           </Typography>
-          {/*           <Typography
-            gutterBottom
-            variant='body1'
-            color='text.secondary'
-            component='div'
-          >
-            ({props.lugarNacimiento} {props.fechaNacimiento}
-            {" - "}
-            {props.fechaFallecimiento})
-          </Typography> */}
           <Typography variant='body2' color='text.secondary'>
             {props.introSmall}
           </Typography>
@@ -51,8 +43,8 @@ function ArtistaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='primary'>
-          Share
+        <Button sx={{ color: "black" }}>
+          <Link to={"/artista/" + props.id}> ver más... </Link>
         </Button>
       </CardActions>
     </Card>

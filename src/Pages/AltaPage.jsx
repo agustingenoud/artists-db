@@ -23,9 +23,9 @@ function AltaPage() {
       case 1:
         return <AltaArtista />;
       case 2:
-        return <h1>Today is Sunday</h1>;
+        return <h1>Formulario de carga OBRA</h1>;
       case 3:
-        return <h1>Today is Monday</h1>;
+        return <h1>Formulario de carga EVENTO</h1>;
       default:
         return <h1>Elegí el tipo de carga</h1>;
     }

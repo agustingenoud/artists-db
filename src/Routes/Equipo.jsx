@@ -7,9 +7,8 @@ import NotFoundPage from "../Pages/NotFoundPage";
 import HomePage from "../Pages/HomePage";
 import IndicePage from "../Pages/IndicePage";
 import TextoPage from "../Pages/TextoPage";
-import AltaArtista from "../Pages/AltasBase/AltaArtista";
-import AltaTest from "../Pages/AltasBase/AltaTest";
 import AltaPage from "../Pages/AltaPage";
+import DetalleArtista from "../Components/Detalles/DetalleArtista";
 
 import NavMenu from "../Components/NavMenu";
 import Footer from "../Components/Footer";
@@ -18,6 +17,7 @@ function Equipo() {
   return (
     <>
       <NavMenu />
+
       <Container>
         <Routes>
           <Route path='/indice' element={<IndicePage />} />
@@ -30,8 +30,7 @@ function Equipo() {
 
           <Route path='/altas' element={<AltaPage />} />
 
-          <Route path='/altas/artista' element={<AltaArtista />} />
-          <Route path='/altas/test' element={<AltaTest />} />
+          <Route path='/artista/:id' element={<DetalleArtista />} />
 
           <Route path='/' exact element={<HomePage />} />
 
