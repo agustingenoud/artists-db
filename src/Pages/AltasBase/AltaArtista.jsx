@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Grid, Typography, Box } from "@mui/material";
+import { Button, Grid, Typography, Avatar, Paper } from "@mui/material";
 
-import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import firebase from "../../Config/firebase";
 
 import FInput from "../../Components/Forms/FInput";
@@ -11,6 +11,7 @@ import FSelect from "../../Components/Forms/FSelect";
 import Titulo from "../../Components/Styles/Titulo";
 import ArtistaCard from "../../Components/Cards/ArtistaCard";
 import ImgUpload from "../../Components/ImgUpload";
+import ImagenesUploads from "../../Components/ImagenesUploads";
 
 import FormArtista from "../../Components/Forms/FormArtista";
 
@@ -29,22 +30,13 @@ function AltaArtista() {
     try {
       data.img = picSample;
       console.log("Data a escribir: ", data);
+      console.log("Las imágenes que van: ");
+      console.log(images);
       const artistasRef = await firebase.db.collection("artistas").add(data);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
-
-  /* const onSubmit = async (data) => {
-    try {
-      data.img = picSample;
-      console.log("DATA: ", data);
-      const artistasRef = doc(collection(firestore, "artistas"));
-      await setDoc(artistasRef, data);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }; */
 
   const nodos = [
     {
@@ -65,6 +57,12 @@ function AltaArtista() {
     },
   ];
 
+  const imagesArray = [
+    {
+      url: "test",
+    },
+  ];
+
   const [nombreSample, setNombreSample] = useState("");
   const [lugarNacimientoSample, setLugarNacimientoSample] = useState();
   const [fechaNacimientoSample, setFechaNacimientoSample] = useState();
@@ -76,9 +74,20 @@ function AltaArtista() {
 
   const [picSample, setPicSample] = useState();
 
+  const [images, setImages] = useState(imagesArray);
+  const [uploadImg, setUploadImg] = useState("");
+
   const handleNombre = (e) => {
     e.preventDefault();
     console.log(e.target.value);
+  };
+
+  const handleAddImage = () => {
+    setImages((imagesArray) => [...imagesArray, { url: uploadImg }]);
+    console.log("IMAGESARRAY");
+    console.log(imagesArray);
+    console.log("images");
+    console.log(images);
   };
 
   return (
@@ -88,14 +97,44 @@ function AltaArtista() {
         <Titulo txt='Alta de Artista' onKeyPress={handleNombre} />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{}}>
         <ImgUpload
           label='img'
           register={{
             ...register("img", { value: picSample }, { required: true }),
           }}
           changeInput={(lift) => setPicSample(lift)}
+          principal='true'
         />
+      </Grid>
+
+      <Grid item xs={12} sx={{}}>
+        <ul>
+          <Typography>Cargar imágenes complementarias</Typography>
+          {images.map((imagen, index) => (
+            <li key={index}>
+              <span>URL: {imagen.url}</span>
+              <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
+            </li>
+          ))}
+          <img style={{ width: "40%" }} src={uploadImg}></img> <br />
+          <Button
+            variant='contained'
+            type='submit'
+            sx={{ m: 2 }}
+            onClick={handleAddImage}
+          >
+            Añadir imágen
+          </Button>
+        </ul>
+        {/* <ImgUpload
+                label='img'
+                register={{
+                  ...register("img", { value: picSample }, { required: true }),
+                }}
+                changeInput={(lift) => setPicSample(lift)}
+                principal='true'
+              /> */}
       </Grid>
 
       <Grid container xs={12} md={6}>
@@ -137,17 +176,17 @@ function AltaArtista() {
           </div>
           <div>
             <FTexto
-              label='intro'
+              label='Texto corto'
               fullwidth
-              register={{ ...register("intro") }}
+              register={{ ...register("txt_corto") }}
               changeInput={(lift) => setIntroSample(lift)}
             />
           </div>
           <div>
             <FTexto
-              label='Bio'
+              label='Texto largo'
               fullwidth
-              register={{ ...register("bio") }}
+              register={{ ...register("txt_largo") }}
               changeInput={(lift) => setBioSample(lift)}
             />
           </div>
@@ -161,6 +200,7 @@ function AltaArtista() {
               changeInput={(lift) => setNodoSample(lift)}
             />
           </div>
+
           <Button variant='contained' type='submit' sx={{ m: 2 }}>
             Ingresar Artista
           </Button>

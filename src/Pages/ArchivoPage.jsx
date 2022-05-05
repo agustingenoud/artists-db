@@ -5,7 +5,7 @@ import firebase from "../Config/firebase";
 import ArtistaCard from "../Components/Cards/ArtistaCard";
 import LineaIndice from "../Components/Styles/LineaIndice";
 
-function IndicePage() {
+function ArchivoPage() {
   const [loading, setLoading] = useState(true);
   const [fichas, setFichas] = useState([]);
 
@@ -48,4 +48,4 @@ function IndicePage() {
   }
 }
 
-export default IndicePage;
+export default ArchivoPage;

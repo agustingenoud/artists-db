@@ -4,7 +4,7 @@ import LoginPage from "../Pages/LoginPage";
 import ProyectoPage from "../Pages/ProyectoPage";
 import NotFoundPage from "../Pages/NotFoundPage";
 import HomePage from "../Pages/HomePage";
-import IndicePage from "../Pages/IndicePage";
+import ArchivoPage from "../Pages/ArchivoPage";
 import TextoPage from "../Pages/TextoPage";
 
 import NavMenu from "../Components/NavMenu";
@@ -18,7 +18,7 @@ function Publico() {
       <NavMenu />
       <Container maxWidth='sm'>
         <Routes>
-          <Route path='/indice' element={<IndicePage />} />
+          <Route path='/archivo' element={<ArchivoPage />} />
 
           <Route path='/proyecto' element={<ProyectoPage />} />
 

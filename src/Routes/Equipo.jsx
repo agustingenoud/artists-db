@@ -5,7 +5,7 @@ import LoginPage from "../Pages/LoginPage";
 import ProyectoPage from "../Pages/ProyectoPage";
 import NotFoundPage from "../Pages/NotFoundPage";
 import HomePage from "../Pages/HomePage";
-import IndicePage from "../Pages/IndicePage";
+import ArchivoPage from "../Pages/ArchivoPage";
 import TextoPage from "../Pages/TextoPage";
 import AltaPage from "../Pages/AltaPage";
 import DetalleArtista from "../Components/Detalles/DetalleArtista";
@@ -20,7 +20,7 @@ function Equipo() {
 
       <Container>
         <Routes>
-          <Route path='/indice' element={<IndicePage />} />
+          <Route path='/archivo' element={<ArchivoPage />} />
 
           <Route path='/proyecto' element={<ProyectoPage />} />
 

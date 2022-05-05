@@ -20,12 +20,12 @@ const menuItems = [
     href: "/proyecto",
   },
   {
-    label: "Texto",
-    href: "/texto",
+    label: "Archivo",
+    href: "/archivo",
   },
   {
-    label: "Índice",
-    href: "/indice",
+    label: "Textos",
+    href: "/texto",
   },
   {
     label: "Altas",

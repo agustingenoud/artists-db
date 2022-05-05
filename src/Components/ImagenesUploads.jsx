@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
-function ImgUpload(props) {
+function ImagenesUploads(props) {
   const [progress, setProgress] = useState(0);
 
   const formHandler = (e) => {
@@ -73,22 +73,12 @@ function ImgUpload(props) {
         }}
       >
         <form onSubmit={formHandler}>
-          <Typography
-            sx={{
-              paddingLeft: "1vw",
-              paddingRight: "3vw",
-              display: "inline",
-            }}
-          >
-            Imágen principal
-          </Typography>
-
           <Input type='file' className='input' sx={{ m: 1 }} />
           <Button color='secondary' type='submit'>
             Upload
           </Button>
           <Typography variant='body1' display='inline'>
-            Uploading done {progress}%
+            {progress}%
           </Typography>
         </form>
       </div>
@@ -96,4 +86,4 @@ function ImgUpload(props) {
   );
 }
 
-export default ImgUpload;
+export default ImagenesUploads;
