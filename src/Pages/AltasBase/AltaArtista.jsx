@@ -141,9 +141,9 @@ function AltaArtista() {
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <FInput
             xs={6}
-            label='id'
+            label='Número de inventario'
             type='Inventario'
-            register={{ ...register("id", { required: true }) }}
+            register={{ ...register("inventario", { required: true }) }}
             changeInput={(lift) => setIdSample(lift)}
           />
 
@@ -155,9 +155,16 @@ function AltaArtista() {
           />
 
           <FInput
-            label='Lugar de nacimiento'
+            label='Ciudad de nacimiento'
             type='text'
-            register={{ ...register("lugar de nacimiento") }}
+            register={{ ...register("ciudad") }}
+            changeInput={(lift) => setLugarNacimientoSample(lift)}
+          />
+
+          <FInput
+            label='País de nacimiento'
+            type='text'
+            register={{ ...register("pais") }}
             changeInput={(lift) => setLugarNacimientoSample(lift)}
           />
           <div>
@@ -176,9 +183,9 @@ function AltaArtista() {
           </div>
           <div>
             <FTexto
-              label='Texto corto'
+              label='Bio corta'
               fullwidth
-              register={{ ...register("txt_corto") }}
+              register={{ ...register("bio_corta") }}
               changeInput={(lift) => setIntroSample(lift)}
             />
           </div>
