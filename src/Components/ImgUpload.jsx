@@ -88,7 +88,7 @@ function ImgUpload(props) {
             Upload
           </Button>
           <Typography variant='body1' display='inline'>
-            Uploading done {progress}%
+            {progress}%
           </Typography>
         </form>
       </div>

@@ -20,14 +20,6 @@ function ArtistaCard(props) {
         <CardContent>
           <Typography
             gutterBottom
-            variant='body1'
-            color='text.secondary'
-            component='div'
-          >
-            ARTISTAS
-          </Typography>
-          <Typography
-            gutterBottom
             variant='h6'
             color='text.primary'
             component='div'
@@ -43,9 +35,7 @@ function ArtistaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button sx={{ color: "black" }}>
-          <Link to={"/artista/" + props.id}> ver más... </Link>
-        </Button>
+        <Link to={"/artista/" + props.id}> ver más... </Link>
       </CardActions>
     </Card>
   );

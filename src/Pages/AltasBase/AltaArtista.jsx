@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Grid, Typography, Avatar, Paper } from "@mui/material";
+import { Button, Grid, Typography, Avatar, Stack } from "@mui/material";
 
 import { getFirestore } from "firebase/firestore";
 import firebase from "../../Config/firebase";
@@ -29,6 +29,7 @@ function AltaArtista() {
   const onSubmit = async (data) => {
     try {
       data.img = picSample;
+      data.images = images;
       console.log("Data a escribir: ", data);
       console.log("Las imágenes que van: ");
       console.log(images);
@@ -57,11 +58,7 @@ function AltaArtista() {
     },
   ];
 
-  const imagesArray = [
-    {
-      url: "test",
-    },
-  ];
+  const imagesArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
   const [lugarNacimientoSample, setLugarNacimientoSample] = useState();
@@ -83,12 +80,27 @@ function AltaArtista() {
   };
 
   const handleAddImage = () => {
-    setImages((imagesArray) => [...imagesArray, { url: uploadImg }]);
-    console.log("IMAGESARRAY");
-    console.log(imagesArray);
-    console.log("images");
-    console.log(images);
+    if (Boolean(uploadImg)) {
+      setImages((imagesArray) => [...imagesArray, { url: uploadImg }]);
+      console.log("imagen CARGADA");
+      setUploadImg("");
+    } else {
+      console.log("Aguardá a que termine la carga un segundo");
+    }
   };
+
+  let cargaInicial = (
+    <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
+  );
+  let cargasSecundarias;
+
+  if (images.length > 0) {
+    cargasSecundarias = images.map((imagen, index) => (
+      <li key={index}>
+        <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
+      </li>
+    ));
+  }
 
   return (
     /* GridRoot */
@@ -96,7 +108,9 @@ function AltaArtista() {
       <Grid item xs={12}>
         <Titulo txt='Alta de Artista' onKeyPress={handleNombre} />
       </Grid>
-
+      <Typography variant='h5' sx={{ margin: "2vh 0" }}>
+        Carga de materiales
+      </Typography>
       <Grid item xs={12} sx={{}}>
         <ImgUpload
           label='img'
@@ -108,25 +122,36 @@ function AltaArtista() {
         />
       </Grid>
 
-      <Grid item xs={12} sx={{}}>
-        <ul>
+      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+        <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
           <Typography>Cargar imágenes complementarias</Typography>
-          {images.map((imagen, index) => (
-            <li key={index}>
-              <span>URL: {imagen.url}</span>
-              <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
-            </li>
-          ))}
-          <img style={{ width: "40%" }} src={uploadImg}></img> <br />
-          <Button
-            variant='contained'
-            type='submit'
-            sx={{ m: 2 }}
-            onClick={handleAddImage}
-          >
-            Añadir imágen
-          </Button>
+          {cargaInicial}
+          {cargasSecundarias}
+          {/* <img style={{ width: "auto", height: "33vh" }} src={uploadImg}></img>
+          <br /> */}
         </ul>
+
+        <Button
+          variant='contained'
+          type='submit'
+          sx={{ m: 2 }}
+          onClick={handleAddImage}
+        >
+          Añadir a galería
+        </Button>
+        <Typography>Galería</Typography>
+        <Stack direction='row' spacing={1} sx={{ marginBottom: "6vh" }}>
+          {images.map((imagen) => (
+            <>
+              <Avatar
+                src={imagen.url}
+                sx={{ width: "10vw", height: "10vh" }}
+                variant='square'
+              />
+            </>
+          ))}
+        </Stack>
+
         {/* <ImgUpload
                 label='img'
                 register={{
@@ -138,6 +163,9 @@ function AltaArtista() {
       </Grid>
 
       <Grid container xs={12} md={6}>
+        <Typography variant='h5' sx={{ margin: "2vh 0" }}>
+          FICHA
+        </Typography>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <FInput
             xs={6}

@@ -38,7 +38,7 @@ function ExposicionPage() {
                 nombre={ficha.data().nombre}
                 imgSrc={ficha.data().img}
                 nodo={ficha.data().nodo}
-                introSmall={ficha.data().bio}
+                introSmall={ficha.data().bio || ficha.data().bio_corta}
                 fechaNacimiento={ficha.data().nacimiento}
                 fechaFallecimiento={ficha.data().fallecimiento}
                 id={ficha.id}

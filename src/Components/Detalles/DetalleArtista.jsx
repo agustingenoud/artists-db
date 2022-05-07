@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import firebase from "../../Config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-import { Button } from "@mui/material";
+import { Button, ImageList, ImageListItem } from "@mui/material";
+import SimpleImageSlider from "react-simple-image-slider";
 
 function DetalleArtista() {
   const { id } = useParams();
@@ -44,18 +45,53 @@ else {
   console.log("No such document")
 }
  */
-  console.log("el ID es " + id);
+  /*   console.log("el ID es " + id);
   console.log("RES es ");
-  console.log(res);
+  console.log(res); */
 
   if (loading) {
     return <div>Loading . . . </div>;
   } else {
+    const imagenes = res.images;
+    console.log("RES IMGS");
+    console.log(imagenes);
     return (
       <>
-        <img src={res.img} alt='' />
+        <img style={{ width: "80vw", height: "auto" }} src={res.img} alt='' />
         <h1>{res.nombre}</h1>
-        <p>{res.bio}</p>
+        <h5>
+          ({res.nacimiento}) {res.ciudad}, {res.pais}
+        </h5>
+        <p>{res.bio_corta}</p>
+        <p>{res.txt_largo}</p>
+        <p>{res.nodo}</p>
+        {/*   <ImageList
+          sx={{ width: "60vw", height: "60vh" }}
+          cols={3}
+          rowHeight={164}
+        >
+          {imagenes.map((imagen) => (
+            <ImageListItem key={imagen.url}>
+              <img
+                src={`${imagen.url}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${imagen.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                loading='lazy'
+              />
+            </ImageListItem>
+          ))}
+        </ImageList> */}
+
+        {imagenes.length > 0 && (
+          <div>
+            <SimpleImageSlider
+              width={896}
+              height={504}
+              images={imagenes}
+              showBullets={true}
+              showNavs={true}
+            />
+          </div>
+        )}
         <Button sx={{ color: "black" }}>
           <Link to={"/"}> volver </Link>
         </Button>

@@ -21,6 +21,7 @@
     "react-hook-form": "^7.21.0",
     "react-router": "^6.0.1",
     "react-scripts": "4.0.3",
+    "react-simple-image-slider": "^2.4.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

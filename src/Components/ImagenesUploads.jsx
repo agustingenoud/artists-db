@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Button, Typography, Input } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Input,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 
 import { initializeApp } from "firebase/app";
 
@@ -73,9 +79,9 @@ function ImagenesUploads(props) {
         }}
       >
         <form onSubmit={formHandler}>
-          <Input type='file' className='input' sx={{ m: 1 }} />
+          <Input type='file' id='file_upload' className='input' sx={{ m: 1 }} />
           <Button color='secondary' type='submit'>
-            Upload
+            cargar
           </Button>
           <Typography variant='body1' display='inline'>
             {progress}%
