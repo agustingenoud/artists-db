@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { Link } from "react-router-dom";
+
 function LineaIndice(props) {
   console.log(props);
 
@@ -30,7 +32,9 @@ function LineaIndice(props) {
     <ul style={styles.container}>
       <li style={styles.title}>{props.nacimiento} </li>
       <li style={styles.nacimiento}>{props.nombre} </li>
-      {/* <Link to={"/producto/" + data.id}>Ver Detalle</Link> */}
+      <li>
+        <Link to={"/artista/" + props.id}>ver +</Link>
+      </li>
     </ul>
   );
 }

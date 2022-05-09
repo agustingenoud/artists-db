@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
+import { ReactDOM } from "react-dom";
+
 import { useForm } from "react-hook-form";
-import { Button, Grid, Typography, Avatar, Stack } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Typography,
+  Avatar,
+  Stack,
+  ImageList,
+  ImageListItem,
+} from "@mui/material";
 
 import { getFirestore } from "firebase/firestore";
 import firebase from "../../Config/firebase";
@@ -8,6 +18,7 @@ import firebase from "../../Config/firebase";
 import FInput from "../../Components/Forms/FInput";
 import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
+import FInputRich from "../../Components/Forms/FInputRich";
 import Titulo from "../../Components/Styles/Titulo";
 import ArtistaCard from "../../Components/Cards/ArtistaCard";
 import ImgUpload from "../../Components/ImgUpload";
@@ -30,6 +41,8 @@ function AltaArtista() {
     try {
       data.img = picSample;
       data.images = images;
+      data.txt_largo = bioSample;
+      data.bio_corta = introSample;
       console.log("Data a escribir: ", data);
       console.log("Las imágenes que van: ");
       console.log(images);
@@ -61,15 +74,15 @@ function AltaArtista() {
   const imagesArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
-  const [lugarNacimientoSample, setLugarNacimientoSample] = useState();
-  const [fechaNacimientoSample, setFechaNacimientoSample] = useState();
-  const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState();
-  const [nodoSample, setNodoSample] = useState();
-  const [bioSample, setBioSample] = useState();
-  const [introSample, setIntroSample] = useState();
-  const [idSample, setIdSample] = useState();
+  const [lugarNacimientoSample, setLugarNacimientoSample] = useState("");
+  const [fechaNacimientoSample, setFechaNacimientoSample] = useState("");
+  const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState("");
+  const [nodoSample, setNodoSample] = useState("");
+  const [bioSample, setBioSample] = useState("");
+  const [introSample, setIntroSample] = useState("");
+  const [idSample, setIdSample] = useState("");
 
-  const [picSample, setPicSample] = useState();
+  const [picSample, setPicSample] = useState("");
 
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
@@ -87,6 +100,11 @@ function AltaArtista() {
     } else {
       console.log("Aguardá a que termine la carga un segundo");
     }
+  };
+
+  const handleBio = () => {
+    console.log("bioSample  > ");
+    console.log(introSample);
   };
 
   let cargaInicial = (
@@ -108,10 +126,15 @@ function AltaArtista() {
       <Grid item xs={12}>
         <Titulo txt='Alta de Artista' onKeyPress={handleNombre} />
       </Grid>
-      <Typography variant='h5' sx={{ margin: "2vh 0" }}>
-        Carga de materiales
-      </Typography>
+      <Grid item xs={12}>
+        <Typography variant='h5' sx={{ margin: "2vh 0" }}>
+          Carga de materiales
+        </Typography>
+      </Grid>
       <Grid item xs={12} sx={{}}>
+        <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+          Imagen principal
+        </Typography>
         <ImgUpload
           label='img'
           register={{
@@ -124,7 +147,9 @@ function AltaArtista() {
 
       <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
         <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
-          <Typography>Cargar imágenes complementarias</Typography>
+          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+            Galería
+          </Typography>
           {cargaInicial}
           {cargasSecundarias}
           {/* <img style={{ width: "auto", height: "33vh" }} src={uploadImg}></img>
@@ -139,8 +164,25 @@ function AltaArtista() {
         >
           Añadir a galería
         </Button>
-        <Typography>Galería</Typography>
-        <Stack direction='row' spacing={1} sx={{ marginBottom: "6vh" }}>
+      </Grid>
+      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+        <Typography variant='h6' sx={{ marginBottom: "2vh", marginTop: "2vh" }}>
+          Galería
+        </Typography>
+        <ImageList variant='masonry' cols={3} gap={8}>
+          {images.map((imagen) => (
+            <>
+              <ImageListItem key={imagen.url}>
+                <img
+                  src={`${imagen.url}?w=248&fit=crop&auto=format`}
+                  srcSet={`${imagen.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  loading='lazy'
+                />
+              </ImageListItem>
+            </>
+          ))}
+        </ImageList>
+        {/* <Stack spacing={1} xs={2} sx={{ marginBottom: "6vh" }}>
           {images.map((imagen) => (
             <>
               <Avatar
@@ -150,7 +192,7 @@ function AltaArtista() {
               />
             </>
           ))}
-        </Stack>
+        </Stack> */}
 
         {/* <ImgUpload
                 label='img'
@@ -162,7 +204,7 @@ function AltaArtista() {
               /> */}
       </Grid>
 
-      <Grid container xs={12} md={6}>
+      <Grid item xs={12} md={6}>
         <Typography variant='h5' sx={{ margin: "2vh 0" }}>
           FICHA
         </Typography>
@@ -210,15 +252,16 @@ function AltaArtista() {
             />
           </div>
           <div>
-            <FTexto
+            <FInputRich
               label='Bio corta'
               fullwidth
               register={{ ...register("bio_corta") }}
               changeInput={(lift) => setIntroSample(lift)}
+              onChange={handleBio}
             />
           </div>
           <div>
-            <FTexto
+            <FInputRich
               label='Texto largo'
               fullwidth
               register={{ ...register("txt_largo") }}

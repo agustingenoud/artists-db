@@ -3,10 +3,19 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import parse from "html-react-parser";
+
 import firebase from "../../Config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-import { Button, ImageList, ImageListItem } from "@mui/material";
+import {
+  Button,
+  ImageList,
+  ImageListItem,
+  Grid,
+  Box,
+  Typography,
+} from "@mui/material";
 import SimpleImageSlider from "react-simple-image-slider";
 
 function DetalleArtista() {
@@ -35,20 +44,6 @@ function DetalleArtista() {
     fetchData();
   }, []);
 
-  /* 
-const snap = await getDoc(doc(db, 'artistas', '1BE0TWJQ9Ah9XOhtzfns'))
-
-if (snap.exists()) {
-  console.log("EL SNAP > " + snap.data())
-}
-else {
-  console.log("No such document")
-}
- */
-  /*   console.log("el ID es " + id);
-  console.log("RES es ");
-  console.log(res); */
-
   if (loading) {
     return <div>Loading . . . </div>;
   } else {
@@ -57,44 +52,62 @@ else {
     console.log(imagenes);
     return (
       <>
-        <img style={{ width: "80vw", height: "auto" }} src={res.img} alt='' />
-        <h1>{res.nombre}</h1>
-        <h5>
-          ({res.nacimiento}) {res.ciudad}, {res.pais}
-        </h5>
-        <p>{res.bio_corta}</p>
-        <p>{res.txt_largo}</p>
-        <p>{res.nodo}</p>
-        {/*   <ImageList
-          sx={{ width: "60vw", height: "60vh" }}
-          cols={3}
-          rowHeight={164}
-        >
-          {imagenes.map((imagen) => (
-            <ImageListItem key={imagen.url}>
-              <img
-                src={`${imagen.url}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${imagen.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                loading='lazy'
-              />
-            </ImageListItem>
-          ))}
-        </ImageList> */}
+        <Grid container>
+          <Grid>
+            <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
+            <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
+              {res.nacimiento}
+            </h2>
+          </Grid>
 
-        {imagenes.length > 0 && (
-          <div>
-            <SimpleImageSlider
-              width={896}
-              height={504}
-              images={imagenes}
-              showBullets={true}
-              showNavs={true}
+          <Grid item xs={12}>
+            <img
+              style={{ width: "80vw", height: "auto", marginTop: "2vh" }}
+              src={res.img}
+              alt=''
             />
-          </div>
-        )}
-        <Button sx={{ color: "black" }}>
-          <Link to={"/"}> volver </Link>
-        </Button>
+          </Grid>
+
+          <Grid xs={10}>{parse(res.bio_corta)}</Grid>
+          <Grid xs={10}>{parse(res.txt_largo)}</Grid>
+
+          <Grid sx={{ marginBottom: "10vh" }}>
+            <Typography variant='h6'>Galería</Typography>
+            <Box sx={{ height: "80vh", overflowY: "scroll" }}>
+              {/* <ImageList cols={3} rowHeight={200}> */}
+              <ImageList variant='masonry' cols={3} gap={8}>
+                {imagenes.map((imagen) => (
+                  <ImageListItem key={imagen.url}>
+                    <img
+                      src={`${imagen.url}?w=164&h=164&fit=crop&auto=format`}
+                      srcSet={`${imagen.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      loading='lazy'
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
+          </Grid>
+
+          <Grid xs={12}>
+            {imagenes.length > 0 && (
+              <div>
+                <SimpleImageSlider
+                  width={"94%"}
+                  height={"50vh"}
+                  images={imagenes}
+                  showBullets={true}
+                  showNavs={true}
+                />
+              </div>
+            )}
+          </Grid>
+          <Grid>
+            <Button sx={{ color: "black" }}>
+              <Link to={"/"}> volver </Link>
+            </Button>
+          </Grid>
+        </Grid>
       </>
     );
   }

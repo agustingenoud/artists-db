@@ -9,6 +9,8 @@ import {
   CardHeader,
 } from "@mui/material";
 
+import parse from "html-react-parser";
+
 import { Link } from "react-router-dom";
 
 function ArtistaCard(props) {
@@ -26,9 +28,9 @@ function ArtistaCard(props) {
           >
             <strong>{props.nombre}</strong>
           </Typography>
-          <Typography variant='body2' color='text.secondary'>
-            {props.introSmall}
-          </Typography>
+
+          {parse(props.introSmall)}
+
           {/*           <Typography variant='body2' color='text.secondary'>
             {props.id}
           </Typography> */}

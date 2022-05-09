@@ -73,16 +73,6 @@ function ImgUpload(props) {
         }}
       >
         <form onSubmit={formHandler}>
-          <Typography
-            sx={{
-              paddingLeft: "1vw",
-              paddingRight: "3vw",
-              display: "inline",
-            }}
-          >
-            Imágen principal
-          </Typography>
-
           <Input type='file' className='input' sx={{ m: 1 }} />
           <Button color='secondary' type='submit'>
             Upload

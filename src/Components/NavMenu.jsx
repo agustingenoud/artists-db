@@ -144,7 +144,7 @@ function NavMenu() {
         <Grid
           container
           spacing={6}
-          sx={{ marginTop: "6vh", paddingLeft: "10vw" }}
+          sx={{ marginTop: "4vh", paddingLeft: "10vw" }}
         >
           <Grid item xs={12} md={5} lg={5}>
             <Typography variant='h5'>

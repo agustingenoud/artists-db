@@ -31,7 +31,7 @@ function ArchivoPage() {
       <>
         <Grid container>
           <Grid item xs={12} md={12} lg={12}>
-            <h1>Índice de entradas</h1>
+            <h1>Archivo</h1>
           </Grid>
           {fichas.map((ficha) => (
             <Grid item xs={12} md={12} lg={12}>
@@ -39,6 +39,7 @@ function ArchivoPage() {
                 nombre={ficha.data().nombre}
                 nodo={ficha.data().nodo}
                 nacimiento={ficha.data().nacimiento}
+                id={ficha.id}
               />
             </Grid>
           ))}
