@@ -1,17 +1,19 @@
-import React from "react";
+import { React, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import Button from "@mui/material/Button";
-/* import firebase from "../Config/firebase";*/
+import { Button, Grid } from "@mui/material";
+import firebase from "../Config/firebase";
+
+import AuthContext from "../Context/AuthContext";
+
+import FInput from "../Components/Forms/FInput";
+import FPassword from "../Components/Forms/FPassword";
+
 function LoginPage() {
-  return (
-    <>
-      <h1>LOGIN PAGE . . .</h1>
-      <h2>La data del lógin péish</h2>
-    </>
-  );
-}
-/*
-function LoginPage() {
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const context = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -19,9 +21,12 @@ function LoginPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log("DATA from", data);
+    console.log(firebase.auth);
+
     try {
       const responseUser = await firebase.auth.signInWithEmailAndPassword(
-        data.email,
+        data.mail,
         data.password
       );
       if (responseUser.user.uid) {
@@ -29,7 +34,8 @@ function LoginPage() {
           .collection("usuarixs")
           .where("userId", "==", responseUser.user.uid)
           .get();
-        console.log(userInfo);
+        console.log("userInfo", userInfo.docs[0]?.data());
+        context.loginUser();
       }
     } catch (e) {
       console.log("ERROR ", e);
@@ -38,30 +44,38 @@ function LoginPage() {
   };
 
   return (
-    <div>
-      <h1>Login page</h1>
+    <Grid container sx={{ height: "100vh" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>mail</label>
-          <input type='email' {...register("email", { required: true })} />
-          {errors.mail && <span> * campo necesario</span>}
-        </div>
+        <Grid item xs={12}>
+          <h1>Login page</h1>
+        </Grid>
 
-        <div>
-          <label>contraseña</label>
-          <input
-            type='password'
-            {...register("password", { required: true })}
+        <Grid item xs={12}>
+          <FInput
+            xs={6}
+            label='mail'
+            type='Inventario'
+            register={{ ...register("mail", { required: true }) }}
+            changeInput={(lift) => setMail(lift)}
           />
-          {errors.pass && <span> * campo necesario</span>}
-        </div>
-
-        <Button variant='contained' type='submit'>
-          Inicio
-        </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <FPassword
+            xs={6}
+            label='password'
+            type='Inventario'
+            register={{ ...register("password", { required: true }) }}
+            changeInput={(lift) => setPassword(lift)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant='contained' type='submit'>
+            Login
+          </Button>
+        </Grid>
       </form>
-    </div>
+    </Grid>
   );
-} */
+}
 
 export default LoginPage;

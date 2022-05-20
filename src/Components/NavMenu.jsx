@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Link } from "react-router-dom";
+import AuthContext from "../Context/AuthContext";
 
 import {
   AppBar,
@@ -27,10 +28,6 @@ const menuItems = [
     label: "Textos",
     href: "/texto",
   },
-  {
-    label: "Altas",
-    href: "/altas",
-  },
 ];
 
 function NavMenu() {
@@ -38,6 +35,8 @@ function NavMenu() {
     mobileView: false,
     drawerOpen: false,
   });
+
+  const context = useContext(AuthContext);
 
   const { mobileView, drawerOpen } = state;
 
@@ -66,6 +65,53 @@ function NavMenu() {
     setAnchorMenu(null);
   };
 
+  const addAltasMobile = () => {
+    if (context.userLogin) {
+      return (
+        <>
+          <MenuItem as={Link} onClick={handleCloseMenu} to={"/altas"}>
+            {"Altas"}
+          </MenuItem>
+          <MenuItem as={Link} onClick={context.logoutUser} to={"/"}>
+            {"Logout"}
+          </MenuItem>
+        </>
+      );
+    }
+  };
+
+  const addAltasDesktop = () => {
+    if (context.userLogin) {
+      return (
+        <>
+          <Typography
+            variant='body1'
+            ml={1}
+            as={Link}
+            to={"/altas"}
+            color='inherit'
+            fontWeight='bold'
+            sx={{ textDecoration: "none" }}
+          >
+            {"Altas"}
+          </Typography>
+          <Typography
+            variant='body1'
+            ml={1}
+            as={Link}
+            to={"/"}
+            color='inherit'
+            fontWeight='bold'
+            sx={{ textDecoration: "none" }}
+            onClick={context.logoutUser}
+          >
+            {"Logout"}
+          </Typography>
+        </>
+      );
+    }
+  };
+
   const displayDesktop = () => {
     return (
       <>
@@ -82,6 +128,7 @@ function NavMenu() {
             {item.label}
           </Typography>
         ))}
+        {addAltasDesktop()}
       </>
     );
   };
@@ -112,6 +159,7 @@ function NavMenu() {
                 {item.label}
               </MenuItem>
             ))}
+            {addAltasMobile()}
           </Menu>
         </Box>
       </>
@@ -119,64 +167,78 @@ function NavMenu() {
   };
 
   return (
-    <Box>
-      <AppBar position='static' sx={{ padding: "8% 2% 12% 2%" }}>
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            variant='h3'
-            as={Link}
-            to='/'
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            Devenir <br />
-            Otros <br />
-            <strong>Cuerpxs</strong>
-          </Typography>
-
-          <Box>{mobileView ? displayMobile() : displayDesktop()}</Box>
-        </Toolbar>
-
-        <Grid
-          container
-          spacing={6}
-          sx={{ marginTop: "4vh", paddingLeft: "10vw" }}
-        >
-          <Grid item xs={12} md={5} lg={5}>
-            <Typography variant='h5'>
-              <span
-                style={{
-                  backgroundColor: "#D6711E",
-                  padding: "0.4vh 1.2vw",
-                }}
+    <AuthContext.Consumer>
+      {(context) => (
+        <Box>
+          <AppBar position='static' sx={{ padding: "8% 2% 12% 2%" }}>
+            <Toolbar
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography
+                variant='h3'
+                as={Link}
+                to='/'
+                sx={{ textDecoration: "none", color: "black" }}
               >
-                Disidencias Sexuales
-              </span>
-            </Typography>
-            <br />
-            <Typography variant='h5' sx={{ fontWeight: "bold" }}>
-              Prácticas artísticas y activistas que{" "}
-              <span style={{ color: "#D6711E" }}>
-                cuestionan la forma hegemónica{" "}
-              </span>
-              en que{" "}
-              <span style={{ fontWeight: "lighter" }}>
-                {" "}
-                <em> sexo y genero</em>
-              </span>{" "}
-              son representados socialmente.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={5} lg={5}>
-            <img src='https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2Fimg-intro.png?alt=media&token=e0eb0b83-24e1-48fd-9ad0-00b61d98095e'></img>
-          </Grid>
-        </Grid>
-      </AppBar>
-    </Box>
+                Devenir <br />
+                Otros <br />
+                <strong>Cuerpxs</strong>
+              </Typography>
+
+              <Box>{mobileView ? displayMobile() : displayDesktop()}</Box>
+              {/* {context.userLogin && (
+                <Box>
+                  <Typography>USUARIX LOGUEADX!!!</Typography>
+                </Box>
+              )}
+              {!context.userLogin && (
+                <Box>
+                  <Typography>QUERES LOGUEARTE???</Typography>
+                </Box>
+              )} */}
+            </Toolbar>
+
+            <Grid
+              container
+              spacing={6}
+              sx={{ marginTop: "4vh", paddingLeft: "10vw" }}
+            >
+              <Grid item xs={12} md={5} lg={5}>
+                <Typography variant='h5'>
+                  <span
+                    style={{
+                      backgroundColor: "#D6711E",
+                      padding: "0.4vh 1.2vw",
+                    }}
+                  >
+                    Disidencias Sexuales
+                  </span>
+                </Typography>
+                <br />
+                <Typography variant='h5' sx={{ fontWeight: "bold" }}>
+                  Prácticas artísticas y activistas que{" "}
+                  <span style={{ color: "#D6711E" }}>
+                    cuestionan la forma hegemónica{" "}
+                  </span>
+                  en que{" "}
+                  <span style={{ fontWeight: "lighter" }}>
+                    {" "}
+                    <em> sexo y genero</em>
+                  </span>{" "}
+                  son representados socialmente.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={5} lg={5}>
+                <img src='https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2Fimg-intro.png?alt=media&token=e0eb0b83-24e1-48fd-9ad0-00b61d98095e'></img>
+              </Grid>
+            </Grid>
+          </AppBar>
+        </Box>
+      )}
+    </AuthContext.Consumer>
   );
 }
 

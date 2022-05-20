@@ -5,6 +5,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Publico from "./Routes/Publico";
 import Equipo from "./Routes/Equipo";
 
+import AuthProvider from "./Context/AuthProvider";
+import AuthContext from "./Context/AuthContext";
+
 const theme = createTheme({
   palette: {
     type: "light",
@@ -59,10 +62,19 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <CssBaseline />
-        <Equipo />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <CssBaseline />
+          <AuthContext.Consumer>
+            {(context) => (
+              <>
+                {context.userLogin && <Equipo />}
+                {!context.userLogin && <Publico />}
+              </>
+            )}
+          </AuthContext.Consumer>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

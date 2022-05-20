@@ -1,19 +1,20 @@
 import React, { useState, useEffect, createContext } from "react";
 import { ReactDOM } from "react-dom";
+import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import {
   Button,
   Grid,
   Typography,
-  Avatar,
-  Stack,
   ImageList,
   ImageListItem,
 } from "@mui/material";
 
 import { getFirestore } from "firebase/firestore";
 import firebase from "../../Config/firebase";
+
+import parse from "html-react-parser";
 
 import FInput from "../../Components/Forms/FInput";
 import FTexto from "../../Components/Forms/FTexto";
@@ -44,11 +45,17 @@ function AltaArtista() {
       data.txt_largo = bioSample;
       data.bio_corta = introSample;
       console.log("Data a escribir: ", data);
-      console.log("Las imágenes que van: ");
-      console.log(images);
       const artistasRef = await firebase.db.collection("artistas").add(data);
+      setEnvio(
+        parse(
+          '<p>La carga se realizó correctamente. Querés cargar otro documento?</p><Link to="/altas"><Button>Reset</Button></Link>'
+        )
+      );
     } catch (e) {
       console.error("Error adding document: ", e);
+      setEnvio(
+        "Por favor revisá el formulario, la carga no pudo hacerse correctamente"
+      );
     }
   };
 
@@ -81,6 +88,7 @@ function AltaArtista() {
   const [bioSample, setBioSample] = useState("");
   const [introSample, setIntroSample] = useState("");
   const [idSample, setIdSample] = useState("");
+  const [envio, setEnvio] = useState("");
 
   const [picSample, setPicSample] = useState("");
 
@@ -152,8 +160,6 @@ function AltaArtista() {
           </Typography>
           {cargaInicial}
           {cargasSecundarias}
-          {/* <img style={{ width: "auto", height: "33vh" }} src={uploadImg}></img>
-          <br /> */}
         </ul>
 
         <Button
@@ -182,26 +188,6 @@ function AltaArtista() {
             </>
           ))}
         </ImageList>
-        {/* <Stack spacing={1} xs={2} sx={{ marginBottom: "6vh" }}>
-          {images.map((imagen) => (
-            <>
-              <Avatar
-                src={imagen.url}
-                sx={{ width: "10vw", height: "10vh" }}
-                variant='square'
-              />
-            </>
-          ))}
-        </Stack> */}
-
-        {/* <ImgUpload
-                label='img'
-                register={{
-                  ...register("img", { value: picSample }, { required: true }),
-                }}
-                changeInput={(lift) => setPicSample(lift)}
-                principal='true'
-              /> */}
       </Grid>
 
       <Grid item xs={12} md={6}>
@@ -283,6 +269,7 @@ function AltaArtista() {
             Ingresar Artista
           </Button>
         </form>
+        <Grid>{envio}</Grid>
       </Grid>
 
       <Grid item xs={12} md={6} lg={3}>

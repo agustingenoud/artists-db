@@ -2,9 +2,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-
 const firebaseConfig = {
   apiKey: "AIzaSyCCV_vDMnmWaFJ_KxtS7gXDS5cKRHgC1WE",
   authDomain: "devenir-otros-cuerpos.firebaseapp.com",

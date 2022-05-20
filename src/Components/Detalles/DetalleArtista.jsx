@@ -68,10 +68,14 @@ function DetalleArtista() {
             />
           </Grid>
 
-          <Grid xs={10}>{parse(res.bio_corta)}</Grid>
-          <Grid xs={10}>{parse(res.txt_largo)}</Grid>
+          <Grid xs={10} sx={{ marginTop: "8vh" }}>
+            {parse(res.bio_corta)}
+          </Grid>
+          <Grid xs={10} sx={{ marginBottom: "8vh" }}>
+            {parse(res.txt_largo)}
+          </Grid>
 
-          <Grid sx={{ marginBottom: "10vh" }}>
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
             <Typography variant='h6'>Galería</Typography>
             <Box sx={{ height: "80vh", overflowY: "scroll" }}>
               {/* <ImageList cols={3} rowHeight={200}> */}
@@ -93,8 +97,8 @@ function DetalleArtista() {
             {imagenes.length > 0 && (
               <div>
                 <SimpleImageSlider
-                  width={"94%"}
-                  height={"50vh"}
+                  width={"88%"}
+                  height={"70vh"}
                   images={imagenes}
                   showBullets={true}
                   showNavs={true}
