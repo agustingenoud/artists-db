@@ -1,14 +1,15 @@
-import React, { useState, useEffect, createContext } from "react";
-import { ReactDOM } from "react-dom";
-import { Link } from "react-router-dom";
+import React, { useState, useRef } from "react";
 
 import { useForm } from "react-hook-form";
+import { EditorState } from "draft-js";
+
 import {
   Button,
   Grid,
   Typography,
   ImageList,
   ImageListItem,
+  Input,
 } from "@mui/material";
 
 import { getFirestore } from "firebase/firestore";
@@ -34,6 +35,7 @@ function AltaArtista() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {},
   });
@@ -46,9 +48,10 @@ function AltaArtista() {
       data.bio_corta = introSample;
       console.log("Data a escribir: ", data);
       const artistasRef = await firebase.db.collection("artistas").add(data);
+      reset();
       setEnvio(
         parse(
-          '<p>La carga se realizó correctamente. Querés cargar otro documento?</p><Link to="/altas"><Button>Reset</Button></Link>'
+          " <p>La carga se realizó correctamente. Reset para cargar otro documento</p>"
         )
       );
     } catch (e) {
@@ -95,6 +98,8 @@ function AltaArtista() {
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
 
+  const childReset = useRef(null);
+
   const handleNombre = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -113,6 +118,17 @@ function AltaArtista() {
   const handleBio = () => {
     console.log("bioSample  > ");
     console.log(introSample);
+  };
+
+  const handleReset = () => {
+    console.log("ADENTRO DE RESET");
+    setPicSample("");
+    setImages([]);
+    setNodoSample("");
+    setBioSample("");
+    setIntroSample("");
+    childReset.current();
+    setEnvio("");
   };
 
   let cargaInicial = (
@@ -239,26 +255,30 @@ function AltaArtista() {
           </div>
           <div>
             <FInputRich
+              label='Texto largo'
+              fullwidth
+              register={{ ...register("txt_largo") }}
+              changeInput={(lift) => setBioSample(lift)}
+              childReset={childReset}
+            />
+          </div>
+          <div>
+            <FInputRich
               label='Bio corta'
               fullwidth
               register={{ ...register("bio_corta") }}
               changeInput={(lift) => setIntroSample(lift)}
               onChange={handleBio}
+              childReset={childReset}
             />
           </div>
           <div>
-            <FInputRich
-              label='Texto largo'
-              fullwidth
-              register={{ ...register("txt_largo") }}
-              changeInput={(lift) => setBioSample(lift)}
-            />
-          </div>
-          <div>
+            <Typography variant='h4' sx={{ marginTop: "4vh" }}>
+              Nodo
+            </Typography>
             <FSelect
               value='nodo'
               id='nodo'
-              label='nodo'
               items={nodos}
               register={{ ...register("nodo") }}
               changeInput={(lift) => setNodoSample(lift)}
@@ -268,8 +288,10 @@ function AltaArtista() {
           <Button variant='contained' type='submit' sx={{ m: 2 }}>
             Ingresar Artista
           </Button>
+          <br />
+          <Input type='reset' onClick={handleReset} sx={{ m: 2 }} />
         </form>
-        <Grid>{envio}</Grid>
+        {envio}
       </Grid>
 
       <Grid item xs={12} md={6} lg={3}>

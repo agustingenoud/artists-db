@@ -4,6 +4,8 @@ import AuthContext from "./AuthContext";
 function AuthProvider(props) {
   const [userLogin, setUserLogin] = useState(false);
 
+  const color = { FE: "#ce490f", ES: "#ce49a4", DS: "#0998a4", AG: "#480ece" };
+
   const loginUser = () => {
     setUserLogin(true);
     console.log("USUARIX LOGUEADX!!!");
@@ -20,6 +22,7 @@ function AuthProvider(props) {
         userLogin,
         loginUser,
         logoutUser,
+        color,
       }}
     >
       {props.children}

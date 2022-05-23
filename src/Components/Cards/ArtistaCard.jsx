@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import AuthContext from "../../Context/AuthContext";
+
 import {
   Button,
   CardActionArea,
@@ -7,6 +10,7 @@ import {
   CardContent,
   Card,
   CardHeader,
+  Box,
 } from "@mui/material";
 
 import parse from "html-react-parser";
@@ -14,11 +18,21 @@ import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 
 function ArtistaCard(props) {
+  const context = useContext(AuthContext);
+
+  const nodo = props.nodo;
+  const color = context.color[nodo];
+
+  console.log("Imprimo color del NODO > ");
+  console.log(color);
+
   return (
     <Card>
       <CardActionArea>
         <CardMedia component='img' image={props.imgSrc} alt={props.imgAlt} />
-
+        <Box
+          sx={{ backgroundColor: color, width: "100%", height: "1vh" }}
+        ></Box>
         <CardContent>
           <Typography
             gutterBottom

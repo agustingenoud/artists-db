@@ -1,7 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
-import { InputLabel, Input, Box } from "@mui/material";
-
 import { Editor } from "react-draft-wysiwyg";
+import { clearEditorContent } from "draftjs-utils";
 import {
   EditorState,
   convertToRaw,
@@ -11,18 +10,27 @@ import {
 import draftToHtml from "draftjs-to-html";
 import parse from "html-react-parser";
 
+import { Button } from "@mui/material";
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function FInputRich(props) {
   console.log("props content - FInput   >  ");
-  console.log(typeof props.content);
-  console.log(props.content);
+  console.log(props);
   const [editorState, setEditorState] = useState(() =>
     /* EditorState.createEmpty() */
     EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML("props.content"))
+      ContentState.createFromBlockArray(convertFromHTML(" "))
     )
   );
+
+  useEffect(() => {
+    props.childReset.current = alertUser;
+  }, []);
+
+  function alertUser() {
+    setEditorState(EditorState.createEmpty());
+  }
 
   const onInputChange = (e) => {
     /* props.changeInput(e.target.value); */
@@ -36,6 +44,10 @@ function FInputRich(props) {
       draftToHtml(convertToRaw(editorState.getCurrentContent()))
     );
   }, [editorState]);
+
+  const handleReset = (e) => {
+    setEditorState(EditorState.createEmpty());
+  };
 
   return (
     <>
@@ -55,6 +67,10 @@ function FInputRich(props) {
           onChange={onInputChange}
         />
       </div>
+      <Button variant='contained' onClick={handleReset}>
+        {" "}
+        Borrar txt{" "}
+      </Button>
     </>
   );
 }

@@ -27,13 +27,14 @@ function AltaPage() {
       case 3:
         return <h1>Formulario de carga EVENTO</h1>;
       default:
-        return <h1>Elegí el tipo de carga</h1>;
+        return <h1></h1>;
     }
   }
 
   return (
     <>
-      <FormControl fullWidth sx={{ paddingTop: "10vh" }}>
+      <h4>Elegí el tipo de carga</h4>
+      <FormControl fullWidth sx={{ paddingTop: "0.2vh" }}>
         <Select value={tipo} onChange={handleChange}>
           <MenuItem value={1}>Artista</MenuItem>
           <MenuItem value={2}>Obra</MenuItem>

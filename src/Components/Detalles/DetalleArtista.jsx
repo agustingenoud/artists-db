@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../Context/AuthContext";
@@ -26,7 +26,12 @@ import {
   Grid,
   Box,
   Typography,
+  Alert,
+  Collapse,
+  IconButton,
 } from "@mui/material";
+
+import CloseIcon from "@mui/icons-material/Close";
 
 function DetalleArtista() {
   ////////////////////////////////////////////////////////////////////////////////////// Form Edit
@@ -40,6 +45,8 @@ function DetalleArtista() {
     defaultValues: {},
   });
 
+  const navigate = useNavigate();
+
   const imagesArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
@@ -51,6 +58,8 @@ function DetalleArtista() {
   const [introSample, setIntroSample] = useState("");
   const [idSample, setIdSample] = useState("");
   const [envio, setEnvio] = useState("");
+
+  const [open, setOpen] = useState(false);
 
   const [picSample, setPicSample] = useState("");
 
@@ -150,6 +159,7 @@ function DetalleArtista() {
         .doc(id)
         .delete();
       console.log("handleDelete ", document);
+      navigate("/");
     } catch (e) {
       console.log("handleDelete()", e);
     }
@@ -211,9 +221,51 @@ function DetalleArtista() {
 
             {context.userLogin && (
               <>
-                <Button variant='outlined' color='error' onClick={handleDelete}>
-                  <Link to={"/"}> Borrar entrada </Link>
-                </Button>
+                <p>
+                  <Box sx={{ width: "100%" }}>
+                    <Collapse in={open}>
+                      <Alert
+                        action={
+                          <IconButton
+                            aria-label='close'
+                            color='inherit'
+                            size='small'
+                            onClick={() => {
+                              setOpen(false);
+                            }}
+                          >
+                            <CloseIcon fontSize='inherit' />
+                          </IconButton>
+                        }
+                        sx={{ mb: 2 }}
+                      >
+                        Confirmar &ensp;
+                        <Button
+                          variant='outlined'
+                          color='error'
+                          onClick={() => {
+                            handleDelete();
+                            setOpen(true);
+                          }}
+                        >
+                          {" "}
+                          eliminar{" "}
+                        </Button>
+                        &ensp; entrada.
+                      </Alert>
+                    </Collapse>
+                    <Button
+                      variant='outlined'
+                      color='error'
+                      disabled={open}
+                      onClick={() => {
+                        setOpen(true);
+                      }}
+                    >
+                      Borrar Entrada
+                    </Button>
+                  </Box>
+                </p>
 
                 <h1>EDITAR ENTRADA</h1>
                 <form
