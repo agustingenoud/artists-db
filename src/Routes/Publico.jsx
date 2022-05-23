@@ -17,7 +17,7 @@ function Publico() {
   return (
     <>
       <NavMenu />
-      <Container maxWidth='sm'>
+      <Container>
         <Routes>
           <Route path='/archivo' element={<ArchivoPage />} />
 

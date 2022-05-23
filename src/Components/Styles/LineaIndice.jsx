@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function LineaIndice(props) {
@@ -25,16 +25,16 @@ function LineaIndice(props) {
       textAlign: "left",
       marginTop: "1rem",
       marginBottom: "0px",
+      color: "black",
     },
   };
 
   return (
     <ul style={styles.container}>
       <li style={styles.title}>{props.nacimiento} </li>
-      <li style={styles.nacimiento}>{props.nombre} </li>
-      <li>
-        <Link to={"/artista/" + props.id}>ver +</Link>
-      </li>
+      <MenuItem style={styles.nacimiento} as={Link} to={"/artista/" + props.id}>
+        {props.nombre}
+      </MenuItem>
     </ul>
   );
 }

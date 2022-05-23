@@ -1,12 +1,23 @@
 import React from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
-import parse from "html-react-parser";
+import AuthContext from "../../Context/AuthContext";
 
 import firebase from "../../Config/firebase";
-import { doc, getDoc } from "firebase/firestore";
+
+import { useForm } from "react-hook-form";
+import parse from "html-react-parser";
+
+import FInput from "../../Components/Forms/FInput";
+import FTexto from "../../Components/Forms/FTexto";
+import FSelect from "../../Components/Forms/FSelect";
+import FInputRich from "../../Components/Forms/FInputRich";
+import Titulo from "../../Components/Styles/Titulo";
+import ArtistaCard from "../../Components/Cards/ArtistaCard";
+import ImgUpload from "../../Components/ImgUpload";
+import ImagenesUploads from "../../Components/ImagenesUploads";
 
 import {
   Button,
@@ -16,9 +27,86 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import SimpleImageSlider from "react-simple-image-slider";
 
 function DetalleArtista() {
+  ////////////////////////////////////////////////////////////////////////////////////// Form Edit
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    defaultValues: {},
+  });
+
+  const imagesArray = [];
+
+  const [nombreSample, setNombreSample] = useState("");
+  const [lugarNacimientoSample, setLugarNacimientoSample] = useState("");
+  const [fechaNacimientoSample, setFechaNacimientoSample] = useState("");
+  const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState("");
+  const [nodoSample, setNodoSample] = useState("");
+  const [bioSample, setBioSample] = useState("");
+  const [introSample, setIntroSample] = useState("");
+  const [idSample, setIdSample] = useState("");
+  const [envio, setEnvio] = useState("");
+
+  const [picSample, setPicSample] = useState("");
+
+  const [images, setImages] = useState(imagesArray);
+  const [uploadImg, setUploadImg] = useState("");
+  const nodos = [
+    {
+      value: "FE",
+      nodo: "Feminismos",
+    },
+    {
+      value: "ES",
+      nodo: "Escenas Subterráneas",
+    },
+    {
+      value: "DS",
+      nodo: "Disidencias Sexuales",
+    },
+    {
+      value: "AG",
+      nodo: "Acción Gráfica",
+    },
+  ];
+
+  const onSubmit = async (data) => {
+    try {
+      data.img = picSample;
+      data.images = images;
+      data.txt_largo = bioSample;
+      data.bio_corta = introSample;
+      console.log("Data a escribir: ", data);
+      const artistasRef = await firebase.db
+        .collection("artistas")
+        .doc(id)
+        .set(data);
+      setEnvio(
+        parse(
+          '<p>La carga se realizó correctamente. Querés cargar otro documento?</p><Link to="/altas"><Button>Reset</Button></Link>'
+        )
+      );
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      setEnvio(
+        "Por favor revisá el formulario, la carga no pudo hacerse correctamente"
+      );
+    }
+  };
+
+  const handleBio = () => {
+    console.log("bioSample  > ");
+    console.log(introSample);
+  };
+
+  ////////////////////////////////////////////////////////////////////////////////////// END FORM EDIT
+
+  const context = useContext(AuthContext);
   const { id } = useParams();
   const [res, setRes] = useState();
   const [loading, setLoading] = useState(true);
@@ -26,7 +114,6 @@ function DetalleArtista() {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("adentro dhjaskd Try");
         const querySnapshot = await firebase.db
           .collection("artistas")
           .doc(id)
@@ -35,7 +122,19 @@ function DetalleArtista() {
           console.log("EL Query > ");
           console.log(querySnapshot.data());
           setRes(querySnapshot.data());
+          console.log("DATA que me traigo");
+          console.log(querySnapshot.data().bio_corta);
           setLoading(false);
+          /* setValue("bio_corta", querySnapshot.data().bio_corta); */
+          setValue("ciudad", querySnapshot.data().ciudad);
+          setValue("fallecimiento", querySnapshot.data().fallecimiento);
+          setValue("images", querySnapshot.data().images);
+          setValue("img", querySnapshot.data().img);
+          setValue("inventario", querySnapshot.data().inventario);
+          setValue("nacimiento", querySnapshot.data().nacimiento);
+          setValue("nombre", querySnapshot.data().nombre);
+          setValue("pais", querySnapshot.data().pais);
+          setValue("txt_largo", querySnapshot.data().txt_largo);
         }
       } catch (e) {
         console.log("ERROR fetchData: ", e);
@@ -43,6 +142,18 @@ function DetalleArtista() {
     }
     fetchData();
   }, []);
+
+  const handleDelete = async () => {
+    try {
+      const document = await firebase.db
+        .collection("artistas")
+        .doc(id)
+        .delete();
+      console.log("handleDelete ", document);
+    } catch (e) {
+      console.log("handleDelete()", e);
+    }
+  };
 
   if (loading) {
     return <div>Loading . . . </div>;
@@ -93,23 +204,99 @@ function DetalleArtista() {
             </Box>
           </Grid>
 
-          <Grid xs={12}>
-            {imagenes.length > 0 && (
-              <div>
-                <SimpleImageSlider
-                  width={"88%"}
-                  height={"70vh"}
-                  images={imagenes}
-                  showBullets={true}
-                  showNavs={true}
-                />
-              </div>
-            )}
-          </Grid>
           <Grid>
             <Button sx={{ color: "black" }}>
               <Link to={"/"}> volver </Link>
             </Button>
+
+            {context.userLogin && (
+              <>
+                <Button variant='outlined' color='error' onClick={handleDelete}>
+                  <Link to={"/"}> Borrar entrada </Link>
+                </Button>
+
+                <h1>EDITAR ENTRADA</h1>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  style={{ width: "100%" }}
+                >
+                  <FInput
+                    xs={6}
+                    label='Número de inventario'
+                    type='Inventario'
+                    register={{ ...register("inventario", { required: true }) }}
+                    changeInput={(lift) => setIdSample(lift)}
+                  />
+
+                  <FInput
+                    label='Nombre'
+                    type='text'
+                    register={{ ...register("nombre", { required: true }) }}
+                    changeInput={(lift) => setNombreSample(lift)}
+                  />
+
+                  <FInput
+                    label='Ciudad de nacimiento'
+                    type='text'
+                    register={{ ...register("ciudad") }}
+                    changeInput={(lift) => setLugarNacimientoSample(lift)}
+                  />
+
+                  <FInput
+                    label='País de nacimiento'
+                    type='text'
+                    register={{ ...register("pais") }}
+                    changeInput={(lift) => setLugarNacimientoSample(lift)}
+                  />
+                  <div>
+                    <FInput
+                      label='Fecha de nacimiento'
+                      type='int'
+                      register={{ ...register("nacimiento") }}
+                      changeInput={(lift) => setFechaNacimientoSample(lift)}
+                    />
+                    <FInput
+                      label='Fecha de Fallecimiento'
+                      type='int'
+                      register={{ ...register("fallecimiento") }}
+                      changeInput={(lift) => setFechaFallecimientoSample(lift)}
+                    />
+                  </div>
+                  <div>
+                    <FInputRich
+                      label='bio_corta'
+                      fullwidth
+                      register={{ ...register("bio_corta") }}
+                      changeInput={(lift) => setIntroSample(lift)}
+                      onChange={handleBio}
+                      content={res.bio_corta}
+                    />
+                  </div>
+                  <div>
+                    <FInputRich
+                      label='Texto largo'
+                      fullwidth
+                      register={{ ...register("txt_largo") }}
+                      changeInput={(lift) => setBioSample(lift)}
+                    />
+                  </div>
+                  <div>
+                    <FSelect
+                      value='nodo'
+                      id='nodo'
+                      label='nodo'
+                      items={nodos}
+                      register={{ ...register("nodo") }}
+                      changeInput={(lift) => setNodoSample(lift)}
+                    />
+                  </div>
+
+                  <Button variant='contained' type='submit' sx={{ m: 2 }}>
+                    Ingresar Artista
+                  </Button>
+                </form>
+              </>
+            )}
           </Grid>
         </Grid>
       </>

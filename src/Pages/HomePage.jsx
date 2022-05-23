@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import ArtistaCard from "../Components/Cards/ArtistaCard";
 import ExpoCards from "../Components/Cards/ExpoCards";
+import Sliders from "../Components/Sliders";
 
 import { Button, Grid, Typography, Box } from "@mui/material";
 
@@ -31,6 +32,8 @@ function ExposicionPage() {
   } else {
     return (
       <>
+        <Sliders />
+
         <Grid container spacing={6} sx={{ marginTop: "0.1vh" }}>
           {fichas.map((ficha) => (
             <Grid item xs={12} md={6} lg={3}>

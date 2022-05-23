@@ -2,6 +2,7 @@ import { React, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Grid } from "@mui/material";
 import firebase from "../Config/firebase";
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../Context/AuthContext";
 
@@ -9,6 +10,8 @@ import FInput from "../Components/Forms/FInput";
 import FPassword from "../Components/Forms/FPassword";
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,6 +39,7 @@ function LoginPage() {
           .get();
         console.log("userInfo", userInfo.docs[0]?.data());
         context.loginUser();
+        navigate("/");
       }
     } catch (e) {
       console.log("ERROR ", e);

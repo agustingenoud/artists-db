@@ -61,8 +61,8 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
         <Router>
           <CssBaseline />
           <AuthContext.Consumer>
@@ -74,8 +74,8 @@ function App() {
             )}
           </AuthContext.Consumer>
         </Router>
-      </AuthProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -2,14 +2,26 @@ import { React, useState, useEffect, useContext } from "react";
 import { InputLabel, Input, Box } from "@mui/material";
 
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
+import parse from "html-react-parser";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-function FInput(props) {
+function FInputRich(props) {
+  console.log("props content - FInput   >  ");
+  console.log(typeof props.content);
+  console.log(props.content);
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    /* EditorState.createEmpty() */
+    EditorState.createWithContent(
+      ContentState.createFromBlockArray(convertFromHTML("props.content"))
+    )
   );
 
   const onInputChange = (e) => {
@@ -47,4 +59,4 @@ function FInput(props) {
   );
 }
 
-export default FInput;
+export default FInputRich;
