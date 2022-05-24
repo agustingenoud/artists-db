@@ -14,8 +14,8 @@ function FInput(props) {
         {...props.register}
         onChange={onInputChange}
         sx={{
-          m: 2,
           width: "85%",
+          margin: "2vh 0vw",
         }}
       />
     </>

@@ -10,7 +10,7 @@ import {
 import draftToHtml from "draftjs-to-html";
 import parse from "html-react-parser";
 
-import { Button } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -51,6 +51,9 @@ function FInputRich(props) {
 
   return (
     <>
+      <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
+        {props.titulo}
+      </Typography>
       <div
         style={{
           border: "1px solid #bbbbbb",
@@ -67,10 +70,10 @@ function FInputRich(props) {
           onChange={onInputChange}
         />
       </div>
-      <Button variant='contained' onClick={handleReset}>
+      {/* <Button variant='contained' onClick={handleReset}>
         {" "}
         Borrar txt{" "}
-      </Button>
+      </Button> */}
     </>
   );
 }

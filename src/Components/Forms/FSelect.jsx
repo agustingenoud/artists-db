@@ -25,8 +25,8 @@ function FSelect(props) {
         onChange={handleChange}
         sx={{
           width: "85%",
-          m: 2,
         }}
+        variant='filled'
       >
         {items.map(({ nodo, value }) => (
           <MenuItem key={value} value={value}>

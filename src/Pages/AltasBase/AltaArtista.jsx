@@ -30,7 +30,7 @@ import FormArtista from "../../Components/Forms/FormArtista";
 
 const firestore = getFirestore();
 
-function AltaArtista() {
+function AltaArtista(props) {
   const {
     register,
     handleSubmit,
@@ -122,13 +122,8 @@ function AltaArtista() {
 
   const handleReset = () => {
     console.log("ADENTRO DE RESET");
-    setPicSample("");
-    setImages([]);
-    setNodoSample("");
-    setBioSample("");
-    setIntroSample("");
     childReset.current();
-    setEnvio("");
+    props.changeInput(0);
   };
 
   let cargaInicial = (
@@ -207,9 +202,9 @@ function AltaArtista() {
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <Typography variant='h5' sx={{ margin: "2vh 0" }}>
+        {/* <Typography variant='h5' sx={{ margin: "2vh 0" }}>
           FICHA
-        </Typography>
+        </Typography> */}
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <FInput
             xs={6}
@@ -255,15 +250,7 @@ function AltaArtista() {
           </div>
           <div>
             <FInputRich
-              label='Texto largo'
-              fullwidth
-              register={{ ...register("txt_largo") }}
-              changeInput={(lift) => setBioSample(lift)}
-              childReset={childReset}
-            />
-          </div>
-          <div>
-            <FInputRich
+              titulo='Bio corta'
               label='Bio corta'
               fullwidth
               register={{ ...register("bio_corta") }}
@@ -273,7 +260,17 @@ function AltaArtista() {
             />
           </div>
           <div>
-            <Typography variant='h4' sx={{ marginTop: "4vh" }}>
+            <FInputRich
+              titulo='Texto largo'
+              label='Texto largo'
+              fullwidth
+              register={{ ...register("txt_largo") }}
+              changeInput={(lift) => setBioSample(lift)}
+              childReset={childReset}
+            />
+          </div>
+          <div>
+            <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
               Nodo
             </Typography>
             <FSelect

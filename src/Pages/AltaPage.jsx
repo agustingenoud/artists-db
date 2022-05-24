@@ -11,7 +11,8 @@ import {
 import AltaArtista from "../Pages/AltasBase/AltaArtista";
 
 function AltaPage() {
-  const [tipo, setTipo] = React.useState(" ");
+  const [tipo, setTipo] = React.useState(0);
+
   const handleChange = (event) => {
     console.log("handleChange ", event.target.value);
     setTipo(event.target.value);
@@ -21,7 +22,7 @@ function AltaPage() {
   function Cargas(props) {
     switch (props.value) {
       case 1:
-        return <AltaArtista />;
+        return <AltaArtista changeInput={(lift) => setTipo(lift)} />;
       case 2:
         return <h1>Formulario de carga OBRA</h1>;
       case 3:
@@ -33,9 +34,9 @@ function AltaPage() {
 
   return (
     <>
-      <h4>Elegí el tipo de carga</h4>
-      <FormControl fullWidth sx={{ paddingTop: "0.2vh" }}>
-        <Select value={tipo} onChange={handleChange}>
+      <FormControl sx={{ width: "60%", marginTop: "3vh" }}>
+        <Select variant='filled' value={tipo} onChange={handleChange}>
+          <MenuItem value={0}>Elegir tipo de carga</MenuItem>
           <MenuItem value={1}>Artista</MenuItem>
           <MenuItem value={2}>Obra</MenuItem>
           <MenuItem value={3}>Evento</MenuItem>
