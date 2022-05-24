@@ -24,9 +24,9 @@ function FInputRich(props) {
     )
   );
 
-  useEffect(() => {
+  /*   useEffect(() => {
     props.childReset.current = alertUser;
-  }, []);
+  }, []); */
 
   function alertUser() {
     setEditorState(EditorState.createEmpty());
