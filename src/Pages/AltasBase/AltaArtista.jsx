@@ -122,7 +122,7 @@ function AltaArtista(props) {
 
   const handleReset = () => {
     console.log("ADENTRO DE RESET");
-    childReset.current();
+    /* childReset.current(); */
     props.changeInput(0);
   };
 
