@@ -175,19 +175,13 @@ function DetalleArtista() {
     return (
       <>
         <Grid container>
-          <Grid>
-            <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
-            <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
-              {res.nacimiento}
-            </h2>
-            {console.log("nodos > ")}
-            {console.log(res.nodos)}
+          <Grid sx={{ mt: 6 }}>
             {res.nodos.map((nodo) => (
               <>
                 <Typography
                   display='inline'
                   sx={{
-                    margin: "0px 0.2vw",
+                    mr: 1,
                     padding: "0px 0.4vw",
                     color: "white",
                     backgroundColor: context.color[nodo.idNodo],
@@ -197,6 +191,10 @@ function DetalleArtista() {
                 </Typography>
               </>
             ))}
+            <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
+            <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
+              {res.nacimiento}
+            </h2>
           </Grid>
 
           <Grid item xs={12}>
