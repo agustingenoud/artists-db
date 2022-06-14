@@ -10,6 +10,7 @@ import {
   ImageList,
   ImageListItem,
   Input,
+  Stack,
 } from "@mui/material";
 
 import { getFirestore } from "firebase/firestore";
@@ -44,6 +45,7 @@ function AltaArtista(props) {
     try {
       data.img = picSample;
       data.images = images;
+      data.nodos = nodos;
       data.txt_largo = bioSample;
       data.bio_corta = introSample;
       console.log("Data a escribir: ", data);
@@ -62,7 +64,7 @@ function AltaArtista(props) {
     }
   };
 
-  const nodos = [
+  const nodosSelect = [
     {
       value: "FE",
       nodo: "Feminismos",
@@ -82,12 +84,12 @@ function AltaArtista(props) {
   ];
 
   const imagesArray = [];
+  const nodosArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
   const [lugarNacimientoSample, setLugarNacimientoSample] = useState("");
   const [fechaNacimientoSample, setFechaNacimientoSample] = useState("");
   const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState("");
-  const [nodoSample, setNodoSample] = useState("");
   const [bioSample, setBioSample] = useState("");
   const [introSample, setIntroSample] = useState("");
   const [idSample, setIdSample] = useState("");
@@ -97,6 +99,9 @@ function AltaArtista(props) {
 
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
+
+  const [nodos, setNodos] = useState(nodosArray);
+  const [nodoSample, setNodoSample] = useState("");
 
   const childReset = useRef(null);
 
@@ -113,6 +118,33 @@ function AltaArtista(props) {
     } else {
       console.log("Aguardá a que termine la carga un segundo");
     }
+  };
+
+  const handleAddNodo = () => {
+    console.log("handleAddNodo > objNodo > ");
+    /*     const objNodo = { nodo: nodoSample.nodo, idNodo: nodoSample.idNodo };
+    console.log(objNodo); 
+     nodosArray.push(nodoSample);
+    */
+
+    console.log("nodoSample ");
+    console.log(nodoSample);
+    setNodos((nodosArray) => [...nodosArray, nodoSample]);
+    console.log("nodosArray ");
+    console.log(nodosArray);
+    console.log("nodos");
+    console.log(nodos);
+    /* if (Boolean(nodoSample)) {
+      setNodos((nodosArray) => [
+        ...nodosArray,
+        { nodo: nodoSample.nodo, idNodo: nodoSample.idNodo },
+      ]);
+      console.log("NODO-CARGAD");
+      console.log(nodosArray);
+      setNodoSample("");
+    } else {
+      console.log("Aguardá a que termine la carga un segundo");
+    } */
   };
 
   const handleBio = () => {
@@ -273,13 +305,28 @@ function AltaArtista(props) {
             <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
               Nodo
             </Typography>
-            <FSelect
-              value='nodo'
-              id='nodo'
-              items={nodos}
-              register={{ ...register("nodo") }}
-              changeInput={(lift) => setNodoSample(lift)}
-            />
+            <Stack direction='row' spacing={2} justifyContent='flex-start'>
+              <FSelect
+                display='inline'
+                value='nodo'
+                id='nodo'
+                items={nodosSelect}
+                register={{ ...register("nodo") }}
+                changeInput={(lift) => setNodoSample(lift)}
+              />
+              <Button
+                variant='contained'
+                display='inline'
+                onClick={handleAddNodo}
+              >
+                +
+              </Button>
+            </Stack>
+            {nodos.map((nodo) => (
+              <Typography sx={{ margin: "2vh 0vw" }} key={nodo.nodo}>
+                {nodo.nodo}
+              </Typography>
+            ))}
           </div>
 
           <Button variant='contained' type='submit' sx={{ m: 2 }}>

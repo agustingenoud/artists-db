@@ -8,9 +8,13 @@ function FSelect(props) {
   const [show, setShow] = React.useState("");
 
   const handleChange = (e) => {
+    const suboData = {
+      nodo: e.explicitOriginalTarget.innerText,
+      idNodo: e.target.value,
+    };
     setShow(e.target.value);
-    console.log(e.explicitOriginalTarget.innerText);
-    props.changeInput(e.explicitOriginalTarget.innerText);
+    /* props.changeInput(e.explicitOriginalTarget.innerText); */
+    props.changeInput(suboData);
   };
 
   const items = props.items;

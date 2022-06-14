@@ -85,7 +85,7 @@ function NavMenu() {
       return (
         <>
           <Typography
-            variant='body1'
+            variant='h6'
             ml={1}
             as={Link}
             to={"/altas"}
@@ -96,7 +96,7 @@ function NavMenu() {
             {"Altas"}
           </Typography>
           <Typography
-            variant='body1'
+            variant='h6'
             ml={1}
             as={Link}
             to={"/"}
@@ -117,7 +117,7 @@ function NavMenu() {
       <>
         {menuItems.map((item) => (
           <Typography
-            variant='body1'
+            variant='h6'
             ml={1}
             as={Link}
             to={item.href}
@@ -178,7 +178,7 @@ function NavMenu() {
               }}
             >
               <Typography
-                variant='h4'
+                variant='h5'
                 as={Link}
                 to='/'
                 sx={{ textDecoration: "none", color: "black" }}

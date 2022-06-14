@@ -65,7 +65,7 @@ function DetalleArtista() {
 
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
-  const nodos = [
+  const nodosSelect = [
     {
       value: "FE",
       nodo: "Feminismos",
@@ -144,6 +144,7 @@ function DetalleArtista() {
           setValue("nombre", querySnapshot.data().nombre);
           setValue("pais", querySnapshot.data().pais);
           setValue("txt_largo", querySnapshot.data().txt_largo);
+          /*setValue("nodos", querySnapshot.data().nodos);*/
         }
       } catch (e) {
         console.log("ERROR fetchData: ", e);
@@ -169,8 +170,8 @@ function DetalleArtista() {
     return <div>Loading . . . </div>;
   } else {
     const imagenes = res.images;
-    console.log("RES IMGS");
-    console.log(imagenes);
+    console.log("NODO");
+    console.log(res.nodo);
     return (
       <>
         <Grid container>
@@ -179,6 +180,23 @@ function DetalleArtista() {
             <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
               {res.nacimiento}
             </h2>
+            {console.log("nodos > ")}
+            {console.log(res.nodos)}
+            {res.nodos.map((nodo) => (
+              <>
+                <Typography
+                  display='inline'
+                  sx={{
+                    margin: "0px 0.2vw",
+                    padding: "0px 0.4vw",
+                    color: "white",
+                    backgroundColor: context.color[nodo.idNodo],
+                  }}
+                >
+                  {nodo.nodo}
+                </Typography>
+              </>
+            ))}
           </Grid>
 
           <Grid item xs={12}>
@@ -337,7 +355,7 @@ function DetalleArtista() {
                       value='nodo'
                       id='nodo'
                       label='nodo'
-                      items={nodos}
+                      items={nodosSelect}
                       register={{ ...register("nodo") }}
                       changeInput={(lift) => setNodoSample(lift)}
                     />
