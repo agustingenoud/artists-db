@@ -170,27 +170,58 @@ function DetalleArtista() {
     return <div>Loading . . . </div>;
   } else {
     const imagenes = res.images;
-    console.log("NODO");
-    console.log(res.nodo);
+
+    function isNodos() {
+      return res.nodos.map((nodo) => (
+        <>
+          <Typography
+            display='inline'
+            sx={{
+              mr: 1,
+              padding: "0px 0.4vw",
+              color: "white",
+              backgroundColor: context.color[nodo.idNodo],
+            }}
+          >
+            {nodo.nodo}
+          </Typography>
+        </>
+      ));
+    }
+
+    function notNodos() {
+      return (
+        <>
+          <Typography
+            display='inline'
+            sx={{
+              mr: 1,
+              padding: "0px 0.4vw",
+              color: "white",
+              backgroundColor: context.color[res.nodo],
+            }}
+          >
+            {res.nodo}
+          </Typography>
+        </>
+      );
+    }
+
+    function nodosHandled() {
+      const dataNodos = res.nodos;
+
+      if (dataNodos) {
+        return isNodos();
+      } else {
+        return notNodos();
+      }
+    }
+
     return (
       <>
         <Grid container>
           <Grid sx={{ mt: 6 }}>
-            {res.nodos.map((nodo) => (
-              <>
-                <Typography
-                  display='inline'
-                  sx={{
-                    mr: 1,
-                    padding: "0px 0.4vw",
-                    color: "white",
-                    backgroundColor: context.color[nodo.idNodo],
-                  }}
-                >
-                  {nodo.nodo}
-                </Typography>
-              </>
-            ))}
+            {nodosHandled()}
             <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
             <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
               {res.nacimiento}

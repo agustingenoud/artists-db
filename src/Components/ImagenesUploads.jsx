@@ -86,6 +86,14 @@ function ImagenesUploads(props) {
           <Typography variant='body1' display='inline'>
             {progress}%
           </Typography>
+          <TextField
+            id='standard-basic'
+            label='Pie IMG'
+            variant='standard'
+            alignItems='center'
+            justify='center'
+            sx={{ ml: 2, textAlign: "center", verticalAlign: "inherit" }}
+          ></TextField>
         </form>
       </div>
     </>
