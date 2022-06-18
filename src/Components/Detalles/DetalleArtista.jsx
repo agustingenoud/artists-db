@@ -33,6 +33,9 @@ import {
 
 import CloseIcon from "@mui/icons-material/Close";
 
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+
 function DetalleArtista() {
   ////////////////////////////////////////////////////////////////////////////////////// Form Edit
 
@@ -247,15 +250,18 @@ function DetalleArtista() {
             <Typography variant='h6'>Galería</Typography>
             <Box sx={{ height: "80vh", overflowY: "scroll" }}>
               {/* <ImageList cols={3} rowHeight={200}> */}
+
               <ImageList variant='masonry' cols={3} gap={8}>
                 {imagenes.map((imagen) => (
-                  <ImageListItem key={imagen.url}>
-                    <img
-                      src={`${imagen.url}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${imagen.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      loading='lazy'
-                    />
-                  </ImageListItem>
+                  <Zoom>
+                    <ImageListItem key={imagen.url}>
+                      <img
+                        src={`${imagen.url}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${imagen.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        loading='lazy'
+                      />
+                    </ImageListItem>
+                  </Zoom>
                 ))}
               </ImageList>
             </Box>
