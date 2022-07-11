@@ -226,7 +226,7 @@ function AltaArtista(props) {
           principal='true'
         />
       </Grid>
-      ////////////////////////////// Galería IMGs
+      {/* ////////////////////////////// Galería IMGs */}
       <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
         <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
           <Typography variant='h6' sx={{ margin: "2vh 0" }}>
@@ -246,8 +246,11 @@ function AltaArtista(props) {
         </Button>
       </Grid>
       <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <Typography variant='h6' sx={{ marginBottom: "2vh", marginTop: "2vh" }}>
-          Galería
+        <Typography
+          variant='body'
+          sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+        >
+          Preview img
         </Typography>
         <ImageList variant='masonry' cols={3} gap={8}>
           {images.map((imagen) => (
@@ -263,7 +266,7 @@ function AltaArtista(props) {
           ))}
         </ImageList>
       </Grid>
-      ////////////////////////////// Galería VIDs
+      {/* ////////////////////////////// Galería VIDs */}
       <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
         <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
           <Typography variant='h6' sx={{ margin: "2vh 0" }}>
@@ -283,8 +286,11 @@ function AltaArtista(props) {
         </Button>
       </Grid>
       <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <Typography variant='h6' sx={{ marginBottom: "2vh", marginTop: "2vh" }}>
-          Galería Videos
+        <Typography
+          variant='body'
+          sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+        >
+          Preview vids
         </Typography>
         <ImageList variant='masonry' cols={2}>
           {videos.map((video) => (
