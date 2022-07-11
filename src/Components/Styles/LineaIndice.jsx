@@ -8,7 +8,7 @@ function LineaIndice(props) {
   const styles = {
     container: {
       display: "grid",
-      gridTemplateColumns: "1fr 9fr 1fr",
+      gridTemplateColumns: "1fr 5fr",
       listStyleType: "none",
       borderTop: "1px solid black",
     },
@@ -22,10 +22,10 @@ function LineaIndice(props) {
     nacimiento: {
       fontWeight: "bold",
       fontSize: "1.6rem",
-      textAlign: "left",
-      marginTop: "1rem",
+      textAlign: "right",
+      marginTop: "0.7rem",
       marginBottom: "0px",
-      color: "black",
+      color: "red",
     },
   };
 
