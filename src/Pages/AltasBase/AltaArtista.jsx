@@ -268,13 +268,13 @@ function AltaArtista(props) {
           />
           <div>
             <FInput
-              label='Fecha de nacimiento'
+              label='Año de nacimiento'
               type='int'
               register={{ ...register("nacimiento") }}
               changeInput={(lift) => setFechaNacimientoSample(lift)}
             />
             <FInput
-              label='Fecha de Fallecimiento'
+              label='Año de Fallecimiento'
               type='int'
               register={{ ...register("fallecimiento") }}
               changeInput={(lift) => setFechaFallecimientoSample(lift)}

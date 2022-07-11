@@ -17,6 +17,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 const menuItems = [
   {
+    label: "Home",
+    href: "/",
+  },
+  {
     label: "Proyecto",
     href: "/proyecto",
   },
