@@ -25,7 +25,7 @@ function LineaIndice(props) {
       textAlign: "right",
       marginTop: "0.7rem",
       marginBottom: "0px",
-      color: "red",
+      color: "black",
     },
   };
 
