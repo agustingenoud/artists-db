@@ -27,6 +27,9 @@ import ArtistaCard from "../../Components/Cards/ArtistaCard";
 import ImgUpload from "../../Components/ImgUpload";
 import ImagenesUploads from "../../Components/ImagenesUploads";
 
+import VidUpload from "../../Components/VidUpload";
+import VideosUploads from "../../Components/VideosUploads";
+
 import FormArtista from "../../Components/Forms/FormArtista";
 
 const firestore = getFirestore();
@@ -84,6 +87,7 @@ function AltaArtista(props) {
   ];
 
   const imagesArray = [];
+  const videosArray = [];
   const nodosArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
@@ -99,6 +103,9 @@ function AltaArtista(props) {
 
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
+
+  const [videos, setVideos] = useState(imagesArray);
+  const [uploadVid, setUploadVid] = useState("");
 
   const [nodos, setNodos] = useState(nodosArray);
   const [nodoSample, setNodoSample] = useState("");
@@ -116,7 +123,17 @@ function AltaArtista(props) {
       console.log("imagen CARGADA");
       setUploadImg("");
     } else {
-      console.log("Aguardá a que termine la carga un segundo");
+      console.log("Aguardá a que cargue la imagen");
+    }
+  };
+
+  const handleAddVid = () => {
+    if (Boolean(uploadVid)) {
+      setVideos((videosArray) => [...videosArray, { url: uploadVid }]);
+      console.log("VIDEO CARGADO");
+      setUploadVid("");
+    } else {
+      console.log("Aguardá a que cargue el video");
     }
   };
 
@@ -171,6 +188,20 @@ function AltaArtista(props) {
     ));
   }
 
+  let cargasVideoInicial = (
+    <VideosUploads changeInput={(lift) => setUploadVid(lift)} />
+  );
+
+  let cargasVideosSecundarios;
+
+  if (videos.length > 0) {
+    cargasVideosSecundarios = videos.map((video, index) => (
+      <li key={index}>
+        <VideosUploads changeInput={(lift) => setUploadVid(lift)} />
+      </li>
+    ));
+  }
+
   return (
     /* GridRoot */
     <Grid container>
@@ -195,11 +226,11 @@ function AltaArtista(props) {
           principal='true'
         />
       </Grid>
-
+      ////////////////////////////// Galería IMGs
       <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
         <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
           <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-            Galería
+            Galería Imágenes
           </Typography>
           {cargaInicial}
           {cargasSecundarias}
@@ -232,7 +263,44 @@ function AltaArtista(props) {
           ))}
         </ImageList>
       </Grid>
+      ////////////////////////////// Galería VIDs
+      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+        <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+            Galería Videos
+          </Typography>
+          {cargasVideoInicial}
+          {cargasVideosSecundarios}
+        </ul>
 
+        <Button
+          variant='contained'
+          type='submit'
+          sx={{ m: 2 }}
+          onClick={handleAddVid}
+        >
+          Añadir a galería
+        </Button>
+      </Grid>
+      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+        <Typography variant='h6' sx={{ marginBottom: "2vh", marginTop: "2vh" }}>
+          Galería Videos
+        </Typography>
+        <ImageList variant='masonry' cols={2}>
+          {videos.map((video) => (
+            <>
+              <ImageListItem key={video.url}>
+                <video width='320' height='240' controls>
+                  <source
+                    src={`${video.url}?w=248&fit=crop&auto=format`}
+                    type='video/mp4'
+                  />
+                </video>
+              </ImageListItem>
+            </>
+          ))}
+        </ImageList>
+      </Grid>
       <Grid item xs={12} md={6}>
         {/* <Typography variant='h5' sx={{ margin: "2vh 0" }}>
           FICHA
@@ -337,7 +405,6 @@ function AltaArtista(props) {
         </form>
         {envio}
       </Grid>
-
       <Grid item xs={12} md={6} lg={3}>
         <ArtistaCard
           title={nombreSample}
