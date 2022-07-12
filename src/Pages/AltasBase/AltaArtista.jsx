@@ -30,6 +30,8 @@ import ImagenesUploads from "../../Components/ImagenesUploads";
 import VidUpload from "../../Components/VidUpload";
 import VideosUploads from "../../Components/VideosUploads";
 
+import SonidosUploads from "../../Components/SonidosUploads";
+
 import FormArtista from "../../Components/Forms/FormArtista";
 
 const firestore = getFirestore();
@@ -48,6 +50,8 @@ function AltaArtista(props) {
     try {
       data.img = picSample;
       data.images = images;
+      data.videos = videos;
+      data.sonidos = sonidos;
       data.nodos = nodos;
       data.txt_largo = bioSample;
       data.bio_corta = introSample;
@@ -88,6 +92,7 @@ function AltaArtista(props) {
 
   const imagesArray = [];
   const videosArray = [];
+  const sonidosArray = [];
   const nodosArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
@@ -104,8 +109,11 @@ function AltaArtista(props) {
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
 
-  const [videos, setVideos] = useState(imagesArray);
+  const [videos, setVideos] = useState(videosArray);
   const [uploadVid, setUploadVid] = useState("");
+
+  const [sonidos, setSonidos] = useState(sonidosArray);
+  const [uploadSon, setUploadSon] = useState("");
 
   const [nodos, setNodos] = useState(nodosArray);
   const [nodoSample, setNodoSample] = useState("");
@@ -134,6 +142,16 @@ function AltaArtista(props) {
       setUploadVid("");
     } else {
       console.log("Aguardá a que cargue el video");
+    }
+  };
+
+  const handleAddSon = () => {
+    if (Boolean(uploadSon)) {
+      setSonidos((sonidosArray) => [...sonidosArray, { url: uploadSon }]);
+      console.log("SONIDO CARGADO");
+      setUploadSon("");
+    } else {
+      console.log("Aguardá a que cargue el sonido");
     }
   };
 
@@ -178,8 +196,8 @@ function AltaArtista(props) {
   let cargaInicial = (
     <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
   );
-  let cargasSecundarias;
 
+  let cargasSecundarias;
   if (images.length > 0) {
     cargasSecundarias = images.map((imagen, index) => (
       <li key={index}>
@@ -193,11 +211,23 @@ function AltaArtista(props) {
   );
 
   let cargasVideosSecundarios;
-
   if (videos.length > 0) {
     cargasVideosSecundarios = videos.map((video, index) => (
       <li key={index}>
         <VideosUploads changeInput={(lift) => setUploadVid(lift)} />
+      </li>
+    ));
+  }
+
+  let cargasSonidoInicial = (
+    <SonidosUploads changeInput={(lift) => setUploadSon(lift)} />
+  );
+
+  let cargasSonidosSecundarios;
+  if (sonidos.length > 0) {
+    cargasSonidosSecundarios = sonidos.map((sonido, index) => (
+      <li key={index}>
+        <SonidosUploads changeInput={(lift) => setUploadSon(lift)} />
       </li>
     ));
   }
@@ -306,6 +336,26 @@ function AltaArtista(props) {
             </>
           ))}
         </ImageList>
+      </Grid>
+
+      {/* ////////////////////////////// Galería SONs */}
+      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+        <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+            SONIDOS
+          </Typography>
+          {cargasSonidoInicial}
+          {cargasSonidosSecundarios}
+        </ul>
+
+        <Button
+          variant='contained'
+          type='submit'
+          sx={{ m: 2 }}
+          onClick={handleAddSon}
+        >
+          Añadir a Sonidos
+        </Button>
       </Grid>
       <Grid item xs={12} md={6}>
         {/* <Typography variant='h5' sx={{ margin: "2vh 0" }}>

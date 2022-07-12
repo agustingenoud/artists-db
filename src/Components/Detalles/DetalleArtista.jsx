@@ -173,6 +173,8 @@ function DetalleArtista() {
     return <div>Loading . . . </div>;
   } else {
     const imagenes = res.images;
+    const videos = res.videos;
+    const sonidos = res.sonidos;
 
     function isNodos() {
       return res.nodos.map((nodo) => (
@@ -262,6 +264,38 @@ function DetalleArtista() {
                       />
                     </ImageListItem>
                   </Zoom>
+                ))}
+              </ImageList>
+            </Box>
+          </Grid>
+
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+            <Typography variant='h6'>Videos</Typography>
+            <Box sx={{ height: "80vh", overflowY: "scroll" }}>
+              <ImageList variant='masonry' cols={1}>
+                {videos.map((video) => (
+                  <ImageListItem key={video.url}>
+                    <video width='90%' height='90%' controls>
+                      <source src={`${video.url}`} type='video/mp4' />
+                    </video>
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
+          </Grid>
+
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+            <Typography variant='h6'>Sonidos</Typography>
+            <Box sx={{ height: "80vh", overflowY: "scroll" }}>
+              <ImageList variant='masonry' cols={1}>
+                {sonidos.map((sonido) => (
+                  <ImageListItem inline key={sonido.url}>
+                    <audio controls>
+                      <source src={`${sonido.url}`} type='audio/x-wav' />
+                      <source src={`${sonido.url}`} type='audio/mpeg' />
+                      Your browser does not support the audio tag.
+                    </audio>
+                  </ImageListItem>
                 ))}
               </ImageList>
             </Box>
