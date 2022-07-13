@@ -108,6 +108,7 @@ function AltaArtista(props) {
 
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
+  const [pieImg, setPieImg] = useState("");
 
   const [videos, setVideos] = useState(videosArray);
   const [uploadVid, setUploadVid] = useState("");
@@ -127,9 +128,15 @@ function AltaArtista(props) {
 
   const handleAddImage = () => {
     if (Boolean(uploadImg)) {
-      setImages((imagesArray) => [...imagesArray, { url: uploadImg }]);
+      setImages((imagesArray) => [
+        ...imagesArray,
+        { url: uploadImg, pie: pieImg },
+      ]);
       console.log("imagen CARGADA");
       setUploadImg("");
+      console.log("PIE-IMG > ");
+      console.log(pieImg);
+      setPieImg("");
     } else {
       console.log("Aguardá a que cargue la imagen");
     }
@@ -194,14 +201,20 @@ function AltaArtista(props) {
   };
 
   let cargaInicial = (
-    <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
+    <ImagenesUploads
+      changeInput={(lift) => setUploadImg(lift)}
+      changePie={(lift) => setPieImg(lift)}
+    />
   );
 
   let cargasSecundarias;
   if (images.length > 0) {
     cargasSecundarias = images.map((imagen, index) => (
       <li key={index}>
-        <ImagenesUploads changeInput={(lift) => setUploadImg(lift)} />
+        <ImagenesUploads
+          changeInput={(lift) => setUploadImg(lift)}
+          changePie={(lift) => setPieImg(lift)}
+        />
       </li>
     ));
   }

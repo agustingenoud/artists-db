@@ -35,16 +35,14 @@ function ImagenesUploads(props) {
     e.preventDefault();
     const file = e.target[0].files[0];
     uploadFiles(file);
+    props.changePie(e.target[2].value);
   };
 
   const uploadFiles = (file) => {
     if (!file) return;
     const storage = getStorage(firebaseApp);
     const storageRef = ref(storage, `images/${file.name}`);
-    /*     uploadBytes(storageRef, file).then((snapshot) => {
-      console.log("Uploaded a blob or file!");
-    });
-    */
+
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(

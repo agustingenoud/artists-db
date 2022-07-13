@@ -262,6 +262,19 @@ function DetalleArtista() {
                         srcSet={`${imagen.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         loading='lazy'
                       />
+                      <Typography
+                        variant='body2'
+                        sx={{
+                          backgroundColor: "rgba(212, 212, 212, 0.4)",
+                          color: "rgba(244, 244, 244, 0.8)",
+                          transform: "translate(0, -4ex)",
+                          textAlign: "right",
+                          paddingRight: "8%",
+                          fontSize: "0.4rem",
+                        }}
+                      >
+                        {imagen.pie}
+                      </Typography>
                     </ImageListItem>
                   </Zoom>
                 ))}
