@@ -12,7 +12,10 @@ function ArchivoPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const querySnapshot = await firebase.db.collection("artistas").get();
+        const querySnapshot = await firebase.db
+          .collection("artistas")
+          .orderBy("nacimiento")
+          .get();
         if (querySnapshot.docs) {
           setFichas(querySnapshot.docs);
           setLoading(false);
