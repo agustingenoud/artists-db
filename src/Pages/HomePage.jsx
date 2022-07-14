@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 import ArtistaCard from "../Components/Cards/ArtistaCard";
+import ObraCard from "../Components/Cards/ObraCard";
+
 import ExpoCards from "../Components/Cards/ExpoCards";
 import Sliders from "../Components/Sliders";
 
@@ -13,28 +15,35 @@ function ExposicionPage() {
   const [fichasGlobal, setFichasGlobal] = useState([]);
   const [fichas, setFichas] = useState([]);
 
+  const [obrasGlobal, setObrasGlobal] = useState([]);
+  const [obras, setObras] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
-      let f = [];
+      let artistas = [];
+      let obras = [];
       try {
         const querySnapshotArtistas = await firebase.db
           .collection("artistas")
           .get();
         const querySnapshotObras = await firebase.db.collection("obras").get();
+
         if (querySnapshotArtistas.docs) {
           querySnapshotArtistas.docs.map((query) => {
             let dataMergeArtistas = query.data();
             dataMergeArtistas.id = query.id;
-            f.push(dataMergeArtistas);
+            artistas.push(dataMergeArtistas);
           });
           if (querySnapshotObras.docs) {
             querySnapshotObras.docs.map((query) => {
               let dataMergeObras = query.data();
               dataMergeObras.id = query.id;
-              f.push(dataMergeObras);
+              obras.push(dataMergeObras);
             });
-            setFichasGlobal(f);
-            setFichas(f);
+            setFichasGlobal(artistas);
+            setFichas(artistas);
+            setObrasGlobal(obras);
+            setObras(obras);
             setLoading(false);
           }
         }
@@ -47,6 +56,8 @@ function ExposicionPage() {
 
   async function handleFeminismos() {
     let fichasTemp = [];
+    let obrasTemp = [];
+
     console.log(fichasGlobal);
     try {
       fichasGlobal.map((ficha) => {
@@ -63,6 +74,19 @@ function ExposicionPage() {
       setFichas(fichasTemp);
       console.log("fichasTemp");
       console.log(fichasTemp);
+
+      obrasGlobal.map((obra) => {
+        if (obra.nodos === undefined && typeof obra.nodos == "undefined") {
+          console.log("* NULL *");
+        } else {
+          if (obra.nodos[0].idNodo == "FE") {
+            console.log("ficha.nodos");
+            console.log(obra.nodos[0].idNodo);
+            obrasTemp.push(obra);
+          }
+        }
+      });
+      setObras(obrasTemp);
     } catch (e) {
       console.log(e);
     }
@@ -70,6 +94,8 @@ function ExposicionPage() {
 
   async function handleEsub() {
     let fichasTemp = [];
+    let obrasTemp = [];
+
     try {
       fichasGlobal.map((ficha) => {
         if (ficha.nodos === undefined && typeof ficha.nodos == "undefined") {
@@ -81,6 +107,17 @@ function ExposicionPage() {
         }
       });
       setFichas(fichasTemp);
+
+      obrasGlobal.map((obra) => {
+        if (obra.nodos === undefined && typeof obra.nodos == "undefined") {
+        } else {
+          console.log(obra.nodos[0].idNodo);
+          if (obra.nodos[0].idNodo == "ES") {
+            obrasTemp.push(obra);
+          }
+        }
+      });
+      setObras(obrasTemp);
     } catch (e) {
       console.log(e);
     }
@@ -88,6 +125,8 @@ function ExposicionPage() {
 
   async function handleDsex() {
     let fichasTemp = [];
+    let obrasTemp = [];
+
     try {
       fichasGlobal.map((ficha) => {
         if (ficha.nodos === undefined && typeof ficha.nodos == "undefined") {
@@ -99,6 +138,17 @@ function ExposicionPage() {
         }
       });
       setFichas(fichasTemp);
+
+      obrasGlobal.map((obra) => {
+        if (obra.nodos === undefined && typeof obra.nodos == "undefined") {
+        } else {
+          console.log(obra.nodos[0].idNodo);
+          if (obra.nodos[0].idNodo == "DS") {
+            obrasTemp.push(obra);
+          }
+        }
+      });
+      setObras(obrasTemp);
     } catch (e) {
       console.log(e);
     }
@@ -106,6 +156,8 @@ function ExposicionPage() {
 
   async function handleAgraf() {
     let fichasTemp = [];
+    let obrasTemp = [];
+
     try {
       fichasGlobal.map((ficha) => {
         if (ficha.nodos === undefined && typeof ficha.nodos == "undefined") {
@@ -117,6 +169,17 @@ function ExposicionPage() {
         }
       });
       setFichas(fichasTemp);
+
+      obrasGlobal.map((obra) => {
+        if (obra.nodos === undefined && typeof obra.nodos == "undefined") {
+        } else {
+          console.log(obra.nodos[0].idNodo);
+          if (obra.nodos[0].idNodo == "AG") {
+            obrasTemp.push(obra);
+          }
+        }
+      });
+      setObras(obrasTemp);
     } catch (e) {
       console.log(e);
     }
@@ -124,6 +187,7 @@ function ExposicionPage() {
 
   async function handleTodo() {
     setFichas(fichasGlobal);
+    setObras(obrasGlobal);
   }
 
   if (loading) {
@@ -153,6 +217,19 @@ function ExposicionPage() {
                 fechaNacimiento={ficha.nacimiento}
                 fechaFallecimiento={ficha.fallecimiento}
                 id={ficha.id}
+              />
+            </Grid>
+          ))}
+          {obras.map((obra) => (
+            <Grid item xs={12} md={6} lg={3}>
+              <ObraCard
+                nombre={obra.nombre}
+                imgSrc={obra.img}
+                nodo={obra.nodo}
+                introSmall={obra.bio || obra.bio_corta}
+                fechaNacimiento={obra.nacimiento}
+                fechaFallecimiento={obra.fallecimiento}
+                id={obra.id}
               />
             </Grid>
           ))}

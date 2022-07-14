@@ -7,6 +7,7 @@ import HomePage from "../Pages/HomePage";
 import ArchivoPage from "../Pages/ArchivoPage";
 import TextoPage from "../Pages/TextoPage";
 import DetalleArtista from "../Components/Detalles/DetalleArtista";
+import DetalleObra from "../Components/Detalles/DetalleObra";
 
 import NavMenu from "../Components/NavMenu";
 import Footer from "../Components/Footer";
@@ -28,6 +29,8 @@ function Publico() {
           <Route path='/login' element={<LoginPage />} />
 
           <Route path='/artista/:id' element={<DetalleArtista />} />
+
+          <Route path='/obra/:id' element={<DetalleObra />} />
 
           <Route path='/' exact element={<HomePage />} />
 
