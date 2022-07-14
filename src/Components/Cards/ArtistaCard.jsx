@@ -23,9 +23,6 @@ function ArtistaCard(props) {
   const nodo = props.nodo;
   const color = context.color[nodo];
 
-  console.log("Imprimo color del NODO > ");
-  console.log(color);
-
   return (
     <Card>
       <CardActionArea>

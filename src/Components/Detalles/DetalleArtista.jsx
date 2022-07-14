@@ -176,6 +176,9 @@ function DetalleArtista() {
     const videos = res.videos;
     const sonidos = res.sonidos;
 
+    console.log("res");
+    console.log(imagenes);
+
     function isNodos() {
       return res.nodos.map((nodo) => (
         <>
@@ -222,37 +225,14 @@ function DetalleArtista() {
       }
     }
 
-    return (
-      <>
-        <Grid container>
-          <Grid sx={{ mt: 6 }}>
-            {nodosHandled()}
-            <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
-            <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
-              {res.nacimiento}
-            </h2>
-          </Grid>
-
-          <Grid item xs={12}>
-            <img
-              style={{ width: "auto", height: "74vh", marginTop: "2vh" }}
-              src={res.img}
-              alt=''
-            />
-          </Grid>
-
-          <Grid xs={10} sx={{ marginTop: "8vh" }}>
-            {parse(res.bio_corta)}
-          </Grid>
-          <Grid xs={10} sx={{ marginBottom: "8vh" }}>
-            {parse(res.txt_largo)}
-          </Grid>
-
-          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+    function imagenesHandled() {
+      if (imagenes === undefined && typeof imagenes == "undefined") {
+        return <Typography> Aquí no hay imágenes : ) </Typography>;
+      } else {
+        return (
+          <>
             <Typography variant='h6'>Galería</Typography>
             <Box sx={{ height: "80vh", overflowY: "scroll" }}>
-              {/* <ImageList cols={3} rowHeight={200}> */}
-
               <ImageList variant='masonry' cols={3} gap={8}>
                 {imagenes.map((imagen) => (
                   <Zoom>
@@ -280,9 +260,17 @@ function DetalleArtista() {
                 ))}
               </ImageList>
             </Box>
-          </Grid>
+          </>
+        );
+      }
+    }
 
-          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+    function videosHandled() {
+      if (videos === undefined && typeof videos == "undefined") {
+        return <Typography> Aquí no hay videos : ) </Typography>;
+      } else {
+        return (
+          <>
             <Typography variant='h6'>Videos</Typography>
             <Box sx={{ height: "80vh", overflowY: "scroll" }}>
               <ImageList variant='masonry' cols={1}>
@@ -295,9 +283,19 @@ function DetalleArtista() {
                 ))}
               </ImageList>
             </Box>
-          </Grid>
+          </>
+        );
+      }
+    }
 
-          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+    function sonidosHandled() {
+      console.log("sonidos");
+      console.log(sonidos);
+      if (sonidos === undefined && typeof sonidos == "undefined") {
+        return <Typography> Aquí no hay sonidos : ) </Typography>;
+      } else {
+        return (
+          <>
             <Typography variant='h6'>Sonidos</Typography>
             <Box sx={{ height: "80vh", overflowY: "scroll" }}>
               <ImageList variant='masonry' cols={1}>
@@ -312,6 +310,47 @@ function DetalleArtista() {
                 ))}
               </ImageList>
             </Box>
+          </>
+        );
+      }
+    }
+
+    return (
+      <>
+        <Grid container>
+          <Grid sx={{ mt: 6 }}>
+            {nodosHandled()}
+            <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
+            <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
+              {res.nacimiento}
+            </h2>
+          </Grid>
+
+          <Grid item xs={12}>
+            <img
+              style={{ width: "auto", height: "74vh", marginTop: "2vh" }}
+              src={res.img}
+              alt=''
+            />
+          </Grid>
+
+          <Grid xs={10} sx={{ marginTop: "8vh" }}>
+            {parse(res.bio_corta)}
+          </Grid>
+          <Grid xs={10} sx={{ marginBottom: "8vh" }}>
+            {parse(res.txt_largo)}
+          </Grid>
+
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+            {imagenesHandled()}
+          </Grid>
+
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+            {videosHandled()}
+          </Grid>
+
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
+            {sonidosHandled()}
           </Grid>
 
           <Grid>
