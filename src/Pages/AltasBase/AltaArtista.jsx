@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { EditorState } from "draft-js";
@@ -19,6 +19,8 @@ import firebase from "../../Config/firebase";
 import parse from "html-react-parser";
 
 import FInput from "../../Components/Forms/FInput";
+import FInputMultiple from "../../Components/Forms/FInputMultiple";
+
 import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
 import FInputRich from "../../Components/Forms/FInputRich";
@@ -29,47 +31,34 @@ import ImagenesUploads from "../../Components/ImagenesUploads";
 
 import VidUpload from "../../Components/VidUpload";
 import VideosUploads from "../../Components/VideosUploads";
-
 import SonidosUploads from "../../Components/SonidosUploads";
+
+import PdfsUploads from "../../Components/PdfsUploads";
 
 import FormArtista from "../../Components/Forms/FormArtista";
 
-const firestore = getFirestore();
-
 function AltaArtista(props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: {},
-  });
+  let introArtistas = [
+    {
+      value: "FE",
+      nodo: "Fe min is mos",
+    },
+    {
+      value: "ES",
+      nodo: "errEs cenbtánas Sueas",
+    },
+    {
+      value: "DS",
+      nodo: "Das Seisiual dencixes",
+    },
+    {
+      value: "AG",
+      nodo: "ráicón fcAiGca",
+    },
+  ];
 
-  const onSubmit = async (data) => {
-    try {
-      data.img = picSample;
-      data.images = images;
-      data.videos = videos;
-      data.sonidos = sonidos;
-      data.nodos = nodos;
-      data.txt_largo = bioSample;
-      data.bio_corta = introSample;
-      console.log("Data a escribir: ", data);
-      const artistasRef = await firebase.db.collection("artistas").add(data);
-      reset();
-      setEnvio(
-        parse(
-          " <p>La carga se realizó correctamente. Reset para cargar otro documento</p>"
-        )
-      );
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      setEnvio(
-        "Por favor revisá el formulario, la carga no pudo hacerse correctamente"
-      );
-    }
-  };
+  const [loading, setLoading] = useState(true);
+  const [participantesSelect, setParticipantesSelect] = useState([]);
 
   const nodosSelect = [
     {
@@ -90,10 +79,76 @@ function AltaArtista(props) {
     },
   ];
 
+  useEffect(() => {
+    async function fetchData() {
+      let f = [];
+      try {
+        const querySnapshotArtistas = await firebase.db
+          .collection("artistas")
+          .get();
+
+        if (querySnapshotArtistas.docs) {
+          let artistasTemp = [];
+          querySnapshotArtistas.docs.map((query) => {
+            console.log(query.data().nombre);
+            artistasTemp.push({
+              value: String(Math.random()),
+              nodo: query.data().nombre,
+            });
+          });
+
+          setParticipantesSelect(artistasTemp);
+          setLoading(false);
+        }
+      } catch (e) {
+        console.log("ERROR fetchData: ", e);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {},
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      data.img = picSample;
+      data.images = images;
+      data.videos = videos;
+      data.sonidos = sonidos;
+      data.pdfs = pdfs;
+      data.nodos = nodos;
+      data.participantes = participantes;
+      data.txt_largo = bioSample;
+      data.bio_corta = introSample;
+      console.log("Data a escribir: ", data);
+      const artistasRef = await firebase.db.collection("artistas").add(data);
+      reset();
+      setEnvio(
+        parse(
+          " <p>La carga se realizó correctamente. Reset para cargar otro documento</p>"
+        )
+      );
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      setEnvio(
+        "Por favor revisá el formulario, la carga no pudo hacerse correctamente"
+      );
+    }
+  };
+
   const imagesArray = [];
   const videosArray = [];
   const sonidosArray = [];
+  const pdfsArray = [];
   const nodosArray = [];
+  const participantesArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
   const [lugarNacimientoSample, setLugarNacimientoSample] = useState("");
@@ -116,8 +171,15 @@ function AltaArtista(props) {
   const [sonidos, setSonidos] = useState(sonidosArray);
   const [uploadSon, setUploadSon] = useState("");
 
+  const [pdfs, setPdfs] = useState(pdfsArray);
+  const [uploadPdf, setUploadPdf] = useState("");
+  const [piePdf, setPiePdf] = useState("");
+
   const [nodos, setNodos] = useState(nodosArray);
   const [nodoSample, setNodoSample] = useState("");
+
+  const [participantes, setParticipantes] = useState(participantesArray);
+  const [participanteSample, setParticipanteSample] = useState("");
 
   const childReset = useRef(null);
 
@@ -132,10 +194,7 @@ function AltaArtista(props) {
         ...imagesArray,
         { url: uploadImg, pie: pieImg },
       ]);
-      console.log("imagen CARGADA");
       setUploadImg("");
-      console.log("PIE-IMG > ");
-      console.log(pieImg);
       setPieImg("");
     } else {
       console.log("Aguardá a que cargue la imagen");
@@ -162,31 +221,25 @@ function AltaArtista(props) {
     }
   };
 
-  const handleAddNodo = () => {
-    console.log("handleAddNodo > objNodo > ");
-    /*     const objNodo = { nodo: nodoSample.nodo, idNodo: nodoSample.idNodo };
-    console.log(objNodo); 
-     nodosArray.push(nodoSample);
-    */
-
-    console.log("nodoSample ");
-    console.log(nodoSample);
-    setNodos((nodosArray) => [...nodosArray, nodoSample]);
-    console.log("nodosArray ");
-    console.log(nodosArray);
-    console.log("nodos");
-    console.log(nodos);
-    /* if (Boolean(nodoSample)) {
-      setNodos((nodosArray) => [
-        ...nodosArray,
-        { nodo: nodoSample.nodo, idNodo: nodoSample.idNodo },
-      ]);
-      console.log("NODO-CARGAD");
-      console.log(nodosArray);
-      setNodoSample("");
+  const handleAddPdf = () => {
+    if (Boolean(uploadPdf)) {
+      setPdfs((pdfsArray) => [...pdfsArray, { url: uploadPdf, pie: piePdf }]);
+      setUploadPdf("");
+      setPiePdf("");
     } else {
-      console.log("Aguardá a que termine la carga un segundo");
-    } */
+      console.log("Aguardá a que cargue la imagen");
+    }
+  };
+
+  const handleAddNodo = () => {
+    setNodos((nodosArray) => [...nodosArray, nodoSample]);
+  };
+
+  const handleAddParticipante = () => {
+    setParticipantes((participantesArray) => [
+      ...participantesArray,
+      participanteSample,
+    ]);
   };
 
   const handleBio = () => {
@@ -245,250 +298,341 @@ function AltaArtista(props) {
     ));
   }
 
-  return (
-    /* GridRoot */
-    <Grid container>
-      <Grid item xs={12}>
-        <Titulo txt='Alta de Artista' onKeyPress={handleNombre} />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant='h5' sx={{ margin: "2vh 0" }}>
-          Carga de materiales
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sx={{}}>
-        <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-          Imagen principal
-        </Typography>
-        <ImgUpload
-          label='img'
-          register={{
-            ...register("img", { value: picSample }, { required: true }),
-          }}
-          changeInput={(lift) => setPicSample(lift)}
-          principal='true'
-        />
-      </Grid>
-      {/* ////////////////////////////// Galería IMGs */}
-      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
-          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-            Galería Imágenes
-          </Typography>
-          {cargaInicial}
-          {cargasSecundarias}
-        </ul>
+  let cargasPdfsInicial = (
+    <PdfsUploads
+      changeInput={(lift) => setUploadPdf(lift)}
+      changePie={(lift) => setPiePdf(lift)}
+    />
+  );
 
-        <Button
-          variant='contained'
-          type='submit'
-          sx={{ m: 2 }}
-          onClick={handleAddImage}
-        >
-          Añadir a galería
-        </Button>
-      </Grid>
-      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <Typography
-          variant='body'
-          sx={{ marginBottom: "2vh", marginTop: "2vh" }}
-        >
-          Preview img
-        </Typography>
-        <ImageList variant='masonry' cols={3} gap={8}>
-          {images.map((imagen) => (
-            <>
-              <ImageListItem key={imagen.url}>
-                <img
-                  src={`${imagen.url}?w=248&fit=crop&auto=format`}
-                  srcSet={`${imagen.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  loading='lazy'
-                />
-              </ImageListItem>
-            </>
-          ))}
-        </ImageList>
-      </Grid>
-      {/* ////////////////////////////// Galería VIDs */}
-      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
-          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-            Galería Videos
-          </Typography>
-          {cargasVideoInicial}
-          {cargasVideosSecundarios}
-        </ul>
+  let cargasPdfsSecundarios;
+  if (pdfs.length > 0) {
+    cargasPdfsSecundarios = pdfs.map((pdf, index) => (
+      <li key={index}>
+        <PdfsUploads changeInput={(lift) => setUploadPdf(lift)} />
+      </li>
+    ));
+  }
 
-        <Button
-          variant='contained'
-          type='submit'
-          sx={{ m: 2 }}
-          onClick={handleAddVid}
-        >
-          Añadir a galería
-        </Button>
-      </Grid>
-      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <Typography
-          variant='body'
-          sx={{ marginBottom: "2vh", marginTop: "2vh" }}
-        >
-          Preview vids
-        </Typography>
-        <ImageList variant='masonry' cols={2}>
-          {videos.map((video) => (
-            <>
-              <ImageListItem key={video.url}>
-                <video width='320' height='240' controls>
-                  <source
-                    src={`${video.url}?w=248&fit=crop&auto=format`}
-                    type='video/mp4'
+  if (loading) {
+    return <div>loading...</div>;
+  } else {
+    return (
+      /* GridRoot */
+      <Grid container>
+        <Grid item xs={12}>
+          <Titulo txt='Alta de Artista' onKeyPress={handleNombre} />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant='h5' sx={{ margin: "2vh 0" }}>
+            Carga de materiales
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sx={{}}>
+          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+            Imagen principal
+          </Typography>
+          <ImgUpload
+            label='img'
+            register={{
+              ...register("img", { value: picSample }, { required: true }),
+            }}
+            changeInput={(lift) => setPicSample(lift)}
+            principal='true'
+          />
+        </Grid>
+        {/* ////////////////////////////// Galería IMGs */}
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+            <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+              Galería Imágenes
+            </Typography>
+            {cargaInicial}
+            {cargasSecundarias}
+          </ul>
+
+          <Button
+            variant='contained'
+            type='submit'
+            sx={{ m: 2 }}
+            onClick={handleAddImage}
+          >
+            Añadir a galería
+          </Button>
+        </Grid>
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <Typography
+            variant='body'
+            sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+          >
+            Preview img
+          </Typography>
+          <ImageList variant='masonry' cols={3} gap={8}>
+            {images.map((imagen) => (
+              <>
+                <ImageListItem key={imagen.url}>
+                  <img
+                    src={`${imagen.url}?w=248&fit=crop&auto=format`}
+                    srcSet={`${imagen.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    loading='lazy'
                   />
-                </video>
-              </ImageListItem>
-            </>
-          ))}
-        </ImageList>
-      </Grid>
+                </ImageListItem>
+              </>
+            ))}
+          </ImageList>
+        </Grid>
+        {/* ////////////////////////////// Galería VIDs */}
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+            <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+              Galería Videos
+            </Typography>
+            {cargasVideoInicial}
+            {cargasVideosSecundarios}
+          </ul>
 
-      {/* ////////////////////////////// Galería SONs */}
-      <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-        <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
-          <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-            SONIDOS
+          <Button
+            variant='contained'
+            type='submit'
+            sx={{ m: 2 }}
+            onClick={handleAddVid}
+          >
+            Añadir a galería
+          </Button>
+        </Grid>
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <Typography
+            variant='body'
+            sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+          >
+            Preview vids
           </Typography>
-          {cargasSonidoInicial}
-          {cargasSonidosSecundarios}
-        </ul>
+          <ImageList variant='masonry' cols={2}>
+            {videos.map((video) => (
+              <>
+                <ImageListItem key={video.url}>
+                  <video width='320' height='240' controls>
+                    <source
+                      src={`${video.url}?w=248&fit=crop&auto=format`}
+                      type='video/mp4'
+                    />
+                  </video>
+                </ImageListItem>
+              </>
+            ))}
+          </ImageList>
+        </Grid>
 
-        <Button
-          variant='contained'
-          type='submit'
-          sx={{ m: 2 }}
-          onClick={handleAddSon}
-        >
-          Añadir a Sonidos
-        </Button>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        {/* <Typography variant='h5' sx={{ margin: "2vh 0" }}>
+        {/* ////////////////////////////// Galería SONs */}
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+            <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+              SONIDOS
+            </Typography>
+            {cargasSonidoInicial}
+            {cargasSonidosSecundarios}
+          </ul>
+
+          <Button
+            variant='contained'
+            type='submit'
+            sx={{ m: 2 }}
+            onClick={handleAddSon}
+          >
+            Añadir a Sonidos
+          </Button>
+        </Grid>
+
+        {/* ////////////////////////////// Archivos */}
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+            <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+              Archivo
+            </Typography>
+            {cargasPdfsInicial}
+            {cargasPdfsSecundarios}
+          </ul>
+
+          <Button
+            variant='contained'
+            type='submit'
+            sx={{ m: 2 }}
+            onClick={handleAddPdf}
+          >
+            Añadir a Archivo
+          </Button>
+        </Grid>
+
+        <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+          <Typography
+            variant='body'
+            sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+          >
+            Preview Pdfs
+          </Typography>
+          <ImageList variant='masonry' cols={1}>
+            {pdfs.map((pdf) => (
+              <>
+                <Typography>{pdf.pie}</Typography> <br />
+                <object
+                  data={`${pdf.url}?w=248&fit=crop&auto=format`}
+                  width='80%'
+                  height='400px'
+                ></object>
+              </>
+            ))}
+          </ImageList>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          {/* <Typography variant='h5' sx={{ margin: "2vh 0" }}>
           FICHA
         </Typography> */}
-        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-          <FInput
-            xs={6}
-            label='Número de inventario'
-            type='Inventario'
-            register={{ ...register("inventario", { required: true }) }}
-            changeInput={(lift) => setIdSample(lift)}
-          />
-
-          <FInput
-            label='Nombre'
-            type='text'
-            register={{ ...register("nombre", { required: true }) }}
-            changeInput={(lift) => setNombreSample(lift)}
-          />
-
-          <FInput
-            label='Ciudad de nacimiento'
-            type='text'
-            register={{ ...register("ciudad") }}
-            changeInput={(lift) => setLugarNacimientoSample(lift)}
-          />
-
-          <FInput
-            label='País de nacimiento'
-            type='text'
-            register={{ ...register("pais") }}
-            changeInput={(lift) => setLugarNacimientoSample(lift)}
-          />
-          <div>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
             <FInput
-              label='Año de nacimiento'
-              type='int'
-              register={{ ...register("nacimiento") }}
-              changeInput={(lift) => setFechaNacimientoSample(lift)}
+              xs={6}
+              label='Número de inventario'
+              type='Inventario'
+              register={{ ...register("inventario", { required: true }) }}
+              changeInput={(lift) => setIdSample(lift)}
             />
+
             <FInput
-              label='Año de Fallecimiento'
-              type='int'
-              register={{ ...register("fallecimiento") }}
-              changeInput={(lift) => setFechaFallecimientoSample(lift)}
+              label='Nombre'
+              type='text'
+              register={{ ...register("nombre", { required: true }) }}
+              changeInput={(lift) => setNombreSample(lift)}
             />
-          </div>
-          <div>
-            <FInputRich
-              titulo='Bio corta'
-              label='Bio corta'
-              fullwidth
-              register={{ ...register("bio_corta") }}
-              changeInput={(lift) => setIntroSample(lift)}
-              onChange={handleBio}
-              childReset={childReset}
+
+            <FInput
+              label='Ciudad de nacimiento'
+              type='text'
+              register={{ ...register("ciudad") }}
+              changeInput={(lift) => setLugarNacimientoSample(lift)}
             />
-          </div>
-          <div>
-            <FInputRich
-              titulo='Texto largo'
-              label='Texto largo'
-              fullwidth
-              register={{ ...register("txt_largo") }}
-              changeInput={(lift) => setBioSample(lift)}
-              childReset={childReset}
+
+            <FInput
+              label='País de nacimiento'
+              type='text'
+              register={{ ...register("pais") }}
+              changeInput={(lift) => setLugarNacimientoSample(lift)}
             />
-          </div>
-          <div>
-            <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
-              Nodo
-            </Typography>
-            <Stack direction='row' spacing={2} justifyContent='flex-start'>
-              <FSelect
-                display='inline'
-                value='nodo'
-                id='nodo'
-                items={nodosSelect}
-                register={{ ...register("nodo") }}
-                changeInput={(lift) => setNodoSample(lift)}
+            <div>
+              <FInput
+                label='Año de nacimiento'
+                type='int'
+                register={{ ...register("nacimiento") }}
+                changeInput={(lift) => setFechaNacimientoSample(lift)}
               />
-              <Button
-                variant='contained'
-                display='inline'
-                onClick={handleAddNodo}
-              >
-                +
-              </Button>
-            </Stack>
-            {nodos.map((nodo) => (
-              <Typography sx={{ margin: "2vh 0vw" }} key={nodo.nodo}>
-                {nodo.nodo}
-              </Typography>
-            ))}
-          </div>
+              <FInput
+                label='Año de Fallecimiento'
+                type='int'
+                register={{ ...register("fallecimiento") }}
+                changeInput={(lift) => setFechaFallecimientoSample(lift)}
+              />
+            </div>
 
-          <Button variant='contained' type='submit' sx={{ m: 2 }}>
-            Ingresar Artista
-          </Button>
-          <br />
-          <Input type='reset' onClick={handleReset} sx={{ m: 2 }} />
-        </form>
-        {envio}
+            <div>
+              <FInputRich
+                titulo='Bio corta'
+                label='Bio corta'
+                fullwidth
+                register={{ ...register("bio_corta") }}
+                changeInput={(lift) => setIntroSample(lift)}
+                onChange={handleBio}
+                childReset={childReset}
+              />
+            </div>
+            <div>
+              <FInputRich
+                titulo='Texto largo'
+                label='Texto largo'
+                fullwidth
+                register={{ ...register("txt_largo") }}
+                changeInput={(lift) => setBioSample(lift)}
+                childReset={childReset}
+              />
+            </div>
+            <div>
+              <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
+                Nodo
+              </Typography>
+              <Stack direction='row' spacing={2} justifyContent='flex-start'>
+                <FSelect
+                  display='inline'
+                  value='nodo'
+                  id='nodo'
+                  items={nodosSelect}
+                  register={{ ...register("nodo") }}
+                  changeInput={(lift) => setNodoSample(lift)}
+                />
+                <Button
+                  variant='contained'
+                  display='inline'
+                  onClick={handleAddNodo}
+                >
+                  +
+                </Button>
+              </Stack>
+              {nodos.map((nodo) => (
+                <Typography sx={{ margin: "2vh 0vw" }} key={nodo.nodo}>
+                  {nodo.nodo}
+                </Typography>
+              ))}
+            </div>
+            <div>
+              <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
+                Participantes
+              </Typography>
+              <Stack direction='row' spacing={2} justifyContent='flex-start'>
+                <FSelect
+                  display='inline'
+                  value='participante'
+                  id='participante'
+                  items={participantesSelect}
+                  register={{ ...register("participantes") }}
+                  changeInput={(lift) => setParticipanteSample(lift)}
+                />
+                <Button
+                  variant='contained'
+                  display='inline'
+                  onClick={handleAddParticipante}
+                >
+                  +
+                </Button>
+              </Stack>
+              {participantes.map((nodo) => (
+                <Typography sx={{ margin: "2vh 0vw" }} key={nodo.nodo}>
+                  {nodo.nodo}
+                </Typography>
+              ))}
+            </div>
+
+            <Button variant='contained' type='submit' sx={{ m: 2 }}>
+              Ingresar Artista
+            </Button>
+            <br />
+            <Input type='reset' onClick={handleReset} sx={{ m: 2 }} />
+          </form>
+          {envio}
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+          <ArtistaCard
+            title={nombreSample}
+            participantes={participanteSample}
+            nodo={nodoSample}
+            imgSrc={picSample}
+            imgAlt={`preview-img`}
+            categorías={nodoSample}
+            lugarNacimiento={lugarNacimientoSample}
+            fechaNacimiento={fechaNacimientoSample}
+            fechaFallecimiento={fechaFallecmientoSample}
+            introSmall={introSample}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6} lg={3}>
-        <ArtistaCard
-          title={nombreSample}
-          nodo={nodoSample}
-          imgSrc={picSample}
-          imgAlt={`preview-img`}
-          categorías={nodoSample}
-          lugarNacimiento={lugarNacimientoSample}
-          fechaNacimiento={fechaNacimientoSample}
-          fechaFallecimiento={fechaFallecmientoSample}
-          introSmall={introSample}
-        />
-      </Grid>
-    </Grid>
-  );
+    );
+  }
 }
 
 export default AltaArtista;

@@ -175,6 +175,7 @@ function DetalleArtista() {
     const imagenes = res.images;
     const videos = res.videos;
     const sonidos = res.sonidos;
+    const pdfs = res.pdfs;
 
     console.log("res");
     console.log(imagenes);
@@ -226,8 +227,10 @@ function DetalleArtista() {
     }
 
     function imagenesHandled() {
-      if (imagenes === undefined && typeof imagenes == "undefined") {
-        return <Typography> Aquí no hay imágenes : ) </Typography>;
+      if (
+        (imagenes === undefined && typeof imagenes == "undefined") ||
+        imagenes.length <= 0
+      ) {
       } else {
         return (
           <>
@@ -266,8 +269,10 @@ function DetalleArtista() {
     }
 
     function videosHandled() {
-      if (videos === undefined && typeof videos == "undefined") {
-        return <Typography> Aquí no hay videos : ) </Typography>;
+      if (
+        (videos === undefined && typeof videos == "undefined") ||
+        videos.length <= 0
+      ) {
       } else {
         return (
           <>
@@ -289,14 +294,15 @@ function DetalleArtista() {
     }
 
     function sonidosHandled() {
-      console.log("sonidos");
-      console.log(sonidos);
-      if (sonidos === undefined && typeof sonidos == "undefined") {
-        return <Typography> Aquí no hay sonidos : ) </Typography>;
+      if (
+        (sonidos === undefined && typeof sonidos == "undefined") ||
+        sonidos.length <= 0
+      ) {
       } else {
         return (
           <>
             <Typography variant='h6'>Sonidos</Typography>
+            <Typography variant='h6'>X</Typography>
             <Box sx={{ height: "80vh", overflowY: "scroll" }}>
               <ImageList variant='masonry' cols={1}>
                 {sonidos.map((sonido) => (
@@ -310,6 +316,96 @@ function DetalleArtista() {
                 ))}
               </ImageList>
             </Box>
+          </>
+        );
+      }
+    }
+
+    /*  function pdfsHandled() {
+      if (
+        (pdfs === undefined && typeof pdfs == "undefined") ||
+        pdfs.length <= 0
+      ) {
+      } else {
+        return (
+          <>
+            <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+              <Typography
+                variant='body'
+                sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+              >
+                Preview Pdfs
+              </Typography>
+              <ImageList variant='masonry' cols={1}>
+                {pdfs.map((pdf) => (
+                  <>
+                    <Typography>{pdf.pie}</Typography> <br />
+                    <object
+                      data={`${pdf.url}?w=248&fit=crop&auto=format`}
+                      width='80%'
+                    ></object>
+                  </>
+                ))}
+              </ImageList>
+            </Grid>
+          </>
+        );
+      }
+    } */
+
+    function pdfsHandled() {
+      if (
+        (pdfs === undefined && typeof pdfs == "undefined") ||
+        pdfs.length <= 0
+      ) {
+      } else {
+        return (
+          <>
+            <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+              <Typography
+                variant='body'
+                sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+              >
+                Preview Pdfs
+              </Typography>
+              {pdfs.map((pdf) => (
+                <>
+                  <Collapse in={open}>
+                    <Alert
+                      action={
+                        <IconButton
+                          aria-label='close'
+                          color='inherit'
+                          size='big'
+                          onClick={() => {
+                            setOpen(false);
+                          }}
+                        >
+                          <CloseIcon fontSize='inherit' />
+                        </IconButton>
+                      }
+                      sx={{ mb: 2 }}
+                    >
+                      <object
+                        data={`${pdf.url}?w=248&fit=crop&auto=format`}
+                        width='969vw'
+                        height='666vh'
+                      ></object>
+                    </Alert>
+                  </Collapse>
+                  <Button
+                    variant='contained'
+                    disabled={open}
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                    sx={{ width: "100%" }}
+                  >
+                    {pdf.pie}
+                  </Button>
+                </>
+              ))}
+            </Grid>
           </>
         );
       }
@@ -351,6 +447,10 @@ function DetalleArtista() {
 
           <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
             {sonidosHandled()}
+          </Grid>
+
+          <Grid sx={{ marginTop: "2vh", marginBottom: "8vh", width: "100%" }}>
+            {pdfsHandled()}
           </Grid>
 
           <Grid>

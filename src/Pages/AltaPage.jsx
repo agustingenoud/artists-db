@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 import AltaArtista from "../Pages/AltasBase/AltaArtista";
+import AltaObra from "../Pages/AltasBase/AltaObra";
 
 function AltaPage() {
   const [tipo, setTipo] = React.useState(0);
@@ -24,7 +25,7 @@ function AltaPage() {
       case 1:
         return <AltaArtista changeInput={(lift) => setTipo(lift)} />;
       case 2:
-        return <h1>Formulario de carga OBRA</h1>;
+        return <AltaObra changeInput={(lift) => setTipo(lift)} />;
       case 3:
         return <h1>Formulario de carga EVENTO</h1>;
       default:

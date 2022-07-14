@@ -17,17 +17,26 @@ function ExposicionPage() {
     async function fetchData() {
       let f = [];
       try {
-        const querySnapshot = await firebase.db.collection("artistas").get();
-        if (querySnapshot.docs) {
-          querySnapshot.docs.map((query) => {
-            let dataMerge = query.data();
-            dataMerge.id = query.id;
-            f.push(dataMerge);
+        const querySnapshotArtistas = await firebase.db
+          .collection("artistas")
+          .get();
+        const querySnapshotObras = await firebase.db.collection("obras").get();
+        if (querySnapshotArtistas.docs) {
+          querySnapshotArtistas.docs.map((query) => {
+            let dataMergeArtistas = query.data();
+            dataMergeArtistas.id = query.id;
+            f.push(dataMergeArtistas);
           });
-          setFichasGlobal(f);
-          setFichas(f);
-          setLoading(false);
-          /* console.log(f[18].nodos[0].idNodo); */
+          if (querySnapshotObras.docs) {
+            querySnapshotObras.docs.map((query) => {
+              let dataMergeObras = query.data();
+              dataMergeObras.id = query.id;
+              f.push(dataMergeObras);
+            });
+            setFichasGlobal(f);
+            setFichas(f);
+            setLoading(false);
+          }
         }
       } catch (e) {
         console.log("ERROR fetchData: ", e);
