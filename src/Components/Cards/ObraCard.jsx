@@ -20,9 +20,15 @@ import { Link } from "react-router-dom";
 function ObraCard(props) {
   const context = useContext(AuthContext);
 
-  let txt = JSON.parse(props.introSmall).map((line) => (
-    <p>{line.children[0].text}</p>
-  ));
+  let txt = "";
+  console.log("props.introSmall");
+  console.log(props.introSmall);
+  if (props.introSmall <= 0) {
+  } else {
+    let txt = JSON.parse(props.introSmall).map((line) => (
+      <p>{line.children[0].text}</p>
+    ));
+  }
 
   const nodo = props.nodo;
   const color = context.color[nodo];
@@ -44,7 +50,6 @@ function ObraCard(props) {
             <strong>{props.nombre}</strong>
           </Typography>
 
-          {/* {parse(props.introSmall)} */}
           <Typography
             gutterBottom
             variant='body'

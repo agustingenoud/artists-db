@@ -22,7 +22,7 @@ import FInput from "../../Components/Forms/FInput";
 import FInputMultiple from "../../Components/Forms/FInputMultiple";
 import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
-import FInputRich from "../../Components/Forms/FInputRich";
+import FInputRichSlate from "../../Components/Forms/FInputRichSlate";
 import Titulo from "../../Components/Styles/Titulo";
 import ObraCard from "../../Components/Cards/ObraCard";
 import ImgUpload from "../../Components/ImgUpload";
@@ -61,13 +61,13 @@ function AltaObra(props) {
       data.bio_corta = introSample;
       data.participantes = participantes;
       console.log("Data a escribir: ", data);
-      /*  const obrasRef = await firebase.db.collection("obras").add(data);
+      const obrasRef = await firebase.db.collection("obras").add(data);
       reset();
       setEnvio(
         parse(
           " <p>La carga de OBRA se realizó correctamente. Reset para cargar otro documento</p>"
         )
-      ); */
+      );
     } catch (e) {
       console.error("Error adding document: ", e);
       setEnvio(
@@ -520,18 +520,17 @@ function AltaObra(props) {
             </div>
 
             <div>
-              <FInputRich
-                titulo='Texto corto'
-                label='Texto corto'
+              <FInputRichSlate
+                titulo='Bio corta'
+                label='Bio corta'
                 fullwidth
-                register={{ ...register("txt_corto") }}
+                register={{ ...register("bio_corta") }}
                 changeInput={(lift) => setIntroSample(lift)}
-                onChange={handleBio}
                 childReset={childReset}
               />
             </div>
             <div>
-              <FInputRich
+              <FInputRichSlate
                 titulo='Texto largo'
                 label='Texto largo'
                 fullwidth
