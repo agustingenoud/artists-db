@@ -14,6 +14,8 @@ function FSelect(props) {
     };
     setShow(e.target.value);
     /* props.changeInput(e.explicitOriginalTarget.innerText); */
+    console.log("suboData");
+    console.log(suboData);
     props.changeInput(suboData);
   };
 

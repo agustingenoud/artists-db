@@ -38,24 +38,7 @@ import PdfsUploads from "../../Components/PdfsUploads";
 import FormArtista from "../../Components/Forms/FormArtista";
 
 function AltaArtista(props) {
-  let introArtistas = [
-    {
-      value: "FE",
-      nodo: "Fe min is mos",
-    },
-    {
-      value: "ES",
-      nodo: "errEs cenbtánas Sueas",
-    },
-    {
-      value: "DS",
-      nodo: "Das Seisiual dencixes",
-    },
-    {
-      value: "AG",
-      nodo: "ráicón fcAiGca",
-    },
-  ];
+  let introArtistas = [];
 
   const [loading, setLoading] = useState(true);
   const [participantesSelect, setParticipantesSelect] = useState([]);
@@ -92,7 +75,7 @@ function AltaArtista(props) {
           querySnapshotArtistas.docs.map((query) => {
             console.log(query.data().nombre);
             artistasTemp.push({
-              value: String(Math.random()),
+              value: query.id,
               nodo: query.data().nombre,
             });
           });
