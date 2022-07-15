@@ -15,8 +15,6 @@ import { Typography } from "@mui/material";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function FInputRich(props) {
-  console.log("props content - FInput   >  ");
-  console.log(props);
   const [editorState, setEditorState] = useState(() =>
     /* EditorState.createEmpty() */
     EditorState.createWithContent(

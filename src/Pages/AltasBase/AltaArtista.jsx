@@ -24,6 +24,7 @@ import FInputMultiple from "../../Components/Forms/FInputMultiple";
 import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
 import FInputRich from "../../Components/Forms/FInputRich";
+import FInputRichSlate from "../../Components/Forms/FInputRichSlate";
 import Titulo from "../../Components/Styles/Titulo";
 import ArtistaCard from "../../Components/Cards/ArtistaCard";
 import ImgUpload from "../../Components/ImgUpload";
@@ -227,7 +228,7 @@ function AltaArtista(props) {
 
   const handleBio = () => {
     console.log("bioSample  > ");
-    console.log(introSample);
+    console.log(bioSample);
   };
 
   const handleReset = () => {
@@ -516,18 +517,17 @@ function AltaArtista(props) {
             </div>
 
             <div>
-              <FInputRich
+              <FInputRichSlate
                 titulo='Bio corta'
                 label='Bio corta'
                 fullwidth
                 register={{ ...register("bio_corta") }}
                 changeInput={(lift) => setIntroSample(lift)}
-                onChange={handleBio}
                 childReset={childReset}
               />
             </div>
             <div>
-              <FInputRich
+              <FInputRichSlate
                 titulo='Texto largo'
                 label='Texto largo'
                 fullwidth

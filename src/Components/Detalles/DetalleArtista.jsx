@@ -321,38 +321,6 @@ function DetalleArtista() {
       }
     }
 
-    /*  function pdfsHandled() {
-      if (
-        (pdfs === undefined && typeof pdfs == "undefined") ||
-        pdfs.length <= 0
-      ) {
-      } else {
-        return (
-          <>
-            <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-              <Typography
-                variant='body'
-                sx={{ marginBottom: "2vh", marginTop: "2vh" }}
-              >
-                Preview Pdfs
-              </Typography>
-              <ImageList variant='masonry' cols={1}>
-                {pdfs.map((pdf) => (
-                  <>
-                    <Typography>{pdf.pie}</Typography> <br />
-                    <object
-                      data={`${pdf.url}?w=248&fit=crop&auto=format`}
-                      width='80%'
-                    ></object>
-                  </>
-                ))}
-              </ImageList>
-            </Grid>
-          </>
-        );
-      }
-    } */
-
     function pdfsHandled() {
       if (
         (pdfs === undefined && typeof pdfs == "undefined") ||
@@ -411,6 +379,14 @@ function DetalleArtista() {
       }
     }
 
+    let txt_largo = JSON.parse(res.txt_largo).map((line) => (
+      <p>{line.children[0].text}</p>
+    ));
+
+    let bio_corta = JSON.parse(res.bio_corta).map((line) => (
+      <p>{line.children[0].text}</p>
+    ));
+
     return (
       <>
         <Grid container>
@@ -431,10 +407,12 @@ function DetalleArtista() {
           </Grid>
 
           <Grid xs={10} sx={{ marginTop: "8vh" }}>
-            {parse(res.bio_corta)}
+            {/* {parse(res.bio_corta)} */}
+            <Typography>{bio_corta}</Typography>
           </Grid>
           <Grid xs={10} sx={{ marginBottom: "8vh" }}>
-            {parse(res.txt_largo)}
+            {/* {parse(res.txt_largo)} */}
+            <Typography>{txt_largo}</Typography>
           </Grid>
 
           <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>

@@ -408,6 +408,14 @@ function DetalleObra() {
       }
     }
 
+    let txt_largo = JSON.parse(res.txt_largo).map((line) => (
+      <p>{line.children[0].text}</p>
+    ));
+
+    let bio_corta = JSON.parse(res.bio_corta).map((line) => (
+      <p>{line.children[0].text}</p>
+    ));
+
     return (
       <>
         <Grid container>
@@ -428,10 +436,12 @@ function DetalleObra() {
           </Grid>
 
           <Grid xs={10} sx={{ marginTop: "8vh" }}>
-            {parse(res.bio_corta)}
+            {/* {parse(res.bio_corta)} */}
+            <Typography>{bio_corta}</Typography>
           </Grid>
           <Grid xs={10} sx={{ marginBottom: "8vh" }}>
-            {parse(res.txt_largo)}
+            {/* {parse(res.txt_largo)} */}
+            <Typography>{txt_largo}</Typography>
           </Grid>
 
           <Grid sx={{ marginTop: "2vh", marginBottom: "8vh" }}>
