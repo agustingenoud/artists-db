@@ -58,7 +58,7 @@ function AltaObra(props) {
       data.nodos = nodos;
       data.txt_largo = bioSample;
       data.txt_corto = introSample;
-      data.bio_corta = "bio_corta_hack";
+      data.bio_corta = introSample;
       console.log("Data a escribir: ", data);
       const obrasRef = await firebase.db.collection("obras").add(data);
       reset();

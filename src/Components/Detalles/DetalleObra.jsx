@@ -158,10 +158,7 @@ function DetalleObra() {
 
   const handleDelete = async () => {
     try {
-      const document = await firebase.db
-        .collection("artistas")
-        .doc(id)
-        .delete();
+      const document = await firebase.db.collection("obras").doc(id).delete();
       console.log("handleDelete ", document);
       navigate("/");
     } catch (e) {
