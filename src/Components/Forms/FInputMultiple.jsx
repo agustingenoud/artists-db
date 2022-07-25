@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  InputLabel,
-  Input,
-  Autocomplete,
-  TextField,
-  Button,
-} from "@mui/material";
+import { InputLabel, Autocomplete, TextField, Button } from "@mui/material";
 
 function FInputMultiple(props) {
   const top100Films = [
@@ -23,10 +17,10 @@ function FInputMultiple(props) {
     { label: "The Good, the Bad and the Ugly", year: 1966 },
     { label: "Fight Club", year: 1999 },
   ];
-
+  /* 
   const onInputChange = (e) => {
     props.changeInput(e.target.value);
-  };
+  }; */
 
   return (
     <>

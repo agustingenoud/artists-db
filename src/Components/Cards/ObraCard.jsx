@@ -2,18 +2,14 @@ import { useContext } from "react";
 import AuthContext from "../../Context/AuthContext";
 
 import {
-  Button,
   CardActionArea,
   CardActions,
   Typography,
   CardMedia,
   CardContent,
   Card,
-  CardHeader,
   Box,
 } from "@mui/material";
-
-import parse from "html-react-parser";
 
 import { Link } from "react-router-dom";
 

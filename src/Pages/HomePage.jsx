@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import ArtistaCard from "../Components/Cards/ArtistaCard";
 import ObraCard from "../Components/Cards/ObraCard";
 
-import ExpoCards from "../Components/Cards/ExpoCards";
 import Sliders from "../Components/Sliders";
 
-import { Button, ButtonGroup, Grid, Typography, Box } from "@mui/material";
+import { Button, ButtonGroup, Grid } from "@mui/material";
 
 import firebase from "../Config/firebase";
 

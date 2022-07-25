@@ -1,5 +1,5 @@
 import React from "react";
-import { InputLabel, Input, Box } from "@mui/material";
+import { InputLabel, Input } from "@mui/material";
 
 function FInput(props) {
   const onInputChange = (e) => {

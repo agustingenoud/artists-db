@@ -11,13 +11,8 @@ import { useForm } from "react-hook-form";
 import parse from "html-react-parser";
 
 import FInput from "../../Components/Forms/FInput";
-import FTexto from "../../Components/Forms/FTexto";
 import FSelect from "../../Components/Forms/FSelect";
 import FInputRich from "../../Components/Forms/FInputRich";
-import Titulo from "../../Components/Styles/Titulo";
-import ArtistaCard from "../../Components/Cards/ArtistaCard";
-import ImgUpload from "../../Components/ImgUpload";
-import ImagenesUploads from "../../Components/ImagenesUploads";
 
 import {
   Button,

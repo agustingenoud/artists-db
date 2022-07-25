@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { clearEditorContent } from "draftjs-utils";
 import {
@@ -8,7 +8,6 @@ import {
   convertFromHTML,
 } from "draft-js";
 import draftToHtml from "draftjs-to-html";
-import parse from "html-react-parser";
 
 import { Typography } from "@mui/material";
 
