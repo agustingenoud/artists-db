@@ -29,8 +29,8 @@ function Sliders() {
           son representados socialmente.
         </Typography>
       </Grid>
-      <Grid item xs={12} md={5} lg={5}>
-        <img src='https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2Fimg-intro.png?alt=media&token=e0eb0b83-24e1-48fd-9ad0-00b61d98095e'></img>
+      <Grid item xs={12} md={5} lg={5} sx={{ widht: "10%" }}>
+        <img src='https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2Fslider_test.png?alt=media&token=4577c485-83ec-49de-bf76-97070134e16d'></img>
       </Grid>
     </Grid>
   );
