@@ -547,7 +547,7 @@ function DetalleArtista() {
                         changeInput={(lift) => setBioSample(lift)}
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <FSelect
                         value='nodo'
                         id='nodo'
@@ -556,7 +556,7 @@ function DetalleArtista() {
                         register={{ ...register("nodo") }}
                         changeInput={(lift) => setNodoSample(lift)}
                       />
-                    </div>
+                    </div> */}
 
                     <Button variant='contained' type='submit' sx={{ m: 2 }}>
                       Ingresar Artista
