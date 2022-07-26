@@ -15,8 +15,6 @@ import { Link } from "react-router-dom";
 
 function ArtistaCard(props) {
   const context = useContext(AuthContext);
-  console.log("props artistaCard");
-  console.log(props);
 
   const nodo = props.nodo;
   const color = context.color[nodo];

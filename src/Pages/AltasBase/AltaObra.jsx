@@ -503,6 +503,7 @@ function AltaObra(props) {
                   items={participantesSelect}
                   register={{ ...register("participantes") }}
                   changeInput={(lift) => setParticipanteSample(lift)}
+                  nodo='False'
                 />
                 <Button
                   variant='contained'
@@ -551,6 +552,7 @@ function AltaObra(props) {
                   items={nodosSelect}
                   register={{ ...register("nodo") }}
                   changeInput={(lift) => setNodoSample(lift)}
+                  nodo='True'
                 />
                 <Button
                   variant='contained'

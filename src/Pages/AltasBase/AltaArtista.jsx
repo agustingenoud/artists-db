@@ -548,6 +548,7 @@ function AltaArtista(props) {
                   items={nodosSelect}
                   register={{ ...register("nodo") }}
                   changeInput={(lift) => setNodoSample(lift)}
+                  nodo='True'
                 />
                 <Button
                   variant='contained'
@@ -575,6 +576,7 @@ function AltaArtista(props) {
                   items={participantesSelect}
                   register={{ ...register("participantes") }}
                   changeInput={(lift) => setParticipanteSample(lift)}
+                  nodo='False'
                 />
                 <Button
                   variant='contained'

@@ -13,7 +13,7 @@ import { Typography, Box } from "@mui/material";
 const initialValue = [
   {
     type: "paragraph",
-    children: [{ text: "A line of text in a paragraph." }],
+    children: [{ text: "Introducir Texto" }],
   },
 ];
 

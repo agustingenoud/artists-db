@@ -62,6 +62,7 @@ function ExposicionPage() {
     let fichasTemp = [];
     let obrasTemp = [];
 
+    console.log("fichasGlobal");
     console.log(fichasGlobal);
     try {
       fichasGlobal.map((ficha) => {
@@ -74,12 +75,12 @@ function ExposicionPage() {
             console.log("ficha.nodos");
             console.log(ficha.nodos[0].idNodo);
             fichasTemp.push(ficha);
+            setFichas(fichasTemp);
+            console.log("fichasTemp");
+            console.log(fichasTemp);
           }
         }
       });
-      setFichas(fichasTemp);
-      console.log("fichasTemp");
-      console.log(fichasTemp);
 
       obrasGlobal.map((obra) => {
         if (obra.nodos === undefined && typeof obra.nodos == "undefined") {
@@ -89,10 +90,10 @@ function ExposicionPage() {
             console.log("ficha.nodos");
             console.log(obra.nodos[0].idNodo);
             obrasTemp.push(obra);
+            setObras(obrasTemp);
           }
         }
       });
-      setObras(obrasTemp);
     } catch (e) {
       console.log(e);
     }
