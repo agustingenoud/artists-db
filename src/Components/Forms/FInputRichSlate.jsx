@@ -10,7 +10,7 @@ import parse from "html-react-parser";
 
 import { Typography, Box } from "@mui/material";
 
-const initialValue = [
+let initialValue = [
   {
     type: "paragraph",
     children: [{ text: "Introducir Texto" }],
@@ -18,7 +18,13 @@ const initialValue = [
 ];
 
 function FInputRich(props) {
+  console.log("props.content");
+  console.log(props.content);
   const [editor] = useState(() => withReact(createEditor()));
+
+  if (props.content) {
+    initialValue = JSON.parse(props.content);
+  }
 
   return (
     <>

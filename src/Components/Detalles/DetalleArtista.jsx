@@ -12,7 +12,7 @@ import parse from "html-react-parser";
 
 import FInput from "../../Components/Forms/FInput";
 import FSelect from "../../Components/Forms/FSelect";
-import FInputRich from "../../Components/Forms/FInputRich";
+import FInputRichSlate from "../../Components/Forms/FInputRichSlate";
 
 import {
   Button,
@@ -85,7 +85,6 @@ function DetalleArtista() {
   const onSubmit = async (data) => {
     try {
       data.img = picSample;
-      data.images = images;
       data.txt_largo = bioSample;
       data.bio_corta = introSample;
       console.log("Data a escribir: ", data);
@@ -230,7 +229,7 @@ function DetalleArtista() {
         return (
           <>
             <Typography variant='h6'>Galería</Typography>
-            <Box sx={{ height: "80vh", overflowY: "scroll" }}>
+            <Box sx={{ width: "60vmax", overflowY: "scroll" }}>
               <ImageList variant='masonry' cols={3} gap={8}>
                 {imagenes.map((imagen) => (
                   <Zoom>
@@ -384,7 +383,7 @@ function DetalleArtista() {
 
     return (
       <>
-        <Grid container>
+        <Grid>
           <Grid sx={{ mt: 6 }}>
             {nodosHandled()}
             <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
@@ -395,7 +394,7 @@ function DetalleArtista() {
 
           <Grid item xs={12}>
             <img
-              style={{ width: "auto", height: "74vh", marginTop: "2vh" }}
+              style={{ width: "auto", marginTop: "2vh" }}
               src={res.img}
               alt=''
             />
@@ -478,87 +477,92 @@ function DetalleArtista() {
                     </Button>
                   </Box>
                 </p>
-
-                <h1>EDITAR ENTRADA</h1>
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  style={{ width: "100%" }}
-                >
-                  <FInput
-                    xs={6}
-                    label='Número de inventario'
-                    type='Inventario'
-                    register={{ ...register("inventario", { required: true }) }}
-                    changeInput={(lift) => setIdSample(lift)}
-                  />
-
-                  <FInput
-                    label='Nombre'
-                    type='text'
-                    register={{ ...register("nombre", { required: true }) }}
-                    changeInput={(lift) => setNombreSample(lift)}
-                  />
-
-                  <FInput
-                    label='Ciudad de nacimiento'
-                    type='text'
-                    register={{ ...register("ciudad") }}
-                    changeInput={(lift) => setLugarNacimientoSample(lift)}
-                  />
-
-                  <FInput
-                    label='País de nacimiento'
-                    type='text'
-                    register={{ ...register("pais") }}
-                    changeInput={(lift) => setLugarNacimientoSample(lift)}
-                  />
-                  <div>
+                <Box sx={{ width: "100%" }}>
+                  <h1>EDITAR ENTRADA</h1>
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    style={{ width: "100%" }}
+                  >
                     <FInput
-                      label='Fecha de nacimiento'
-                      type='int'
-                      register={{ ...register("nacimiento") }}
-                      changeInput={(lift) => setFechaNacimientoSample(lift)}
+                      xs={6}
+                      label='Número de inventario'
+                      type='Inventario'
+                      register={{
+                        ...register("inventario", { required: true }),
+                      }}
+                      changeInput={(lift) => setIdSample(lift)}
                     />
-                    <FInput
-                      label='Fecha de Fallecimiento'
-                      type='int'
-                      register={{ ...register("fallecimiento") }}
-                      changeInput={(lift) => setFechaFallecimientoSample(lift)}
-                    />
-                  </div>
-                  <div>
-                    <FInputRich
-                      label='bio_corta'
-                      fullwidth
-                      register={{ ...register("bio_corta") }}
-                      changeInput={(lift) => setIntroSample(lift)}
-                      onChange={handleBio}
-                      content={res.bio_corta}
-                    />
-                  </div>
-                  <div>
-                    <FInputRich
-                      label='Texto largo'
-                      fullwidth
-                      register={{ ...register("txt_largo") }}
-                      changeInput={(lift) => setBioSample(lift)}
-                    />
-                  </div>
-                  <div>
-                    <FSelect
-                      value='nodo'
-                      id='nodo'
-                      label='nodo'
-                      items={nodosSelect}
-                      register={{ ...register("nodo") }}
-                      changeInput={(lift) => setNodoSample(lift)}
-                    />
-                  </div>
 
-                  <Button variant='contained' type='submit' sx={{ m: 2 }}>
-                    Ingresar Artista
-                  </Button>
-                </form>
+                    <FInput
+                      label='Nombre'
+                      type='text'
+                      register={{ ...register("nombre", { required: true }) }}
+                      changeInput={(lift) => setNombreSample(lift)}
+                    />
+
+                    <FInput
+                      label='Ciudad de nacimiento'
+                      type='text'
+                      register={{ ...register("ciudad") }}
+                      changeInput={(lift) => setLugarNacimientoSample(lift)}
+                    />
+
+                    <FInput
+                      label='País de nacimiento'
+                      type='text'
+                      register={{ ...register("pais") }}
+                      changeInput={(lift) => setLugarNacimientoSample(lift)}
+                    />
+                    <div>
+                      <FInput
+                        label='Fecha de nacimiento'
+                        type='int'
+                        register={{ ...register("nacimiento") }}
+                        changeInput={(lift) => setFechaNacimientoSample(lift)}
+                      />
+                      <FInput
+                        label='Fecha de Fallecimiento'
+                        type='int'
+                        register={{ ...register("fallecimiento") }}
+                        changeInput={(lift) =>
+                          setFechaFallecimientoSample(lift)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <FInputRichSlate
+                        label='bio_corta'
+                        fullwidth
+                        register={{ ...register("bio_corta") }}
+                        changeInput={(lift) => setIntroSample(lift)}
+                        onChange={handleBio}
+                        content={res.bio_corta}
+                      />
+                    </div>
+                    <div>
+                      <FInputRichSlate
+                        label='Texto largo'
+                        fullwidth
+                        register={{ ...register("txt_largo") }}
+                        changeInput={(lift) => setBioSample(lift)}
+                      />
+                    </div>
+                    <div>
+                      <FSelect
+                        value='nodo'
+                        id='nodo'
+                        label='nodo'
+                        items={nodosSelect}
+                        register={{ ...register("nodo") }}
+                        changeInput={(lift) => setNodoSample(lift)}
+                      />
+                    </div>
+
+                    <Button variant='contained' type='submit' sx={{ m: 2 }}>
+                      Ingresar Artista
+                    </Button>
+                  </form>
+                </Box>
               </>
             )}
           </Grid>
