@@ -46,12 +46,16 @@ function DetalleArtista() {
   const navigate = useNavigate();
 
   const imagesArray = [];
+  const videosArray = [];
+  const sonidosArray = [];
+  const pdfsArray = [];
+  const nodosArray = [];
+  const participantesArray = [];
 
   const [nombreSample, setNombreSample] = useState("");
   const [lugarNacimientoSample, setLugarNacimientoSample] = useState("");
   const [fechaNacimientoSample, setFechaNacimientoSample] = useState("");
   const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState("");
-  const [nodoSample, setNodoSample] = useState("");
   const [bioSample, setBioSample] = useState("");
   const [introSample, setIntroSample] = useState("");
   const [idSample, setIdSample] = useState("");
@@ -63,6 +67,24 @@ function DetalleArtista() {
 
   const [images, setImages] = useState(imagesArray);
   const [uploadImg, setUploadImg] = useState("");
+  const [pieImg, setPieImg] = useState("");
+
+  const [videos, setVideos] = useState(videosArray);
+  const [uploadVid, setUploadVid] = useState("");
+
+  const [sonidos, setSonidos] = useState(sonidosArray);
+  const [uploadSon, setUploadSon] = useState("");
+
+  const [pdfs, setPdfs] = useState(pdfsArray);
+  const [uploadPdf, setUploadPdf] = useState("");
+  const [piePdf, setPiePdf] = useState("");
+
+  const [nodos, setNodos] = useState(nodosArray);
+  const [nodoSample, setNodoSample] = useState("");
+
+  const [participantes, setParticipantes] = useState(participantesArray);
+  const [participanteSample, setParticipanteSample] = useState("");
+
   const nodosSelect = [
     {
       value: "FE",
@@ -84,9 +106,57 @@ function DetalleArtista() {
 
   const onSubmit = async (data) => {
     try {
-      data.img = picSample;
-      data.txt_largo = bioSample;
-      data.bio_corta = introSample;
+      if (picSample) {
+        data.img = picSample;
+      } else {
+        data.img = res.img;
+      }
+
+      if (images) {
+        data.imgages = images;
+      } else {
+        data.imgages = res.images;
+      }
+      if (res.videos) {
+        data.videos = res.videos;
+      } else {
+        data.videos = "";
+      }
+
+      if (res.sonidos) {
+        data.sonidos = res.sonidos;
+      } else {
+        data.sonidos = "";
+      }
+
+      if (res.pdfs) {
+        data.pdfs = res.pdfs;
+      } else {
+        data.pdfs = "";
+      }
+
+      if (res.nodos) {
+        data.nodos = res.nodos;
+      } else {
+        data.nodos = "";
+      }
+      if (res.participantes) {
+        data.participantes = res.participantes;
+      } else {
+        data.participantes = "";
+      }
+
+      if (bioSample) {
+        data.txt_largo = bioSample;
+      } else {
+        data.txt_largo = res.txt_largo;
+      }
+
+      if (introSample) {
+        data.bio_corta = introSample;
+      } else {
+        data.bio_corta = res.bio_corta;
+      }
       console.log("Data a escribir: ", data);
       const artistasRef = await firebase.db
         .collection("artistas")
@@ -545,21 +615,13 @@ function DetalleArtista() {
                         fullwidth
                         register={{ ...register("txt_largo") }}
                         changeInput={(lift) => setBioSample(lift)}
+                        content={res.txt_largo}
+                        sx={{ height: "80vh" }}
                       />
                     </div>
-                    {/* <div>
-                      <FSelect
-                        value='nodo'
-                        id='nodo'
-                        label='nodo'
-                        items={nodosSelect}
-                        register={{ ...register("nodo") }}
-                        changeInput={(lift) => setNodoSample(lift)}
-                      />
-                    </div> */}
 
                     <Button variant='contained' type='submit' sx={{ m: 2 }}>
-                      Ingresar Artista
+                      Modificar Artista
                     </Button>
                   </form>
                 </Box>
