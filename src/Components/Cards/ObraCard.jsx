@@ -16,14 +16,16 @@ import { Link } from "react-router-dom";
 function ObraCard(props) {
   const context = useContext(AuthContext);
 
-  let txt = "";
   console.log("props.introSmall");
   console.log(props.introSmall);
-  if (props.introSmall <= 0) {
-  } else {
-    let txt = JSON.parse(props.introSmall).map((line) => (
+
+  let txt = "";
+
+  if (props.introSmall) {
+    txt = JSON.parse(props.introSmall).map((line) => (
       <p>{line.children[0].text}</p>
     ));
+  } else {
   }
 
   const nodo = props.nodo;
