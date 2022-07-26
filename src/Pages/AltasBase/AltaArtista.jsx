@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
-import { EditorState } from "draft-js";
 
 import {
   Button,
@@ -13,7 +12,6 @@ import {
   Stack,
 } from "@mui/material";
 
-import { getFirestore } from "firebase/firestore";
 import firebase from "../../Config/firebase";
 
 import parse from "html-react-parser";
