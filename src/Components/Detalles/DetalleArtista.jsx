@@ -30,6 +30,7 @@ import {
   Alert,
   Collapse,
   IconButton,
+  Stack,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -141,11 +142,6 @@ function DetalleArtista() {
         data.pdfs = "";
       }
 
-      if (res.nodos) {
-        data.nodos = res.nodos;
-      } else {
-        data.nodos = "";
-      }
       if (res.participantes) {
         data.participantes = res.participantes;
       } else {
@@ -163,6 +159,8 @@ function DetalleArtista() {
       } else {
         data.bio_corta = res.bio_corta;
       }
+      data.nodos = nodos;
+
       console.log("Data a escribir: ", data);
       const artistasRef = await firebase.db
         .collection("artistas")
@@ -231,6 +229,13 @@ function DetalleArtista() {
 
   const handleAddNodo = () => {
     setNodos((nodosArray) => [...nodosArray, nodoSample]);
+    console.log("//////////////////////");
+    console.log("nodoSample");
+    console.log(nodoSample);
+    console.log("nodosArray");
+    console.log(nodosArray);
+    console.log("nodos");
+    console.log(nodos);
   };
 
   const handleAddParticipante = () => {
@@ -343,7 +348,8 @@ function DetalleArtista() {
           setValue("nombre", querySnapshot.data().nombre);
           setValue("pais", querySnapshot.data().pais);
           setValue("txt_largo", querySnapshot.data().txt_largo);
-          /*setValue("nodos", querySnapshot.data().nodos);*/
+
+          setNodos(querySnapshot.data().nodos);
         }
       } catch (e) {
         console.log("ERROR fetchData: ", e);
@@ -377,21 +383,23 @@ function DetalleArtista() {
     console.log(imagenes);
 
     function isNodos() {
-      return res.nodos.map((nodo) => (
-        <>
-          <Typography
-            display='inline'
-            sx={{
-              mr: 1,
-              padding: "0px 0.4vw",
-              color: "white",
-              backgroundColor: context.color[nodo.idNodo],
-            }}
-          >
-            {nodo.nodo}
-          </Typography>
-        </>
-      ));
+      if (res.nodos != "") {
+        return res.nodos.map((nodo) => (
+          <>
+            <Typography
+              display='inline'
+              sx={{
+                mr: 1,
+                padding: "0px 0.4vw",
+                color: "white",
+                backgroundColor: context.color[nodo.idNodo],
+              }}
+            >
+              {nodo.nodo}
+            </Typography>
+          </>
+        ));
+      }
     }
 
     function notNodos() {
@@ -413,9 +421,7 @@ function DetalleArtista() {
     }
 
     function nodosHandled() {
-      const dataNodos = res.nodos;
-
-      if (dataNodos) {
+      if (nodos) {
         return isNodos();
       } else {
         return notNodos();
@@ -918,7 +924,38 @@ function DetalleArtista() {
                         sx={{ height: "80vh" }}
                       />
                     </div>
-
+                    <div>
+                      <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
+                        Nodo
+                      </Typography>
+                      <Stack
+                        direction='row'
+                        spacing={2}
+                        justifyContent='flex-start'
+                      >
+                        <FSelect
+                          display='inline'
+                          value='nodo'
+                          id='nodo'
+                          items={nodosSelect}
+                          register={{ ...register("nodo") }}
+                          changeInput={(lift) => setNodoSample(lift)}
+                          nodo='True'
+                        />
+                        <Button
+                          variant='contained'
+                          display='inline'
+                          onClick={handleAddNodo}
+                        >
+                          +
+                        </Button>
+                      </Stack>
+                      {nodos.map((nodo) => (
+                        <Typography sx={{ margin: "2vh 0vw" }} key={nodo.nodo}>
+                          {nodo.nodo}
+                        </Typography>
+                      ))}
+                    </div>
                     <Button variant='contained' type='submit' sx={{ m: 2 }}>
                       Modificar Artista
                     </Button>

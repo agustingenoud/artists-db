@@ -31,6 +31,7 @@ import {
   Alert,
   Collapse,
   IconButton,
+  Stack,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -61,8 +62,6 @@ function DetalleObra() {
 
   const [nombreSample, setNombreSample] = useState("");
   const [fechaRealizacionSample, setFechaRealizacionSample] = useState("");
-  const [fechaNacimientoSample, setFechaNacimientoSample] = useState("");
-  const [fechaFallecmientoSample, setFechaFallecimientoSample] = useState("");
   const [bioSample, setBioSample] = useState("");
   const [introSample, setIntroSample] = useState("");
   const [idSample, setIdSample] = useState("");
@@ -148,11 +147,6 @@ function DetalleObra() {
         data.pdfs = "";
       }
 
-      if (res.nodos) {
-        data.nodos = res.nodos;
-      } else {
-        data.nodos = "";
-      }
       if (res.participantes) {
         data.participantes = res.participantes;
       } else {
@@ -170,6 +164,7 @@ function DetalleObra() {
       } else {
         data.bio_corta = res.bio_corta;
       }
+      data.nodos = nodos;
       console.log("Data a escribir: ", data);
       const artistasRef = await firebase.db
         .collection("obras")
@@ -237,7 +232,16 @@ function DetalleObra() {
   };
 
   const handleAddNodo = () => {
+    /*  nodosArray.push(nodoSample); */
+    /* setNodos(nodosArray); */
     setNodos((nodosArray) => [...nodosArray, nodoSample]);
+    console.log("//////////////////////");
+    console.log("nodoSample");
+    console.log(nodoSample);
+    console.log("nodosArray");
+    console.log(nodosArray);
+    console.log("nodos");
+    console.log(nodos);
   };
 
   const handleAddParticipante = () => {
@@ -337,10 +341,11 @@ function DetalleObra() {
           setValue("images", querySnapshot.data().images);
           setValue("img", querySnapshot.data().img);
           setValue("inventario", querySnapshot.data().inventario);
-          setValue("nacimiento", querySnapshot.data().realizacion);
+          setValue("realizacion", querySnapshot.data().realizacion);
           setValue("nombre", querySnapshot.data().nombre);
           setValue("txt_largo", querySnapshot.data().txt_largo);
-          /*setValue("nodos", querySnapshot.data().nodos);*/
+
+          setNodos(querySnapshot.data().nodos);
         }
       } catch (e) {
         console.log("ERROR fetchData: ", e);
@@ -407,9 +412,7 @@ function DetalleObra() {
     }
 
     function nodosHandled() {
-      const dataNodos = res.nodos;
-
-      if (dataNodos) {
+      if (nodos) {
         return isNodos();
       } else {
         return notNodos();
@@ -897,9 +900,10 @@ function DetalleObra() {
                   <FInput
                     label='Año de realización'
                     type='int'
-                    register={{ ...register("nacimiento") }}
+                    register={{ ...register("realizacion") }}
                     changeInput={(lift) => setFechaRealizacionSample(lift)}
                   />
+
                   <div>
                     <FInputRichSlate
                       label='bio_corta'
@@ -920,7 +924,38 @@ function DetalleObra() {
                       sx={{ height: "80vh" }}
                     />
                   </div>
-
+                  <div>
+                    <Typography variant='h5' sx={{ margin: "2vh 0vw" }}>
+                      Nodo
+                    </Typography>
+                    <Stack
+                      direction='row'
+                      spacing={2}
+                      justifyContent='flex-start'
+                    >
+                      <FSelect
+                        display='inline'
+                        value='nodo'
+                        id='nodo'
+                        items={nodosSelect}
+                        register={{ ...register("nodo") }}
+                        changeInput={(lift) => setNodoSample(lift)}
+                        nodo='True'
+                      />
+                      <Button
+                        variant='contained'
+                        display='inline'
+                        onClick={handleAddNodo}
+                      >
+                        +
+                      </Button>
+                    </Stack>
+                    {nodos.map((nodo) => (
+                      <Typography sx={{ margin: "2vh 0vw" }} key={nodo.nodo}>
+                        {nodo.nodo}
+                      </Typography>
+                    ))}
+                  </div>
                   <Button variant='contained' type='submit' sx={{ m: 2 }}>
                     Modificar Obra
                   </Button>
