@@ -18,9 +18,12 @@ function ArtistaCard(props) {
   console.log("ArtistaCard props");
   console.log(props);
 
-  let bio_corta = JSON.parse(props.introSmall).map((line) => (
-    <p>{line.children[0].text}</p>
-  ));
+  let bio_corta = "";
+  if (props.introSmall) {
+    bio_corta = JSON.parse(props.introSmall).map((line) => (
+      <p>{line.children[0].text}</p>
+    ));
+  }
 
   const nodo = props.nodo;
   const color = context.color[nodo];
