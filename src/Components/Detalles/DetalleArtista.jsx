@@ -602,7 +602,7 @@ function DetalleArtista() {
 
           <Grid xs={10} sx={{ marginTop: "8vh" }}>
             <img
-              style={{ width: "100%", marginTop: "2vh" }}
+              style={{ width: "50%", marginTop: "2vh" }}
               src={res.img}
               alt=''
             />
