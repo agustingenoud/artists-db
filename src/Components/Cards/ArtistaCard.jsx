@@ -65,7 +65,7 @@ function ArtistaCard(props) {
             sx={{ color: color, textDecoration: "none" }}
           >
             {" "}
-            ver más...{" "}
+            ver más &rarr;{" "}
           </Typography>
         </Link>
       </CardActions>

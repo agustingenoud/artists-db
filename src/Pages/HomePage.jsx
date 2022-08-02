@@ -233,6 +233,7 @@ function ExposicionPage() {
           {obras.map((obra) => (
             <Grid item xs={12} md={6} lg={3}>
               <ObraCard
+                ficha={obra}
                 nombre={obra.nombre}
                 imgSrc={obra.img}
                 nodo={obra.nodo}
