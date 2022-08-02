@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import ArtistaCard from "../Components/Cards/ArtistaCard";
 import ObraCard from "../Components/Cards/ObraCard";
-
+import Slider from "../Components/Slider";
 import Sliders from "../Components/Sliders";
 
 import { Button, ButtonGroup, Grid } from "@mui/material";
@@ -202,7 +202,9 @@ function ExposicionPage() {
   } else {
     return (
       <>
-        <Sliders />
+        {/* <Sliders /> */}
+        <Slider />
+
         <ButtonGroup
           variant='contained'
           aria-label='outlined primary button group'
