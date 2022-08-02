@@ -626,9 +626,9 @@ function DetalleObra() {
             </h2>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid xs={10} sx={{ marginTop: "8vh" }}>
             <img
-              style={{ width: "auto", height: "74vh", marginTop: "2vh" }}
+              style={{ width: "100%", marginTop: "2vh" }}
               src={res.img}
               alt=''
             />
