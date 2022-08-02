@@ -48,7 +48,18 @@ function Item(props) {
       container
       sx={{ width: "100%", marginTop: "2vh", paddingLeft: "0vw" }}
     >
-      <Grid item xs={12} md={5} lg={5}>
+      <Grid
+        item
+        xs={12}
+        md={5}
+        lg={5}
+        /* sx={{
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundImage: `url(${props.item.img}) no-repeat center center fixed`,
+        }} */
+      >
         <Typography variant='h5'>
           <span
             style={{
