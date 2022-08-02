@@ -27,6 +27,15 @@ function ArtistaCard(props) {
 
   const nodo = props.nodo;
   const color = context.color[nodo];
+  function nacimientoHandled() {
+    if (props.ficha.nacimiento) {
+      <Typography gutterBottom variant='body2' sx={{ color: "gray" }}>
+        <strong>{props.ficha.nacimiento}</strong>
+      </Typography>;
+    } else {
+      <p></p>;
+    }
+  }
 
   return (
     <Card>
@@ -44,9 +53,7 @@ function ArtistaCard(props) {
           >
             <strong>{props.nombre}</strong>
           </Typography>
-          <Typography gutterBottom variant='body2' sx={{ color: "gray" }}>
-            <strong>{props.ficha.nacimiento}</strong>
-          </Typography>
+          {nacimientoHandled}
 
           <Typography>{bio_corta}</Typography>
           {/*           <Typography variant='body2' color='text.secondary'>

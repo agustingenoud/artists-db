@@ -8,18 +8,26 @@ function Slider(props) {
       name: "Disidencias Sexuales",
       description:
         "Prácticas artísticas y activistas que cuestionan la forma hegemónica en que sexo y genero son representados socialmente",
+      img:
+        "https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2FDS.jpg?alt=media&token=4bbda1eb-12f0-4e3e-addc-9d10e37828d4",
     },
     {
       name: "Feminismos",
       description: "FE",
+      img:
+        "https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2FFE.jpg?alt=media&token=8d7c8ab5-64df-41e7-a007-7177cc140d19",
     },
     {
       name: "Escenas Subterráneas",
       description: "ES",
+      img:
+        "https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2FES.jpg?alt=media&token=22bea0cf-fbd8-4930-84f5-b928b14ed979",
     },
     {
       name: "Acción Gráfica",
       description: "AG",
+      img:
+        "https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2FAG.jpg?alt=media&token=3a4a61ef-1f38-4358-88da-c0aa339d043e",
     },
   ];
 
@@ -60,8 +68,8 @@ function Item(props) {
         <br />
         <Button variant='contained'>Ver Más</Button>
       </Grid>
-      <Grid item xs={12} md={5} lg={5} sx={{ widht: "10%" }}>
-        <img src='https://firebasestorage.googleapis.com/v0/b/devenir-otros-cuerpos.appspot.com/o/images%2Fslider_test.png?alt=media&token=4577c485-83ec-49de-bf76-97070134e16d'></img>
+      <Grid item xs={12} md={6} lg={3}>
+        <img src={props.item.img}></img>
       </Grid>
     </Grid>
   );
