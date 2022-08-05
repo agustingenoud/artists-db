@@ -601,6 +601,7 @@ function AltaArtista(props) {
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
           <ArtistaCard
+            ficha={""}
             title={nombreSample}
             participantes={participanteSample}
             nodo={nodoSample}
