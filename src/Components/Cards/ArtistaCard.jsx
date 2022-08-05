@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../Context/AuthContext";
 
 import {
@@ -18,6 +18,8 @@ function ArtistaCard(props) {
   console.log("ArtistaCard props");
   console.log(props);
 
+  const [nacimiento, setNacimiento] = useState(props.ficha.nacimiento);
+
   let bio_corta = "";
   if (props.introSmall) {
     bio_corta = JSON.parse(props.introSmall).map((line) => (
@@ -27,15 +29,6 @@ function ArtistaCard(props) {
 
   const nodo = props.nodo;
   const color = context.color[nodo];
-  function nacimientoHandled() {
-    if (props.ficha.nacimiento) {
-      <Typography gutterBottom variant='body2' sx={{ color: "gray" }}>
-        <strong>{props.ficha.nacimiento}</strong>
-      </Typography>;
-    } else {
-      <p></p>;
-    }
-  }
 
   return (
     <Card>
@@ -53,8 +46,10 @@ function ArtistaCard(props) {
           >
             <strong>{props.nombre}</strong>
           </Typography>
-          {nacimientoHandled}
 
+          <Typography gutterBottom variant='body2' sx={{ color: "gray" }}>
+            <strong>{nacimiento}</strong>
+          </Typography>
           <Typography>{bio_corta}</Typography>
           {/*           <Typography variant='body2' color='text.secondary'>
             {props.id}

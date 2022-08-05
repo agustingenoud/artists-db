@@ -581,13 +581,23 @@ function DetalleArtista() {
       }
     }
 
-    let txt_largo = JSON.parse(res.txt_largo).map((line) => (
-      <p>{line.children[0].text}</p>
-    ));
+    let txt_largo = "";
+    if (res.txt_largo) {
+      txt_largo = JSON.parse(res.txt_largo).map((line) => (
+        <p>{line.children[0].text}</p>
+      ));
+    } else {
+      txt_largo = <p></p>;
+    }
 
-    let bio_corta = JSON.parse(res.bio_corta).map((line) => (
-      <p>{line.children[0].text}</p>
-    ));
+    let bio_corta = "";
+    if (res.bio_corta) {
+      bio_corta = JSON.parse(res.bio_corta).map((line) => (
+        <p>{line.children[0].text}</p>
+      ));
+    } else {
+      bio_corta = <p></p>;
+    }
 
     return (
       <>
