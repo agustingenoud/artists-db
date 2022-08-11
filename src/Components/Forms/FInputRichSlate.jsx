@@ -17,7 +17,7 @@ let initialValue = [
   },
 ];
 
-function FInputRich(props) {
+function FInputRichSlate(props) {
   console.log("props.content");
   console.log(props.content);
   const [editor] = useState(() => withReact(createEditor()));
@@ -34,7 +34,7 @@ function FInputRich(props) {
       <Box
         sx={{
           width: "96%",
-          height: props.height,
+          height: props.height || "60vh",
           color: "rgb(0,0,0)",
           padding: "2vmin",
           border: " 1px solid black",
@@ -71,4 +71,4 @@ function FInputRich(props) {
   );
 }
 
-export default FInputRich;
+export default FInputRichSlate;
