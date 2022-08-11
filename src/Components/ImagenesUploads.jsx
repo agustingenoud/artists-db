@@ -32,6 +32,7 @@ function ImagenesUploads(props) {
   const [progress, setProgress] = useState(0);
 
   const formHandler = (e) => {
+    console.log("inside_FORM_HANDLER");
     e.preventDefault();
     const file = e.target[0].files[0];
     uploadFiles(file);

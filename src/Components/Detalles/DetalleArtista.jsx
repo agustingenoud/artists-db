@@ -379,11 +379,32 @@ function DetalleArtista() {
     const sonidos = res.sonidos;
     const pdfs = res.pdfs; */
 
-    console.log("res");
-    console.log(imagenes);
+    /* console.log("res");
+    console.log(imagenes); */
 
     function isNodos() {
-      if (res.nodos != "") {
+      if (res.nodo != "") {
+        console.log("RES_NODOS");
+        console.log(res.nodo);
+        return (
+          <>
+            <Typography
+              display='inline'
+              sx={{
+                mr: 1,
+                padding: "0px 0.4vw",
+                color: "white",
+                /*  backgroundColor: context.color[nodo.idNodo], */
+              }}
+            >
+              {res.nodo}
+            </Typography>
+          </>
+        );
+      }
+
+      /*       if (res.nodos != "") {
+        console.log("RES_NODOS");
         return res.nodos.map((nodo) => (
           <>
             <Typography
@@ -399,7 +420,7 @@ function DetalleArtista() {
             </Typography>
           </>
         ));
-      }
+      } */
     }
 
     function notNodos() {
@@ -604,6 +625,7 @@ function DetalleArtista() {
         <Grid>
           <Grid sx={{ mt: 6 }}>
             {nodosHandled()}
+            NODO
             <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
             <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
               {res.nacimiento}

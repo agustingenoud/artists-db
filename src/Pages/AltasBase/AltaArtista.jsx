@@ -518,6 +518,7 @@ function AltaArtista(props) {
               <FInputRichSlate
                 titulo='Bio corta'
                 label='Bio corta'
+                height='30vh'
                 fullwidth
                 register={{ ...register("bio_corta") }}
                 changeInput={(lift) => setIntroSample(lift)}
@@ -528,6 +529,7 @@ function AltaArtista(props) {
               <FInputRichSlate
                 titulo='Texto largo'
                 label='Texto largo'
+                height='100vh'
                 fullwidth
                 register={{ ...register("txt_largo") }}
                 changeInput={(lift) => setBioSample(lift)}

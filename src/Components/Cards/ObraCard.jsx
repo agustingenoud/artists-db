@@ -16,8 +16,8 @@ import { Link } from "react-router-dom";
 function ObraCard(props) {
   const context = useContext(AuthContext);
 
-  console.log("props.introSmall");
-  console.log(props.introSmall);
+  /* console.log("props.introSmall");
+  console.log(props.introSmall); */
 
   let txt = "";
 

@@ -26,17 +26,17 @@ function ExposicionPage() {
           .collection("artistas")
           .get();
         const querySnapshotObras = await firebase.db.collection("obras").get();
-        console.log("querySnapshotArtistas.docs >>>>>>>>>>>>>>>> ");
+        /* console.log("querySnapshotArtistas.docs >>>>>>>>>>>>>>>> ");
         console.log(querySnapshotArtistas.docs);
         console.log("querySnapshotObras.docs >>>>>>>>>>>>>>>> ");
-        console.log(querySnapshotObras.docs);
+        console.log(querySnapshotObras.docs); */
         if (querySnapshotArtistas.docs) {
           querySnapshotArtistas.docs.map((query) => {
             let dataMergeArtistas = query.data();
             dataMergeArtistas.id = query.id;
             artistas.push(dataMergeArtistas);
-            console.log("artistas >>>>>>>>>>>>>>> ");
-            console.log(artistas);
+            /* console.log("artistas >>>>>>>>>>>>>>> ");
+            console.log(artistas); */
           });
           if (querySnapshotObras.docs) {
             querySnapshotObras.docs.map((query) => {
@@ -66,8 +66,8 @@ function ExposicionPage() {
     console.log(fichasGlobal);
     try {
       fichasGlobal.map((ficha) => {
-        console.log("ficha >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
-        console.log(ficha);
+        /* console.log("ficha >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
+        console.log(ficha); */
         if (ficha.nodos === undefined && typeof ficha.nodos == "undefined") {
           console.log("* NULL *");
         } else {

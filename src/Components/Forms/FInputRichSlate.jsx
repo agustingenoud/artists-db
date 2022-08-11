@@ -33,8 +33,8 @@ function FInputRich(props) {
       </Typography>
       <Box
         sx={{
-          width: "100%",
-          height: "333px",
+          width: "96%",
+          height: props.height,
           color: "rgb(0,0,0)",
           padding: "2vmin",
           border: " 1px solid black",
