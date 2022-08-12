@@ -10,6 +10,7 @@ import {
 
 import AltaArtista from "../Pages/AltasBase/AltaArtista";
 import AltaObra from "../Pages/AltasBase/AltaObra";
+import AltaEvento from "../Pages/AltasBase/AltaEvento";
 
 function AltaPage() {
   const [tipo, setTipo] = React.useState(0);
@@ -27,7 +28,7 @@ function AltaPage() {
       case 2:
         return <AltaObra changeInput={(lift) => setTipo(lift)} />;
       case 3:
-        return <h1>Formulario de carga EVENTO</h1>;
+        return <AltaEvento changeInput={(lift) => setTipo(lift)} />;
       default:
         return <h1></h1>;
     }

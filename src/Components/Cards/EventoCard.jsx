@@ -13,7 +13,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-function ObraCard(props) {
+function EventoCard(props) {
   const context = useContext(AuthContext);
 
   /* console.log("props.introSmall");
@@ -64,11 +64,11 @@ function ObraCard(props) {
       <CardActions>
         <Link
           underline='none'
-          to={"/obra/" + props.id}
+          to={"/evento/" + props.id}
           style={{ textDecoration: "none" }}
         >
           <Typography
-            to={"/obra/" + props.id}
+            to={"/evento/" + props.id}
             sx={{ color: color, textDecoration: "none" }}
           >
             {" "}
@@ -80,4 +80,4 @@ function ObraCard(props) {
   );
 }
 
-export default ObraCard;
+export default EventoCard;

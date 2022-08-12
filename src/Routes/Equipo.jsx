@@ -10,6 +10,7 @@ import TextoPage from "../Pages/TextoPage";
 import AltaPage from "../Pages/AltaPage";
 import DetalleArtista from "../Components/Detalles/DetalleArtista";
 import DetalleObra from "../Components/Detalles/DetalleObra";
+import DetalleEvento from "../Components/Detalles/DetalleEvento";
 
 import NavMenu from "../Components/NavMenu";
 import Footer from "../Components/Footer";
@@ -34,6 +35,8 @@ function Equipo() {
           <Route path='/artista/:id' element={<DetalleArtista />} />
 
           <Route path='/obra/:id' element={<DetalleObra />} />
+
+          <Route path='/evento/:id' element={<DetalleEvento />} />
 
           <Route path='/' exact element={<HomePage />} />
 

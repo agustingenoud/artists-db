@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import ArtistaCard from "../Components/Cards/ArtistaCard";
 import ObraCard from "../Components/Cards/ObraCard";
+import EventoCard from "../Components/Cards/EventoCard";
 import Slider from "../Components/Slider";
-import Sliders from "../Components/Sliders";
 
 import { Button, ButtonGroup, Grid } from "@mui/material";
 
@@ -11,25 +11,32 @@ import firebase from "../Config/firebase";
 
 function ExposicionPage() {
   const [loading, setLoading] = useState(true);
+
   const [fichasGlobal, setFichasGlobal] = useState([]);
   const [fichas, setFichas] = useState([]);
 
   const [obrasGlobal, setObrasGlobal] = useState([]);
   const [obras, setObras] = useState([]);
 
+  const [eventosGlobal, setEventosGlobal] = useState([]);
+  const [eventos, setEventos] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       let artistas = [];
       let obras = [];
+      let eventos = [];
+
       try {
         const querySnapshotArtistas = await firebase.db
           .collection("artistas")
           .get();
         const querySnapshotObras = await firebase.db.collection("obras").get();
-        /* console.log("querySnapshotArtistas.docs >>>>>>>>>>>>>>>> ");
-        console.log(querySnapshotArtistas.docs);
-        console.log("querySnapshotObras.docs >>>>>>>>>>>>>>>> ");
-        console.log(querySnapshotObras.docs); */
+
+        const querySnapshotEventos = await firebase.db
+          .collection("eventos")
+          .get();
+
         if (querySnapshotArtistas.docs) {
           querySnapshotArtistas.docs.map((query) => {
             let dataMergeArtistas = query.data();
@@ -44,10 +51,22 @@ function ExposicionPage() {
               dataMergeObras.id = query.id;
               obras.push(dataMergeObras);
             });
+          }
+          if (querySnapshotEventos.docs) {
+            querySnapshotEventos.docs.map((query) => {
+              let dataMergeEventos = query.data();
+              dataMergeEventos.id = query.id;
+              eventos.push(dataMergeEventos);
+              console.log(">>>>>>>>>>>>>> querySnapshotEventos.docs.data()");
+              console.log(query.data());
+            });
+
             setFichasGlobal(artistas);
             setFichas(artistas);
             setObrasGlobal(obras);
             setObras(obras);
+            setEventosGlobal(eventos);
+            setEventos(eventos);
             setLoading(false);
           }
         }
@@ -61,6 +80,7 @@ function ExposicionPage() {
   async function handleFeminismos() {
     let fichasTemp = [];
     let obrasTemp = [];
+    let eventosTemp = [];
 
     console.log("fichasGlobal");
     console.log(fichasGlobal);
@@ -94,6 +114,18 @@ function ExposicionPage() {
           }
         }
       });
+      eventosGlobal.map((evento) => {
+        if (evento.nodos === undefined && typeof evento.nodos == "undefined") {
+          console.log("* NULL *");
+        } else {
+          if (eventos.nodos[0].idNodo == "FE") {
+            console.log("evento.nodos");
+            console.log(evento.nodos[0].idNodo);
+            eventosTemp.push(evento);
+            setEventos(eventosTemp);
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }
@@ -102,6 +134,7 @@ function ExposicionPage() {
   async function handleEsub() {
     let fichasTemp = [];
     let obrasTemp = [];
+    let eventosTemp = [];
 
     try {
       fichasGlobal.map((ficha) => {
@@ -125,6 +158,19 @@ function ExposicionPage() {
         }
       });
       setObras(obrasTemp);
+
+      eventosGlobal.map((evento) => {
+        if (evento.nodos === undefined && typeof evento.nodos == "undefined") {
+          console.log("* NULL *");
+        } else {
+          if (eventos.nodos[0].idNodo == "ES") {
+            console.log("evento.nodos");
+            console.log(evento.nodos[0].idNodo);
+            eventosTemp.push(evento);
+            setEventos(eventosTemp);
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }
@@ -133,6 +179,7 @@ function ExposicionPage() {
   async function handleDsex() {
     let fichasTemp = [];
     let obrasTemp = [];
+    let eventosTemp = [];
 
     try {
       fichasGlobal.map((ficha) => {
@@ -156,6 +203,19 @@ function ExposicionPage() {
         }
       });
       setObras(obrasTemp);
+
+      eventosGlobal.map((evento) => {
+        if (evento.nodos === undefined && typeof evento.nodos == "undefined") {
+          console.log("* NULL *");
+        } else {
+          if (eventos.nodos[0].idNodo == "DS") {
+            console.log("evento.nodos");
+            console.log(evento.nodos[0].idNodo);
+            eventosTemp.push(evento);
+            setEventos(eventosTemp);
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }
@@ -164,6 +224,7 @@ function ExposicionPage() {
   async function handleAgraf() {
     let fichasTemp = [];
     let obrasTemp = [];
+    let eventosTemp = [];
 
     try {
       fichasGlobal.map((ficha) => {
@@ -187,6 +248,17 @@ function ExposicionPage() {
         }
       });
       setObras(obrasTemp);
+
+      eventosGlobal.map((evento) => {
+        if (evento.nodos === undefined && typeof evento.nodos == "undefined") {
+        } else {
+          console.log(evento.nodos[0].idNodo);
+          if (evento.nodos[0].idNodo == "AG") {
+            eventosTemp.push(evento);
+          }
+        }
+      });
+      setEventos(eventosTemp);
     } catch (e) {
       console.log(e);
     }
@@ -195,6 +267,7 @@ function ExposicionPage() {
   async function handleTodo() {
     setFichas(fichasGlobal);
     setObras(obrasGlobal);
+    setEventos(eventosGlobal);
   }
 
   if (loading) {
@@ -216,6 +289,20 @@ function ExposicionPage() {
           <Button onClick={handleTodo}>Todo</Button>
         </ButtonGroup>
         <Grid container spacing={6} sx={{ marginTop: "0.1vh" }}>
+          {eventos.map((evento) => (
+            <Grid item xs={12} md={6} lg={3}>
+              <EventoCard
+                ficha={evento}
+                nombre={evento.nombre}
+                imgSrc={evento.img}
+                nodo={evento.nodo}
+                introSmall={evento.bio || evento.bio_corta}
+                fechaNacimiento={evento.nacimiento}
+                fechaFallecimiento={evento.fallecimiento}
+                id={evento.id}
+              />
+            </Grid>
+          ))}
           {fichas.map((ficha) => (
             <Grid item xs={12} md={6} lg={3}>
               <ArtistaCard
