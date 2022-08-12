@@ -608,13 +608,19 @@ function DetalleObra() {
     console.log("res.txt_largo");
     console.log(res.txt_largo);
 
-    let txt_largo = JSON.parse(res.txt_largo).map((line) => (
-      <p>{line.children[0].text}</p>
-    ));
+    let txt_largo = "";
+    if (res.txt_largo) {
+      txt_largo = JSON.parse(res.txt_largo).map((line) => (
+        <p>{line.children[0].text}</p>
+      ));
+    }
 
-    let bio_corta = JSON.parse(res.bio_corta).map((line) => (
-      <p>{line.children[0].text}</p>
-    ));
+    let bio_corta = "";
+    if (res.bio_corta) {
+      let bio_corta = JSON.parse(res.bio_corta).map((line) => (
+        <p>{line.children[0].text}</p>
+      ));
+    }
 
     return (
       <>
