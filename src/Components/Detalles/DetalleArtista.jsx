@@ -171,6 +171,7 @@ function DetalleArtista() {
           '<p>La carga se realizó correctamente. Querés cargar otro documento?</p><Link to="/altas"><Button>Reset</Button></Link>'
         )
       );
+      setTimeout(() => navigate("/"), 2000);
     } catch (e) {
       console.error("Error adding document: ", e);
       setEnvio(
@@ -631,7 +632,7 @@ function DetalleArtista() {
             </h2>
           </Grid>
 
-          <Grid xs={10} sx={{ marginTop: "8vh" }}>
+          <Grid xs={12} sx={{ marginTop: "8vh" }}>
             <img
               style={{ width: "50%", marginTop: "2vh" }}
               src={res.img}

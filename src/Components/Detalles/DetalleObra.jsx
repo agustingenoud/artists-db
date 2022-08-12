@@ -175,6 +175,7 @@ function DetalleObra() {
           '<p>La carga se realizó correctamente. Querés cargar otro documento?</p><Link to="/altas"><Button>Reset</Button></Link>'
         )
       );
+      setTimeout(() => navigate("/"), 2000);
     } catch (e) {
       console.error("Error adding document: ", e);
       setEnvio(
@@ -622,13 +623,13 @@ function DetalleObra() {
             {nodosHandled()}
             <h1 style={{ margin: "2vh 0vh" }}>{res.nombre}</h1>
             <h2 style={{ color: "#bbbbbb", marginTop: "0%" }}>
-              {res.nacimiento}
+              {res.realizacion}
             </h2>
           </Grid>
 
-          <Grid xs={10} sx={{ marginTop: "8vh" }}>
+          <Grid xs={12} sx={{ marginTop: "8vh" }}>
             <img
-              style={{ width: "100%", marginTop: "2vh" }}
+              style={{ width: "50%", marginTop: "2vh" }}
               src={res.img}
               alt=''
             />
@@ -711,177 +712,170 @@ function DetalleObra() {
                 </p>
 
                 <h1>EDITAR ENTRADA</h1>
+
+                <Grid item xs={12} sx={{}}>
+                  <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+                    Imagen principal
+                  </Typography>
+                  <ImgUpload
+                    label='img'
+                    register={{
+                      ...register(
+                        "img",
+                        { value: picSample },
+                        { required: true }
+                      ),
+                    }}
+                    changeInput={(lift) => setPicSample(lift)}
+                    principal='true'
+                  />
+                </Grid>
+                {/* ////////////////////////////// Galería IMGs */}
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+                    <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+                      Galería Imágenes
+                    </Typography>
+                    {cargaInicial}
+                    {cargasSecundarias}
+                  </ul>
+
+                  <Button
+                    variant='contained'
+                    type='submit'
+                    sx={{ m: 2 }}
+                    onClick={handleAddImage}
+                  >
+                    Añadir a galería
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <Typography
+                    variant='body'
+                    sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+                  >
+                    Preview img
+                  </Typography>
+                  <ImageList variant='masonry' cols={3} gap={8}>
+                    {images.map((imagen) => (
+                      <>
+                        <ImageListItem key={imagen.url}>
+                          <img
+                            src={`${imagen.url}?w=248&fit=crop&auto=format`}
+                            srcSet={`${imagen.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            loading='lazy'
+                          />
+                        </ImageListItem>
+                      </>
+                    ))}
+                  </ImageList>
+                </Grid>
+                {/* ////////////////////////////// Galería VIDs */}
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+                    <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+                      Galería Videos
+                    </Typography>
+                    {cargasVideoInicial}
+                    {cargasVideosSecundarios}
+                  </ul>
+
+                  <Button
+                    variant='contained'
+                    type='submit'
+                    sx={{ m: 2 }}
+                    onClick={handleAddVid}
+                  >
+                    Añadir a galería
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <Typography
+                    variant='body'
+                    sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+                  >
+                    Preview vids
+                  </Typography>
+                  <ImageList variant='masonry' cols={2}>
+                    {videos.map((video) => (
+                      <>
+                        <ImageListItem key={video.url}>
+                          <video width='320' height='240' controls>
+                            <source
+                              src={`${video.url}?w=248&fit=crop&auto=format`}
+                              type='video/mp4'
+                            />
+                          </video>
+                        </ImageListItem>
+                      </>
+                    ))}
+                  </ImageList>
+                </Grid>
+
+                {/* ////////////////////////////// Galería SONs */}
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+                    <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+                      SONIDOS
+                    </Typography>
+                    {cargasSonidoInicial}
+                    {cargasSonidosSecundarios}
+                  </ul>
+
+                  <Button
+                    variant='contained'
+                    type='submit'
+                    sx={{ m: 2 }}
+                    onClick={handleAddSon}
+                  >
+                    Añadir a Sonidos
+                  </Button>
+                </Grid>
+
+                {/* ////////////////////////////// Archivos */}
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <ul style={{ listStyle: "none", margin: "0", padding: "0" }}>
+                    <Typography variant='h6' sx={{ margin: "2vh 0" }}>
+                      Archivo
+                    </Typography>
+                    {cargasPdfsInicial}
+                    {cargasPdfsSecundarios}
+                  </ul>
+
+                  <Button
+                    variant='contained'
+                    type='submit'
+                    sx={{ m: 2 }}
+                    onClick={handleAddPdf}
+                  >
+                    Añadir a Archivo
+                  </Button>
+                </Grid>
+
+                <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
+                  <Typography
+                    variant='body'
+                    sx={{ marginBottom: "2vh", marginTop: "2vh" }}
+                  >
+                    Preview Pdfs
+                  </Typography>
+                  <ImageList variant='masonry' cols={1}>
+                    {pdfs.map((pdf) => (
+                      <>
+                        <Typography>{pdf.pie}</Typography> <br />
+                        <object
+                          data={`${pdf.url}?w=248&fit=crop&auto=format`}
+                          width='80%'
+                          height='400px'
+                        ></object>
+                      </>
+                    ))}
+                  </ImageList>
+                </Grid>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   style={{ width: "100%" }}
                 >
-                  <Grid item xs={12} sx={{}}>
-                    <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-                      Imagen principal
-                    </Typography>
-                    <ImgUpload
-                      label='img'
-                      register={{
-                        ...register(
-                          "img",
-                          { value: picSample },
-                          { required: true }
-                        ),
-                      }}
-                      changeInput={(lift) => setPicSample(lift)}
-                      principal='true'
-                    />
-                  </Grid>
-                  {/* ////////////////////////////// Galería IMGs */}
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <ul
-                      style={{ listStyle: "none", margin: "0", padding: "0" }}
-                    >
-                      <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-                        Galería Imágenes
-                      </Typography>
-                      {cargaInicial}
-                      {cargasSecundarias}
-                    </ul>
-
-                    <Button
-                      variant='contained'
-                      type='submit'
-                      sx={{ m: 2 }}
-                      onClick={handleAddImage}
-                    >
-                      Añadir a galería
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <Typography
-                      variant='body'
-                      sx={{ marginBottom: "2vh", marginTop: "2vh" }}
-                    >
-                      Preview img
-                    </Typography>
-                    <ImageList variant='masonry' cols={3} gap={8}>
-                      {images.map((imagen) => (
-                        <>
-                          <ImageListItem key={imagen.url}>
-                            <img
-                              src={`${imagen.url}?w=248&fit=crop&auto=format`}
-                              srcSet={`${imagen.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                              loading='lazy'
-                            />
-                          </ImageListItem>
-                        </>
-                      ))}
-                    </ImageList>
-                  </Grid>
-                  {/* ////////////////////////////// Galería VIDs */}
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <ul
-                      style={{ listStyle: "none", margin: "0", padding: "0" }}
-                    >
-                      <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-                        Galería Videos
-                      </Typography>
-                      {cargasVideoInicial}
-                      {cargasVideosSecundarios}
-                    </ul>
-
-                    <Button
-                      variant='contained'
-                      type='submit'
-                      sx={{ m: 2 }}
-                      onClick={handleAddVid}
-                    >
-                      Añadir a galería
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <Typography
-                      variant='body'
-                      sx={{ marginBottom: "2vh", marginTop: "2vh" }}
-                    >
-                      Preview vids
-                    </Typography>
-                    <ImageList variant='masonry' cols={2}>
-                      {videos.map((video) => (
-                        <>
-                          <ImageListItem key={video.url}>
-                            <video width='320' height='240' controls>
-                              <source
-                                src={`${video.url}?w=248&fit=crop&auto=format`}
-                                type='video/mp4'
-                              />
-                            </video>
-                          </ImageListItem>
-                        </>
-                      ))}
-                    </ImageList>
-                  </Grid>
-
-                  {/* ////////////////////////////// Galería SONs */}
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <ul
-                      style={{ listStyle: "none", margin: "0", padding: "0" }}
-                    >
-                      <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-                        SONIDOS
-                      </Typography>
-                      {cargasSonidoInicial}
-                      {cargasSonidosSecundarios}
-                    </ul>
-
-                    <Button
-                      variant='contained'
-                      type='submit'
-                      sx={{ m: 2 }}
-                      onClick={handleAddSon}
-                    >
-                      Añadir a Sonidos
-                    </Button>
-                  </Grid>
-
-                  {/* ////////////////////////////// Archivos */}
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <ul
-                      style={{ listStyle: "none", margin: "0", padding: "0" }}
-                    >
-                      <Typography variant='h6' sx={{ margin: "2vh 0" }}>
-                        Archivo
-                      </Typography>
-                      {cargasPdfsInicial}
-                      {cargasPdfsSecundarios}
-                    </ul>
-
-                    <Button
-                      variant='contained'
-                      type='submit'
-                      sx={{ m: 2 }}
-                      onClick={handleAddPdf}
-                    >
-                      Añadir a Archivo
-                    </Button>
-                  </Grid>
-
-                  <Grid item xs={12} sx={{ margin: "0", padding: "0" }}>
-                    <Typography
-                      variant='body'
-                      sx={{ marginBottom: "2vh", marginTop: "2vh" }}
-                    >
-                      Preview Pdfs
-                    </Typography>
-                    <ImageList variant='masonry' cols={1}>
-                      {pdfs.map((pdf) => (
-                        <>
-                          <Typography>{pdf.pie}</Typography> <br />
-                          <object
-                            data={`${pdf.url}?w=248&fit=crop&auto=format`}
-                            width='80%'
-                            height='400px'
-                          ></object>
-                        </>
-                      ))}
-                    </ImageList>
-                  </Grid>
                   <FInput
                     xs={6}
                     label='Número de inventario'
