@@ -12,6 +12,7 @@ import {
   Button,
   Typography,
   Grid,
+  Icon,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -174,23 +175,26 @@ function NavMenu() {
     <AuthContext.Consumer>
       {(context) => (
         <Box>
-          <AppBar position='static' sx={{ padding: "2% 2% 2% 2%" }}>
+          <AppBar
+            position='static'
+            sx={{ minHeight: "8%", maxHeight: "10%", padding: "2px" }}
+          >
             <Toolbar
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
-              <Typography
-                variant='h5'
-                as={Link}
-                to='/'
-                sx={{ textDecoration: "none", color: "black" }}
+              {/* <div
+                style={{
+                  width: "20%",
+                }}
               >
-                Devenir <br />
-                Otros <br />
-                <strong>Cuerpxs</strong>
-              </Typography>
+                <img src='/LogoDevenir.svg'></img>
+              </div> */}
+              <Icon sx={{ height: "8%", width: "14%", padding: "1%" }}>
+                <img src='/LogoDevenir.svg' />
+              </Icon>
 
               <Box>{mobileView ? displayMobile() : displayDesktop()}</Box>
               {/* {context.userLogin && (
